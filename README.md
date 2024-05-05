@@ -6,7 +6,7 @@ This repo is based on the demo repo of the Payload 3.0 Beta running completely w
 > Unless you have very specific needs, or a lot of experience with Lexical and custom Payload fields, you should almost certainly be using the new and official [Payload Lexical Rich Text editor](https://payloadcms.com/docs/rich-text/lexical). 
 >
 
-It's also important to mention that creating a generalized and extensible editor with a 'pluggable' feature system - such as the one currently being developed by Alessio and the team at Payload, is an order of magnitude more difficult than creating an 'opinionated' system with zero extensibility - and so this repo and our editor is in no way a criticism of the excellent work being done at Payload.
+It's also important to mention that creating a generalized and extensible editor with a 'pluggable' feature system - such as the one currently being developed by Alessio and the team at Payload, is an order of magnitude more difficult than creating an 'opinionated' system with zero extensibility. The Payload team are doing amazing work - and this repo and our editor is in no way a criticism of the work being done at Payload.
 
 ## Our Lexical Editor
 

@@ -20,7 +20,7 @@ And so we started work on a Lexical-based rich text field for Payload. Early in 
 
 Thanks largely to Alessio's efforts, Lexical has now been adopted by the Payload team and is on its way to becoming the default editor for Payload, which is fantastic.
 
-There are however, still a few cases that meant for us, continuing with our own editor was still our preferred approach, although it's likely that most of these issues will be resolved over time, and we'll instead shift to converting our Lexical plugins to official Payload Lexical features.
+There are still however, a few cases that meant for us, continuing with our own editor is our preferred approach for the moment, although it's likely that most of these issues will be resolved over time and we'll eventually shift to converting our Lexical plugins to official Payload Lexical features.
 
 ## Rationale
 
@@ -56,7 +56,7 @@ Here are the main drivers for us wanting to maintain our own editor:
   "text": "internal"
 }
 ```
-We've added a `data` attribute and populated the title and slug for the related document. We do this via a [`beforeChange`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-hook.ts) field hook - which means this additional relationship data is stored with the document in the database. For most cases, this is all the front end application needs to build a link to another document (router link or other). We don't need the entire related document for each internal link.
+We've added a `data` attribute and populated the title and slug for the related document. We do this via a [`beforeChange`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-hook.ts) field hook - which means this additional relationship data is stored in the document and in the database. For most cases, this is all the front end application needs to build a link to another document (router link or other). We don't need the entire related document for each internal link.
 
 > [!IMPORTANT]
 > Storing additional data in the document (slug and title) is one strategy for internal links, but - if the source document is removed or its slug changes, the links in the front end will break. Alternatively if links are populated via an `afterRead` hook and the document is missing, or the slug has changed - both the hook and the serializer can decide what to do - for example, the front end could simply ignore the link and the link will disappear. Both are valid strategies.

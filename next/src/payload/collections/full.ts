@@ -1,0 +1,48 @@
+import { lexicalRichText } from '../fields/richtext-full'
+import { type CollectionConfig } from 'payload/types'
+import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
+import { slugField } from '@/payload/fields/slug'
+
+export const Full: CollectionConfig = {
+  slug: 'full',
+  admin: {
+    enableRichTextLink: true,
+    defaultColumns: ['title', 'author', '_status'],
+    useAsTitle: 'title',
+    group: 'Content',
+    preview: (doc, { locale }) => {
+      if (doc?.slug != null) {
+        return `http://localhost:3000/${doc.slug as string}?locale=${locale}`
+      }
+      return null
+    },
+  },
+  versions: {
+    drafts: true,
+    maxPerDoc: 5,
+  },
+  labels: {
+    singular: 'Full',
+    plural: 'Full',
+  },
+  access: {
+    create: isAdminOrEditor,
+    read: publishedOnly,
+    readVersions: isAdminOrEditor,
+    update: isAdminOrEditor,
+    delete: isAdmin,
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
+    lexicalRichText({
+      name: 'richText',
+      label: 'RichText',
+      required: true,
+    }),
+    slugField(),
+  ],
+}

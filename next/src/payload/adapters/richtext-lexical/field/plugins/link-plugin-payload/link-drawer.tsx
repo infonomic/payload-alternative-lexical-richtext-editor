@@ -6,8 +6,7 @@ import { Form } from '@payloadcms/ui/forms/Form'
 import { RenderFields } from '@payloadcms/ui/forms/RenderFields'
 import { FormSubmit } from '@payloadcms/ui/forms/Submit'
 import { useTranslation } from '@payloadcms/ui/providers/Translation'
-// import { useConfig } from '@payloadcms/ui/providers/Config'
-import { useEditorConfig } from '../../config'
+import { useConfig } from '@payloadcms/ui/providers/Config'
 
 import { getMappedFields, getInitialState, validateFields } from './fields'
 
@@ -28,30 +27,31 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
   data: dataFromProps,
 }) => {
   const { t } = useTranslation()
-  const {
-    config: { enableRichTextLinks },
-  } = useEditorConfig()
-
-  // const config = useConfig()
+  const config = useConfig()
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
     undefined,
   )
   const version = useRef<string>(uuid())
 
-  // TODO: Not 100% sure but there appears to be a bug where ALL collections including
-  // payload-migrations and payload-preferences default to enableRichTextLink: true
-  // So we've placed this in editor config for now.
-  // const validRelationships: string[] = useMemo(() => {
-  //   const results = []
-  //   for (const c of config.collections) {
-  //     if (c?.admin?.enableRichTextLink === true) {
-  //       console.log('Found collection:', c.slug)
-  //       console.log('Found collection:', c.admin.enableRichTextLink)
-  //        results.push(c.slug)
-  //     }
-  //   }
-  //   return results
-  // }, [config])
+  console.log('LinkDrawer rendered')
+
+  // NOTE: enableRichTextLink is currently true by default for all collections
+  // and so we need to check for both enableRichTextLink and hidden. For example
+  // payload-preferences and payload-migrations have enableRichTextLink: true 🫨.
+  const validRelationships: string[] = useMemo(() => {
+    const results: string[] = []
+    for (const c of config.collections) {
+      if (
+        c?.admin?.enableRichTextLink === true &&
+        (c?.admin?.hidden == null || c?.admin?.hidden === false) &&
+        c?.slug != 'payload-preferences' &&
+        c?.slug != 'payload-migrations'
+      ) {
+        results.push(c.slug)
+      }
+    }
+    return results
+  }, [config])
 
   const handleOnCancel = (): void => {
     setSynchronizedFormState(undefined)
@@ -115,7 +115,7 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
         uuid={uuid()}
       >
         <RenderFields
-          fieldMap={getMappedFields(synchronizedFormState, enableRichTextLinks)}
+          fieldMap={getMappedFields(synchronizedFormState, validRelationships)}
           forceRender
           path=""
           readOnly={false}

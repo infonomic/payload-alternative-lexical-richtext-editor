@@ -43,7 +43,6 @@ export type OptionName =
 export interface EditorSettings {
   options: Record<OptionName, boolean>
   inlineImageUploadCollection: string
-  enableRichTextLinks: string[]
   placeholderText: string
 }
 

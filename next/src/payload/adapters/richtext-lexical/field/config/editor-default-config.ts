@@ -43,8 +43,6 @@ export const DEFAULT_EDITOR_SETTINGS: EditorSettings = {
   },
   inlineImageUploadCollection: 'media',
   placeholderText: 'Enter some rich text...',
-  // TODO: Temporary solution - see the note in payload/adapters/richtext-lexical/field/plugins/link-plugin-payload/link-drawer.tsx
-  enableRichTextLinks: ['full', 'minimal', 'compact', 'debug'],
 }
 
 export const defaultEditorConfig: EditorConfig = {

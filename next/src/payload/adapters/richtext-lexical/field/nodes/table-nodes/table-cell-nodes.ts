@@ -12,7 +12,6 @@ import { ListItemNode, ListNode } from '@lexical/list'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 
 // import {AutocompleteNode} from './AutocompleteNode'
-import { EmojiNode } from '../emoji-node'
 import { AutoLinkNode, LinkNode } from '../link-nodes-payload'
 
 import type { Klass, LexicalNode } from 'lexical'
@@ -33,7 +32,6 @@ const LexicalNodes: Array<Klass<LexicalNode>> = [
   LinkNode,
   // ImageNode,
   // MentionNode,
-  EmojiNode
   // EquationNode,
   // AutocompleteNode,
   // KeywordNode,

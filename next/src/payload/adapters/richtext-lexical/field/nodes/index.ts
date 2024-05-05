@@ -9,7 +9,6 @@
 import { CodeHighlightNode, CodeNode } from '@lexical/code'
 // Lexical default link nodes
 // import {AutoLinkNode, LinkNode} from '@lexical/link'
-// Payload modified nodes
 import { ListItemNode, ListNode } from '@lexical/list'
 import { MarkNode } from '@lexical/mark'
 import { OverflowNode } from '@lexical/overflow'
@@ -18,7 +17,6 @@ import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 import { TableNode, TableCellNode, TableRowNode } from '@lexical/table'
 
 import { AdmonitionNode } from './admonition-node/admonition-node'
-import { EmojiNode } from './emoji-node'
 import { InlineImageNode } from './inline-image-node/inline-image-node'
 import { LayoutContainerNode } from './layout-container-node/layout-container-node'
 import { LayoutItemNode } from './layout-container-node/layout-item-node'
@@ -41,11 +39,10 @@ export const Nodes: Array<Klass<LexicalNode>> = [
   LinkNode,
   OverflowNode,
   InlineImageNode,
-  EmojiNode,
   HorizontalRuleNode,
   MarkNode,
   AdmonitionNode,
   YouTubeNode,
   LayoutContainerNode,
-  LayoutItemNode
+  LayoutItemNode,
 ]

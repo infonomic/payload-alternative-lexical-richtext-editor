@@ -43,7 +43,6 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
     for (const c of config.collections) {
       if (
         c?.admin?.enableRichTextLink === true &&
-        (c?.admin?.hidden == null || c?.admin?.hidden === false) &&
         c?.slug != 'payload-preferences' &&
         c?.slug != 'payload-migrations'
       ) {

@@ -22,6 +22,6 @@ export default function LexicalContentEditableInline({
 }: {
   className?: string
 }): JSX.Element {
-  const classes = cx('ContentEditable__root', className)
+  const classes = cx(className)
   return <ContentEditable className={classes} />
 }

@@ -1,6 +1,9 @@
 'use client'
 /**
- * Copyright (c) 2024 Infonomic Co., Ltd. info@infonomic.io
+ * Portions copyright (c) Meta Platforms, Inc.
+ * and affiliates and is based on examples found here
+ * https://github.com/facebook/lexical/tree/main/packages/lexical-playground
+ *  - in particular the ImagesPlugin
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.

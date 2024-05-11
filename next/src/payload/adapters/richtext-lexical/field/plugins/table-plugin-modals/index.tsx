@@ -13,7 +13,7 @@ import { useEditorConfig } from '../../config'
 type OpenModalType = 'table' | 'newTable' | string
 
 export const OPEN_TABLE_MODAL_COMMAND: LexicalCommand<OpenModalType> = createCommand(
-  'OPEN_TABLE_MODAL_COMMAND',
+  'OPEN_TABLE_MODAL_COMMAND'
 )
 
 export default function TablePluginModals(): JSX.Element {
@@ -22,24 +22,24 @@ export default function TablePluginModals(): JSX.Element {
   const editDepth = useEditDepth()
   const {
     toggleModal = () => {
-      console.log('Error: useModal() from FacelessUI did not work correctly')
+      console.log('Error: useModal() from Payload did not work correctly')
     },
-    closeModal,
+    closeModal
   } = useModal()
 
   const addTableDrawerSlug = formatDrawerSlug({
     slug: `lexicalRichText-add-table-${uuid}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   const addNewTableDrawerSlug = formatDrawerSlug({
     slug: `lexicalRichText-add-newtable-${uuid}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   const modalDictionary: Record<OpenModalType, string> = {
     table: addTableDrawerSlug,
-    newTable: addNewTableDrawerSlug,
+    newTable: addNewTableDrawerSlug
   }
 
   editor.registerCommand<OpenModalType>(
@@ -52,7 +52,7 @@ export default function TablePluginModals(): JSX.Element {
       }
       return false
     },
-    COMMAND_PRIORITY_NORMAL,
+    COMMAND_PRIORITY_NORMAL
   )
 
   return (

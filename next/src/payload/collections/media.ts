@@ -30,6 +30,7 @@ export const Media: CollectionConfig = {
     enableRichTextLink: false,
     enableRichTextRelationship: false,
     group: 'Uploads',
+    // @ts-ignore
     description: MediaCollectionDescription,
   },
   access: {

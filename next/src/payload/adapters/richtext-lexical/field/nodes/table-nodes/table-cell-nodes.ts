@@ -29,7 +29,7 @@ const LexicalNodes: Array<Klass<LexicalNode>> = [
   HashtagNode,
   CodeHighlightNode,
   AutoLinkNode,
-  LinkNode,
+  LinkNode
   // ImageNode,
   // MentionNode,
   // EquationNode,

@@ -9,6 +9,7 @@
 import { CodeHighlightNode, CodeNode } from '@lexical/code'
 // Lexical default link nodes
 // import {AutoLinkNode, LinkNode} from '@lexical/link'
+// Payload modified nodes
 import { ListItemNode, ListNode } from '@lexical/list'
 import { MarkNode } from '@lexical/mark'
 import { OverflowNode } from '@lexical/overflow'
@@ -44,5 +45,5 @@ export const Nodes: Array<Klass<LexicalNode>> = [
   AdmonitionNode,
   YouTubeNode,
   LayoutContainerNode,
-  LayoutItemNode,
+  LayoutItemNode
 ]

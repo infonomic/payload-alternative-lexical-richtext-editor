@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2024 Infonomic Co., Ltd. info@infonomic.io
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
 export function getPreferredSize(
   preferred: string,
   doc: Record<string, any>,

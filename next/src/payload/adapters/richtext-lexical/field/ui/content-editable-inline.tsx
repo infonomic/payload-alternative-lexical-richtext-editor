@@ -18,7 +18,7 @@ import './content-editable.scss'
 // as in content-editable.tsx - because this version will
 // appear inside caption areas for images.
 export default function LexicalContentEditableInline({
-  className,
+  className
 }: {
   className?: string
 }): JSX.Element {

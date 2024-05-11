@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2024 Infonomic Co., Ltd. info@infonomic.io
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
 import { MappedField } from '@payloadcms/ui/utilities/buildComponentMap'
 import type { FormState, OptionObject } from 'payload/types'
 import { InlineImageData } from './types'
@@ -12,25 +5,25 @@ import { InlineImageData } from './types'
 export const positionOptions: OptionObject[] = [
   {
     label: 'Left',
-    value: 'left',
+    value: 'left'
   },
   {
     label: 'Right',
-    value: 'right',
+    value: 'right'
   },
   {
     label: 'Full',
-    value: 'full',
+    value: 'full'
   },
   {
     label: 'Wide',
-    value: 'wide',
-  },
+    value: 'wide'
+  }
 ]
 
 export const getMappedFields = (
   collection: string,
-  formState: FormState | undefined,
+  formState: FormState | undefined
 ): MappedField[] => [
   // TODO: Investigate - would love to have used formState and RenderFields / MappedFields
   // for the Image upload field, but for some reason I could not get a return value
@@ -57,47 +50,47 @@ export const getMappedFields = (
     isFieldAffectingData: true,
     localized: false,
     isHidden: true,
-    type: 'text',
+    type: 'text'
   },
   {
     name: 'altText',
     cellComponentProps: { name: 'altText' },
     fieldComponentProps: {
       name: 'altText',
-      labelProps: { label: 'Alt Text' },
+      label: 'Alt Text',
       errorProps: {
         showError: formState?.altText?.valid === false,
-        message: 'Please enter alternative text for this image.',
+        message: 'Please enter alternative text for this image.'
       },
-      required: true,
+      required: true
     },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'text',
+    type: 'text'
   },
   {
     name: 'position',
     cellComponentProps: { name: 'position' },
     fieldComponentProps: {
       name: 'position',
-      labelProps: { label: 'Position' },
-      options: positionOptions,
+      label: 'Position',
+      options: positionOptions
     },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'select',
+    type: 'select'
   },
   {
     name: 'showCaption',
     cellComponentProps: { name: 'showCaption' },
-    fieldComponentProps: { name: 'showCaption', labelProps: { label: 'Show Caption' } },
+    fieldComponentProps: { name: 'showCaption', label: 'Show Caption' },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'checkbox',
-  },
+    type: 'checkbox'
+  }
 ]
 
 export function getInitialState(data: InlineImageData | undefined): FormState {
@@ -113,23 +106,23 @@ export function getInitialState(data: InlineImageData | undefined): FormState {
     version: {
       value: '',
       initialValue: '',
-      valid: true,
+      valid: true
     },
     altText: {
       value: data?.altText,
       initialValue: data?.altText,
-      valid: true,
+      valid: true
     },
     position: {
       value: data?.position ?? 'left',
       initialValue: data?.position ?? 'left',
-      valid: true,
+      valid: true
     },
     showCaption: {
       value: data?.showCaption ?? false,
       initialValue: data?.showCaption ?? false,
-      valid: true,
-    },
+      valid: true
+    }
   }
 }
 
@@ -149,6 +142,6 @@ export function validateFields(fields: FormState): { valid: boolean; fields: For
   // Return
   return {
     valid,
-    fields,
+    fields
   }
 }

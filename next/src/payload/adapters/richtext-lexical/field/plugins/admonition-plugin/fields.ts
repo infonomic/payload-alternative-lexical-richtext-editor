@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2024 Infonomic Co., Ltd. info@infonomic.io
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
 import type { FormState, OptionObject } from 'payload/types'
 import { MappedField } from '@payloadcms/ui/utilities/buildComponentMap'
 import { AdmonitionType } from '../../nodes/admonition-node'
@@ -12,20 +5,20 @@ import { AdmonitionType } from '../../nodes/admonition-node'
 export const admonitionTypeOptions: OptionObject[] = [
   {
     label: 'Note',
-    value: 'note',
+    value: 'note'
   },
   {
     label: 'Tip',
-    value: 'tip',
+    value: 'tip'
   },
   {
     label: 'Warning',
-    value: 'warning',
+    value: 'warning'
   },
   {
     label: 'Danger',
-    value: 'danger',
-  },
+    value: 'danger'
+  }
 ]
 
 export const getMappedFields = (formState: FormState | undefined): MappedField[] => {
@@ -38,38 +31,38 @@ export const getMappedFields = (formState: FormState | undefined): MappedField[]
       isFieldAffectingData: true,
       localized: false,
       isHidden: true,
-      type: 'text',
+      type: 'text'
     },
     {
       name: 'title',
       cellComponentProps: { name: 'title' },
       fieldComponentProps: {
         name: 'title',
-        labelProps: { label: 'Title' },
+        label: 'Title',
         errorProps: {
           showError: formState?.title?.valid === false,
-          message: 'Please enter title for this admonition.',
+          message: 'Please enter title for this admonition.'
         },
-        required: true,
+        required: true
       },
       fieldIsPresentational: false,
       isFieldAffectingData: true,
       localized: false,
-      type: 'text',
+      type: 'text'
     },
     {
       name: 'admonitionType',
       cellComponentProps: { name: 'admonitionType' },
       fieldComponentProps: {
         name: 'admonitionType',
-        labelProps: { label: 'Admonition Type' },
-        options: admonitionTypeOptions,
+        label: 'Admonition Type',
+        options: admonitionTypeOptions
       },
       fieldIsPresentational: false,
       isFieldAffectingData: true,
       localized: false,
-      type: 'radio',
-    },
+      type: 'radio'
+    }
   ]
 }
 
@@ -81,18 +74,18 @@ export function getInitialState(data: {
     version: {
       value: '',
       initialValue: '',
-      valid: true,
+      valid: true
     },
     title: {
       value: data?.title,
       initialValue: data?.title,
-      valid: true,
+      valid: true
     },
     admonitionType: {
       value: data?.admonitionType ?? 'note',
       initialValue: data?.admonitionType ?? 'note',
-      valid: true,
-    },
+      valid: true
+    }
   }
 }
 
@@ -112,6 +105,6 @@ export function validateFields(fields: FormState): { valid: boolean; fields: For
   // Return
   return {
     valid,
-    fields,
+    fields
   }
 }

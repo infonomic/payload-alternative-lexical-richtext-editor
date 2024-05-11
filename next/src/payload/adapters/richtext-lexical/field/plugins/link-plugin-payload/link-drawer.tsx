@@ -24,16 +24,14 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
   drawerSlug,
   onSubmit,
   onClose,
-  data: dataFromProps,
+  data: dataFromProps
 }) => {
   const { t } = useTranslation()
   const config = useConfig()
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
-    undefined,
+    undefined
   )
   const version = useRef<string>(uuid())
-
-  console.log('LinkDrawer rendered')
 
   // NOTE: enableRichTextLink is currently true by default for all collections
   // and so we need to check for both enableRichTextLink and hidden. For example
@@ -43,6 +41,7 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
     for (const c of config.collections) {
       if (
         c?.admin?.enableRichTextLink === true &&
+        // (c?.admin?.hidden == null || c?.admin?.hidden === false) &&
         c?.slug != 'payload-preferences' &&
         c?.slug != 'payload-migrations'
       ) {
@@ -85,10 +84,10 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
             doc: {
               value: doc.value,
               relationTo: doc.relationTo,
-              data: {},
+              data: {}
             },
-            linkType: data.linkType === 'custom' ? 'custom' : 'internal',
-          },
+            linkType: data.linkType === 'custom' ? 'custom' : 'internal'
+          }
         }
         onSubmit(submitData)
       }

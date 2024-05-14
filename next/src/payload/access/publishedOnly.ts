@@ -2,7 +2,7 @@ import type { Access } from 'payload/config'
 
 import type { User } from 'payload-types'
 
-export const publishedOnly: Access<any, User> = ({ req: { user } }) => {
+export const publishedOnly: Access<User> = ({ req: { user } }) => {
   // if (user?.roles?.includes('admin')) {
   //   return true
   // }

@@ -1,0 +1,10 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  payload-alternative-lexical-richtext:
+    specifier: 'link:'
+    version: 'link:'

@@ -35,6 +35,7 @@ import TablePluginModals from './plugins/table-plugin-modals'
 import ToolbarPlugin from './plugins/toolbar-plugin'
 import TreeViewPlugin from './plugins/treeview-plugin'
 import YouTubePlugin from './plugins/youtube-plugin'
+import VimeoPlugin from './plugins/vimeo-plugin'
 import { CAN_USE_DOM } from './shared/canUseDOM'
 import ContentEditable from './ui/content-editable'
 import Placeholder from './ui/placeholder'
@@ -69,11 +70,11 @@ export function Editor(): JSX.Element {
         markdownShortcutPlugin,
         floatingLinkEditorPlugin,
         floatingTextFormatToolbarPlugin,
-        autoEmbedPlugin,
+        autoEmbedPlugin
       },
       placeholderText,
-      inlineImageUploadCollection,
-    },
+      inlineImageUploadCollection
+    }
   } = useEditorConfig()
 
   const onRef = (_floatingAnchorElem: HTMLDivElement): void => {
@@ -146,6 +147,7 @@ export function Editor(): JSX.Element {
             {horizontalRulePlugin && <HorizontalRulePlugin />}
             {layoutPlugin && <LayoutPlugin />}
             {autoEmbedPlugin && <YouTubePlugin />}
+            {autoEmbedPlugin && <VimeoPlugin />}
             {markdownShortcutPlugin && <MarkdownShortcutPlugin transformers={TRANSFORMERS} />}
             {tablePlugin && <TablePlugin hasCellMerge={true} hasCellBackgroundColor={true} />}
             {floatingAnchorElem != null && !isSmallWidthViewport && (

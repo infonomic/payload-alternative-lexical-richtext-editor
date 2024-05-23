@@ -23,6 +23,7 @@ import { LayoutContainerNode } from './layout-container-node/layout-container-no
 import { LayoutItemNode } from './layout-container-node/layout-item-node'
 import { AutoLinkNode, LinkNode } from './link-nodes-payload'
 import { YouTubeNode } from './youtube-node'
+import { VimeoNode } from './vimeo-node'
 
 import type { Klass, LexicalNode } from 'lexical'
 
@@ -44,6 +45,7 @@ export const Nodes: Array<Klass<LexicalNode>> = [
   MarkNode,
   AdmonitionNode,
   YouTubeNode,
+  VimeoNode,
   LayoutContainerNode,
   LayoutItemNode
 ]

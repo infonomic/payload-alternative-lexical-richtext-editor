@@ -1,8 +1,5 @@
-import type { SerializedEditorState } from 'lexical'
+import type { SerializedEditorState, SerializedParagraphNode } from 'lexical'
 import type { Validate } from 'payload/types'
-
-import defaultValue from '../field/config/editor-default-value'
-import { deepEqual } from '../field/utils/deepEqual'
 
 export const richTextValidate: Validate<
   SerializedEditorState,
@@ -13,12 +10,19 @@ export const richTextValidate: Validate<
   const { t, required } = options
 
   if (required) {
-    if (
-      value == null ||
-      value?.root?.children == null ||
-      value?.root?.children?.length == 0 ||
-      deepEqual(value, defaultValue) == true
-    ) {
+    const hasChildren = value?.root?.children?.length
+
+    const hasOnlyEmptyParagraph =
+      (value?.root?.children?.length === 1 &&
+        value?.root?.children[0]?.type === 'paragraph' &&
+        (value?.root?.children[0] as SerializedParagraphNode)?.children?.length === 0) ||
+      ((value?.root?.children[0] as SerializedParagraphNode)?.children?.length === 1 &&
+        (value?.root?.children[0] as SerializedParagraphNode)?.children[0]?.type === 'text' &&
+        (value?.root?.children[0] as SerializedParagraphNode)?.children[0]?.[
+          'text' as keyof object
+        ] === '')
+
+    if (!hasChildren || hasOnlyEmptyParagraph) {
       return t('validation:required')
     }
   }

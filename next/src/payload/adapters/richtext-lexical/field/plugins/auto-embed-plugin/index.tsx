@@ -26,6 +26,7 @@ import { DialogActions } from '../../ui/dialog'
 // import { INSERT_FIGMA_COMMAND } from '../FigmaPlugin'
 // import { INSERT_TWEET_COMMAND } from '../TwitterPlugin'
 import { INSERT_YOUTUBE_COMMAND } from '../youtube-plugin'
+import { INSERT_VIMEO_COMMAND } from '../vimeo-plugin'
 
 import type { LexicalEditor } from 'lexical'
 
@@ -77,6 +78,37 @@ export const YoutubeEmbedConfig: PlaygroundEmbedConfig = {
   },
 
   type: 'youtube-video'
+}
+
+export const VimeoEmbedConfig: PlaygroundEmbedConfig = {
+  contentName: 'Vimeo Video',
+
+  exampleUrl: 'https://vimeo.com/584985260',
+
+  // Icon for display.
+  icon: <i className="icon vimeo" />,
+
+  insertNode: (editor: LexicalEditor, result: EmbedMatchResult) => {
+    editor.dispatchCommand(INSERT_VIMEO_COMMAND, result.id)
+  },
+
+  keywords: ['vimeo', 'video'],
+
+  // Determine if a given URL is a match and return url data.
+  parseUrl: async (url: string) => {
+    const match = /https:\/\/vimeo\.com\/(\d{5,10})/.exec(url)
+    const id = match != null ? match[1] : null
+    if (id != null) {
+      return {
+        id,
+        url
+      }
+    }
+
+    return null
+  },
+
+  type: 'vimeo-video'
 }
 
 // export const TwitterEmbedConfig: PlaygroundEmbedConfig = {
@@ -145,7 +177,7 @@ export const YoutubeEmbedConfig: PlaygroundEmbedConfig = {
 // }
 
 // export const EmbedConfigs = [TwitterEmbedConfig, YoutubeEmbedConfig, FigmaEmbedConfig]
-export const EmbedConfigs = [YoutubeEmbedConfig]
+export const EmbedConfigs = [YoutubeEmbedConfig, VimeoEmbedConfig]
 
 function AutoEmbedMenuItem({
   index,

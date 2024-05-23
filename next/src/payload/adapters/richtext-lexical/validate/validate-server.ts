@@ -1,29 +1,32 @@
-import type { SerializedEditorState } from 'lexical'
-import type { Validate } from 'payload/types'
+import type { SerializedEditorState, SerializedParagraphNode } from 'lexical'
+import type { RichTextField, Validate } from 'payload/types'
 
-import defaultValue from '../field/config/editor-default-value'
-import { deepEqual } from '../field/utils/deepEqual'
-
+// https://github.com/payloadcms/payload/pull/6435
 export const richTextValidate: Validate<
   SerializedEditorState,
-  SerializedEditorState,
   unknown,
-  any
+  unknown,
+  RichTextField
 > = async (value, options) => {
   const {
-    req: {
-      i18n: { t },
-    },
-    required,
+    req: { t },
+    required
   } = options
 
   if (required) {
-    if (
-      value == null ||
-      value?.root?.children == null ||
-      value?.root?.children?.length == 0 ||
-      deepEqual(value, defaultValue) == true
-    ) {
+    const hasChildren = value?.root?.children?.length
+
+    const hasOnlyEmptyParagraph =
+      (value?.root?.children?.length === 1 &&
+        value?.root?.children[0]?.type === 'paragraph' &&
+        (value?.root?.children[0] as SerializedParagraphNode)?.children?.length === 0) ||
+      ((value?.root?.children[0] as SerializedParagraphNode)?.children?.length === 1 &&
+        (value?.root?.children[0] as SerializedParagraphNode)?.children[0]?.type === 'text' &&
+        (value?.root?.children[0] as SerializedParagraphNode)?.children[0]?.[
+          'text' as keyof object
+        ] === '')
+
+    if (!hasChildren || hasOnlyEmptyParagraph) {
       return t('validation:required')
     }
   }

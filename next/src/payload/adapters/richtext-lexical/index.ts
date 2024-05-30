@@ -22,7 +22,6 @@ import type { EditorConfig as LexicalEditorConfig } from 'lexical/LexicalEditor'
 import type { EditorConfig } from './field/config/types'
 import type { JSONSchema4 } from 'json-schema'
 import type { LexicalRichTextAdapter } from './types'
-
 import type { LexicalEditorProps } from './types'
 
 // TODO: sanitize / validate all inputs (okay for now as we control all inputs)
@@ -50,17 +49,17 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
 
   const editorConfig: EditorConfig = {
     settings,
-    lexical,
+    lexical
   }
 
   return {
     CellComponent: withMergedProps({
       Component: RichTextCell,
-      toMergeIntoProps: { editorConfig },
+      toMergeIntoProps: { editorConfig }
     }),
     FieldComponent: withMergedProps({
       Component: RichTextField,
-      toMergeIntoProps: { editorConfig },
+      toMergeIntoProps: { editorConfig }
     }),
     editorConfig,
     generateComponentMap: () => new Map(),
@@ -82,49 +81,49 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
                   additionalProperties: true,
                   properties: {
                     type: {
-                      type: 'string',
+                      type: 'string'
                     },
                     version: {
-                      type: 'integer',
-                    },
+                      type: 'integer'
+                    }
                   },
                   required: ['type', 'version'],
-                  type: 'object',
+                  type: 'object'
                 },
-                type: 'array',
+                type: 'array'
               },
               direction: {
                 oneOf: [
                   {
-                    enum: ['ltr', 'rtl'],
+                    enum: ['ltr', 'rtl']
                   },
                   {
-                    type: 'null',
-                  },
-                ],
+                    type: 'null'
+                  }
+                ]
               },
               format: {
                 enum: ['left', 'start', 'center', 'right', 'end', 'justify', ''], // ElementFormatType, since the root node is an element
-                type: 'string',
+                type: 'string'
               },
               indent: {
-                type: 'integer',
+                type: 'integer'
               },
               type: {
-                type: 'string',
+                type: 'string'
               },
               version: {
-                type: 'integer',
-              },
+                type: 'integer'
+              }
             },
-            required: ['children', 'direction', 'format', 'indent', 'type', 'version'],
-          },
+            required: ['children', 'direction', 'format', 'indent', 'type', 'version']
+          }
         },
-        required: ['root'],
+        required: ['root']
       }
 
       return outputSchema
     },
-    validate: richTextValidate,
+    validate: richTextValidate
   }
 }

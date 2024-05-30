@@ -16,7 +16,7 @@ export const OPEN_TABLE_MODAL_COMMAND: LexicalCommand<OpenModalType> = createCom
   'OPEN_TABLE_MODAL_COMMAND'
 )
 
-export default function TablePluginModals(): JSX.Element {
+export function TablePluginModals(): JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()

@@ -13,20 +13,20 @@ import { FieldLabel } from '@payloadcms/ui/forms/FieldLabel'
 import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider'
 import { useField } from '@payloadcms/ui/forms/useField'
 import { withCondition } from '@payloadcms/ui/forms/withCondition'
-import { richTextValidate } from '../validate/validate-client'
 
+import { richTextValidate } from '../validate/validate-client'
 import { EditorContext } from './editor-context'
 
 import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
+import type { RichTextFieldProps } from 'payload/types'
+import type { AdapterProps } from '../types'
 
 import './field.scss'
-import { RichTextFieldProps } from 'payload/types'
-import { AdapterProps } from '../types'
 
 const baseClass = 'lexicalRichTextEditor'
 
 const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps, any>> = (
-  props,
+  props
 ) => {
   const {
     name,
@@ -35,7 +35,7 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
     editorConfig,
     path: pathFromProps,
     required,
-    validate = richTextValidate,
+    validate = richTextValidate
   } = props
 
   const memoizedValidate = useCallback(
@@ -47,7 +47,7 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
     // Important: do not add props to the dependencies array.
     // This would cause an infinite loop and endless re-rendering.
     // Removing props from the dependencies array fixed this issue: https://github.com/payloadcms/payload/issues/3709
-    [validate, required, props],
+    [validate, required, props]
   )
 
   const { path: pathFromContext } = useFieldProps()
@@ -55,7 +55,7 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
 
   const field = useField<SerializedEditorState>({
     path,
-    validate: memoizedValidate,
+    validate: memoizedValidate
   })
 
   const { showError, errorMessage, initialValue, value, setValue } = field
@@ -65,7 +65,7 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
     'field-type',
     className,
     showError && 'error',
-    readOnly && `${baseClass}--read-only`,
+    readOnly && `${baseClass}--read-only`
   ]
     .filter(Boolean)
     .join(' ')
@@ -75,7 +75,7 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
       className={classes}
       style={{
         ...style,
-        width,
+        width
       }}
     >
       <div className={`${baseClass}__wrap`}>

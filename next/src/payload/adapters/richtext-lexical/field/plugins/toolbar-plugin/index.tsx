@@ -18,7 +18,7 @@ import {
   $isCodeNode,
   CODE_LANGUAGE_FRIENDLY_NAME_MAP,
   CODE_LANGUAGE_MAP,
-  getLanguageFriendlyName,
+  getLanguageFriendlyName
 } from '@lexical/code'
 import {
   $isListNode,
@@ -26,7 +26,7 @@ import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
   ListNode,
-  REMOVE_LIST_COMMAND,
+  REMOVE_LIST_COMMAND
 } from '@lexical/list'
 import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
@@ -37,7 +37,7 @@ import {
   $createQuoteNode,
   $isHeadingNode,
   $isQuoteNode,
-  type HeadingTagType,
+  type HeadingTagType
 } from '@lexical/rich-text'
 import { $isParentElementRTL, $setBlocksType } from '@lexical/selection'
 import { $isTableNode } from '@lexical/table'
@@ -45,7 +45,7 @@ import {
   $findMatchingParent,
   $getNearestBlockElementAncestorOrThrow,
   $getNearestNodeOfType,
-  mergeRegister,
+  mergeRegister
 } from '@lexical/utils'
 import {
   $createParagraphNode,
@@ -65,7 +65,7 @@ import {
   OUTDENT_CONTENT_COMMAND,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
-  UNDO_COMMAND,
+  UNDO_COMMAND
 } from 'lexical'
 
 import { useEditorConfig } from '../../config'
@@ -73,7 +73,7 @@ import useModal from '../../hooks/useModal'
 import {
   $isLinkNode,
   type LinkAttributes,
-  TOGGLE_LINK_COMMAND,
+  TOGGLE_LINK_COMMAND
 } from '../../nodes/link-nodes-payload'
 import { IS_APPLE } from '../../shared/environment'
 import DropDown, { DropDownItem } from '../../ui/dropdown'
@@ -99,12 +99,12 @@ const blockTypeToBlockName = {
   h6: 'Heading 6',
   number: 'Numbered List',
   paragraph: 'Normal',
-  quote: 'Quote',
+  quote: 'Quote'
 }
 
 const rootTypeToRootName = {
   root: 'Root',
-  table: 'Table',
+  table: 'Table'
 }
 
 function getCodeLanguageOptions(): Array<[string, string]> {
@@ -128,7 +128,7 @@ function BlockFormatDropDown({
   editor,
   blockType,
   rootType,
-  disabled = false,
+  disabled = false
 }: {
   blockType: keyof typeof blockTypeToBlockName
   rootType: keyof typeof rootTypeToRootName
@@ -137,8 +137,8 @@ function BlockFormatDropDown({
 }): JSX.Element {
   const {
     config: {
-      options: { checkListPlugin, listPlugin, codeHighlightPlugin },
-    },
+      options: { checkListPlugin, listPlugin, codeHighlightPlugin }
+    }
   } = useEditorConfig()
 
   const formatParagraph = (): void => {
@@ -322,7 +322,7 @@ function Divider(): JSX.Element {
   return <div className="divider" />
 }
 
-export default function ToolbarPlugin(): JSX.Element {
+export function ToolbarPlugin(): JSX.Element {
   const [modal, showModal] = useModal()
   const [editor] = useLexicalComposerContext()
   const [activeEditor, setActiveEditor] = useState(editor)
@@ -357,9 +357,9 @@ export default function ToolbarPlugin(): JSX.Element {
         undoRedo,
         textStyle,
         inlineCode,
-        links,
-      },
-    },
+        links
+      }
+    }
   } = useEditorConfig()
   const { openModal } = usePayloadModal()
   const editDepth = useEditDepth()
@@ -437,7 +437,7 @@ export default function ToolbarPlugin(): JSX.Element {
         setActiveEditor(newEditor)
         return false
       },
-      COMMAND_PRIORITY_CRITICAL,
+      COMMAND_PRIORITY_CRITICAL
     )
   }, [editor, $updateToolbar])
 
@@ -457,7 +457,7 @@ export default function ToolbarPlugin(): JSX.Element {
           setCanUndo(payload)
           return false
         },
-        COMMAND_PRIORITY_CRITICAL,
+        COMMAND_PRIORITY_CRITICAL
       ),
       activeEditor.registerCommand<boolean>(
         CAN_REDO_COMMAND,
@@ -465,8 +465,8 @@ export default function ToolbarPlugin(): JSX.Element {
           setCanRedo(payload)
           return false
         },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
+        COMMAND_PRIORITY_CRITICAL
+      )
     )
   }, [$updateToolbar, activeEditor, editor])
 
@@ -481,12 +481,12 @@ export default function ToolbarPlugin(): JSX.Element {
           event.preventDefault()
           return activeEditor.dispatchCommand(
             TOGGLE_LINK_COMMAND,
-            sanitizeUrl('https://') as LinkAttributes,
+            sanitizeUrl('https://') as LinkAttributes
           )
         }
         return false
       },
-      COMMAND_PRIORITY_NORMAL,
+      COMMAND_PRIORITY_NORMAL
     )
   }, [activeEditor, isLink])
 
@@ -535,14 +535,14 @@ export default function ToolbarPlugin(): JSX.Element {
 
   const linkDrawerSlug = formatDrawerSlug({
     slug: `rich-text-link-lexical-${uuid}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   const insertLink = useCallback(() => {
     if (!isLink) {
       const linkAttributes: LinkAttributes = {
         linkType: 'custom',
-        url: 'https://',
+        url: 'https://'
       }
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
       openModal(linkDrawerSlug)
@@ -562,7 +562,7 @@ export default function ToolbarPlugin(): JSX.Element {
         }
       })
     },
-    [activeEditor, selectedElementKey],
+    [activeEditor, selectedElementKey]
   )
 
   return (

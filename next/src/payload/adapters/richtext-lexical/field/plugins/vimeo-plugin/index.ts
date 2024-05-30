@@ -17,7 +17,7 @@ import { $createVimeoNode, VimeoNode } from '../../nodes/vimeo-node'
 
 export const INSERT_VIMEO_COMMAND: LexicalCommand<string> = createCommand('INSERT_VIMEO_COMMAND')
 
-export default function VimeoPlugin(): JSX.Element | null {
+export function VimeoPlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext()
 
   useEffect(() => {

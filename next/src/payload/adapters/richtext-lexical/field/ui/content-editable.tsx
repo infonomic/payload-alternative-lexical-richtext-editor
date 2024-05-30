@@ -8,19 +8,19 @@
  */
 import * as React from 'react'
 
-import { ContentEditable } from '@lexical/react/LexicalContentEditable'
+import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable'
 import cx from 'classnames'
 
 import { useEditorConfig } from '../config'
 
 import './content-editable.scss'
 
-export default function LexicalContentEditable({ className }: { className?: string }): JSX.Element {
+export function ContentEditable({ className }: { className?: string }): JSX.Element {
   const { config } = useEditorConfig()
   // const classes = cx('ContentEditable__root', className, {
   //   ContentEditable__with_draggable_blocks: config.options.draggableBlocks
   // })
   const classes = cx('ContentEditable__root', className)
 
-  return <ContentEditable className={classes} />
+  return <LexicalContentEditable className={classes} />
 }

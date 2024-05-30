@@ -14,9 +14,9 @@ import './placeholder.scss'
 
 import { useEditorConfig } from '../config'
 
-export default function Placeholder({
+export function Placeholder({
   children,
-  className,
+  className
 }: {
   children: React.ReactNode
   className?: string

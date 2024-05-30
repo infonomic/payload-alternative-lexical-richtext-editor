@@ -29,14 +29,14 @@ import {
   COMMAND_PRIORITY_LOW,
   FORMAT_TEXT_COMMAND,
   type LexicalEditor,
-  SELECTION_CHANGE_COMMAND,
+  SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
 import { useEditorConfig } from '../../config'
 import {
   $isLinkNode,
   TOGGLE_LINK_COMMAND,
-  type LinkAttributes,
+  type LinkAttributes
 } from '../../nodes/link-nodes-payload'
 import { getDOMRangeRect } from '../../utils/getDOMRangeRect'
 import { getSelectedNode } from '../../utils/getSelectedNode'
@@ -53,7 +53,7 @@ function TextFormatFloatingToolbar({
   isCode,
   isStrikethrough,
   isSubscript,
-  isSuperscript,
+  isSuperscript
 }: {
   editor: LexicalEditor
   anchorElem: HTMLElement
@@ -73,14 +73,14 @@ function TextFormatFloatingToolbar({
 
   const linkDrawerSlug = formatDrawerSlug({
     slug: `rich-text-link-lexical-${uuid}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   const insertLink = useCallback(() => {
     if (!isLink) {
       const linkAttributes: LinkAttributes = {
         linkType: 'custom',
-        url: 'https://',
+        url: 'https://'
       }
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
       openModal(linkDrawerSlug)
@@ -198,8 +198,8 @@ function TextFormatFloatingToolbar({
           updateTextFormatFloatingToolbar()
           return false
         },
-        COMMAND_PRIORITY_LOW,
-      ),
+        COMMAND_PRIORITY_LOW
+      )
     )
   }, [editor, updateTextFormatFloatingToolbar])
 
@@ -303,7 +303,7 @@ function TextFormatFloatingToolbar({
 
 function useFloatingTextFormatToolbar(
   editor: LexicalEditor,
-  anchorElem: HTMLElement,
+  anchorElem: HTMLElement
 ): JSX.Element | null {
   const [isText, setIsText] = useState(false)
   const [isLink, setIsLink] = useState(false)
@@ -387,7 +387,7 @@ function useFloatingTextFormatToolbar(
         if (editor.getRootElement() === null) {
           setIsText(false)
         }
-      }),
+      })
     )
   }, [editor, updatePopup])
 
@@ -408,12 +408,12 @@ function useFloatingTextFormatToolbar(
       isUnderline={isUnderline}
       isCode={isCode}
     />,
-    anchorElem,
+    anchorElem
   )
 }
 
-export default function FloatingTextFormatToolbarPlugin({
-  anchorElem = document.body,
+export function FloatingTextFormatToolbarPlugin({
+  anchorElem = document.body
 }: {
   anchorElem?: HTMLElement
 }): JSX.Element | null {

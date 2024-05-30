@@ -11,7 +11,7 @@ import * as React from 'react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { TreeView } from '@lexical/react/LexicalTreeView'
 
-function TreeViewPlugin(): JSX.Element {
+export function TreeViewPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext()
   return (
     <TreeView
@@ -25,5 +25,3 @@ function TreeViewPlugin(): JSX.Element {
     />
   )
 }
-
-export default TreeViewPlugin

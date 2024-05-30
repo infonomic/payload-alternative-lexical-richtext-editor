@@ -9,7 +9,10 @@
 
 import * as React from 'react'
 
-import { AutoLinkPlugin, createLinkMatcherWithRegExp } from './auto-link-plugin'
+import {
+  AutoLinkPlugin as LexicalAutoLinkPlugin,
+  createLinkMatcherWithRegExp
+} from './auto-link-plugin'
 
 const URL_REGEX =
   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
@@ -23,9 +26,9 @@ const MATCHERS = [
   }),
   createLinkMatcherWithRegExp(EMAIL_REGEX, (text) => {
     return `mailto:${text}`
-  }),
+  })
 ]
 
-export default function LexicalAutoLinkPlugin(): JSX.Element {
-  return <AutoLinkPlugin matchers={MATCHERS} />
+export function AutoLinkPlugin(): JSX.Element {
+  return <LexicalAutoLinkPlugin matchers={MATCHERS} />
 }

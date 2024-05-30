@@ -26,7 +26,7 @@ import {
   KEY_DELETE_COMMAND,
   KEY_ENTER_COMMAND,
   KEY_ESCAPE_COMMAND,
-  SELECTION_CHANGE_COMMAND,
+  SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
 import { $isAdmonitionNode } from './admonition-node'
@@ -35,11 +35,11 @@ import { useEditorConfig } from '../../config'
 import { useSharedHistoryContext } from '../../context/shared-history-context'
 import { useSharedOnChange } from '../../context/shared-on-change-context'
 import { AdmonitionDrawer } from '../../plugins/admonition-plugin/admonition-drawer'
-import FloatingTextFormatToolbarPlugin from '../../plugins/floating-text-format-toolbar-plugin/index'
-import FloatingLinkEditorPlugin from '../../plugins/link-plugin-payload/floating-link-editor'
+import { FloatingTextFormatToolbarPlugin } from '../../plugins/floating-text-format-toolbar-plugin/index'
+import { FloatingLinkEditorPlugin } from '../../plugins/link-plugin-payload/floating-link-editor'
 import LinkPlugin from '../../plugins/link-plugin-lexical'
-import ContentEditable from '../../ui/content-editable'
-import Placeholder from '../../ui/placeholder'
+import { ContentEditable } from '../../ui/content-editable'
+import { Placeholder } from '../../ui/placeholder'
 
 import type { AdmonitionNode } from './admonition-node'
 import type { AdmonitionType, AdmonitionAttributes } from './types'
@@ -52,14 +52,14 @@ const icons = {
   note: NoteIcon,
   tip: TipIcon,
   warning: WarningIcon,
-  danger: DangerIcon,
+  danger: DangerIcon
 }
 
 export default function AdmonitionNodeComponent({
   admonitionType,
   title,
   content,
-  nodeKey,
+  nodeKey
 }: {
   admonitionType: AdmonitionType
   title: string
@@ -72,7 +72,7 @@ export default function AdmonitionNodeComponent({
   const { historyState } = useSharedHistoryContext()
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey)
   const [selection, setSelection] = useState<RangeSelection | NodeSelection | BaseSelection | null>(
-    null,
+    null
   )
   const { uuid } = useEditorConfig()
   const { onChange } = useSharedOnChange()
@@ -85,14 +85,14 @@ export default function AdmonitionNodeComponent({
       console.error('Error: useModal() from FacelessUI did not work correctly')
     },
     closeModal,
-    isModalOpen,
+    isModalOpen
   } = useModal()
 
   // NOTE: set the slug suffix to the document ID so that
   // each image in the editor gets its own slug and modal
   const admonitionDrawerSlug = formatDrawerSlug({
     slug: `admonition-update-${nodeKey}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   const onDelete = useCallback(
@@ -108,7 +108,7 @@ export default function AdmonitionNodeComponent({
       }
       return false
     },
-    [isSelected, nodeKey, setSelected],
+    [isSelected, nodeKey, setSelected]
   )
 
   const onEnter = useCallback(
@@ -126,7 +126,7 @@ export default function AdmonitionNodeComponent({
       }
       return false
     },
-    [content, isSelected],
+    [content, isSelected]
   )
 
   const onEscape = useCallback(
@@ -144,7 +144,7 @@ export default function AdmonitionNodeComponent({
       }
       return false
     },
-    [content, editor, setSelected],
+    [content, editor, setSelected]
   )
 
   useEffect(() => {
@@ -161,12 +161,12 @@ export default function AdmonitionNodeComponent({
           activeEditorRef.current = activeEditor
           return false
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
       editor.registerCommand(KEY_BACKSPACE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
       editor.registerCommand(KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
-      editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW),
+      editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
     )
     return () => {
       isMounted = false
@@ -188,7 +188,7 @@ export default function AdmonitionNodeComponent({
     if (title != null && admonitionType != null) {
       const admonitionPayload: AdmonitionAttributes = {
         admonitionType,
-        title,
+        title
       }
 
       editor.update(() => {
@@ -202,7 +202,7 @@ export default function AdmonitionNodeComponent({
   const classNames = cx(
     'Admonition__container',
     { focused: isFocused },
-    { draggable: $isNodeSelection(selection) },
+    { draggable: $isNodeSelection(selection) }
   )
 
   const Icon = icons[admonitionType]

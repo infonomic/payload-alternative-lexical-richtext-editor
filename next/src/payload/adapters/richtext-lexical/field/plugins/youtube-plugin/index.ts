@@ -18,7 +18,7 @@ import { $createYouTubeNode, YouTubeNode } from '../../nodes/youtube-node'
 export const INSERT_YOUTUBE_COMMAND: LexicalCommand<string> =
   createCommand('INSERT_YOUTUBE_COMMAND')
 
-export default function YouTubePlugin(): JSX.Element | null {
+export function YouTubePlugin(): JSX.Element | null {
   const [editor] = useLexicalComposerContext()
 
   useEffect(() => {

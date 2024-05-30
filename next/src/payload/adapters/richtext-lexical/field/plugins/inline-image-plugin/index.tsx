@@ -38,7 +38,7 @@ import {
   DROP_COMMAND,
   type LexicalCommand,
   type LexicalEditor,
-  COMMAND_PRIORITY_NORMAL,
+  COMMAND_PRIORITY_NORMAL
 } from 'lexical'
 
 import { InlineImageDrawer } from './inline-image-drawer'
@@ -47,7 +47,7 @@ import { useEditorConfig } from '../../config'
 import {
   $createInlineImageNode,
   $isInlineImageNode,
-  InlineImageNode,
+  InlineImageNode
 } from '../../nodes/inline-image-node'
 import { CAN_USE_DOM } from '../../shared/canUseDOM'
 
@@ -60,21 +60,21 @@ const getDOMSelection = (targetWindow: Window | null): Selection | null =>
   CAN_USE_DOM ? (targetWindow ?? window).getSelection() : null
 
 export const OPEN_INLINE_IMAGE_MODAL_COMMAND: LexicalCommand<null> = createCommand(
-  'OPEN_INLINE_IMAGE_MODAL_COMMAND',
+  'OPEN_INLINE_IMAGE_MODAL_COMMAND'
 )
 
 export const INSERT_INLINE_IMAGE_COMMAND: LexicalCommand<InlineImageAttributes> = createCommand(
-  'INSERT_INLINE_IMAGE_COMMAND',
+  'INSERT_INLINE_IMAGE_COMMAND'
 )
 
-export default function InlineImagePlugin({ collection }: { collection: string }): JSX.Element {
+export function InlineImagePlugin({ collection }: { collection: string }): JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()
   const config = useConfig()
   const {
     serverURL,
-    routes: { api },
+    routes: { api }
   } = config
 
   const {
@@ -82,12 +82,12 @@ export default function InlineImagePlugin({ collection }: { collection: string }
       console.error('Error: useModal() from FacelessUI did not work correctly')
     },
     closeModal,
-    isModalOpen,
+    isModalOpen
   } = useModal()
 
   const inlineImageDrawerSlug = formatDrawerSlug({
     slug: `rich-text-inline-image-insert-lexical-${uuid}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function InlineImagePlugin({ collection }: { collection: string }
           }
           return false
         },
-        COMMAND_PRIORITY_NORMAL,
+        COMMAND_PRIORITY_NORMAL
       ),
 
       editor.registerCommand<InsertInlineImagePayload>(
@@ -119,7 +119,7 @@ export default function InlineImagePlugin({ collection }: { collection: string }
           }
           return true
         },
-        COMMAND_PRIORITY_EDITOR,
+        COMMAND_PRIORITY_EDITOR
       ),
 
       editor.registerCommand<DragEvent>(
@@ -127,7 +127,7 @@ export default function InlineImagePlugin({ collection }: { collection: string }
         (event) => {
           return onDragStart(event)
         },
-        COMMAND_PRIORITY_HIGH,
+        COMMAND_PRIORITY_HIGH
       ),
 
       editor.registerCommand<DragEvent>(
@@ -135,7 +135,7 @@ export default function InlineImagePlugin({ collection }: { collection: string }
         (event) => {
           return onDragover(event)
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
 
       editor.registerCommand<DragEvent>(
@@ -143,8 +143,8 @@ export default function InlineImagePlugin({ collection }: { collection: string }
         (event) => {
           return onDrop(event, editor)
         },
-        COMMAND_PRIORITY_HIGH,
-      ),
+        COMMAND_PRIORITY_HIGH
+      )
     )
   }, [editor, inlineImageDrawerSlug, toggleModal])
 
@@ -165,7 +165,7 @@ export default function InlineImagePlugin({ collection }: { collection: string }
               src: imageSource.url,
               altText: data?.altText,
               position: data?.position,
-              showCaption: data?.showCaption,
+              showCaption: data?.showCaption
             }
 
             // We don't set width or height for SVG images
@@ -198,7 +198,7 @@ export default function InlineImagePlugin({ collection }: { collection: string }
         id: undefined,
         altText: undefined,
         position: undefined,
-        showCaption: undefined,
+        showCaption: undefined
       }}
       onSubmit={(data: InlineImageData) => {
         void handleModalSubmit(data)
@@ -239,10 +239,10 @@ function onDragStart(event: DragEvent): boolean {
         key: node.getKey(),
         showCaption: node.__showCaption,
         src: node.__src,
-        width: node.__width,
+        width: node.__width
       },
-      type: 'image',
-    }),
+      type: 'image'
+    })
   )
 
   return true
@@ -329,8 +329,8 @@ function getDragSelection(event: DragEvent): Range | null | undefined {
     target == null
       ? null
       : target.nodeType === 9
-      ? (target as Document).defaultView
-      : (target as Element).ownerDocument.defaultView
+        ? (target as Document).defaultView
+        : (target as Element).ownerDocument.defaultView
   const domSelection = getDOMSelection(targetWindow)
   if (document.caretRangeFromPoint != null) {
     range = document.caretRangeFromPoint(event.clientX, event.clientY)

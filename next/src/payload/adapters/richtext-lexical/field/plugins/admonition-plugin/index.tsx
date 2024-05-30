@@ -14,7 +14,7 @@ import {
   COMMAND_PRIORITY_EDITOR,
   createCommand,
   type LexicalCommand,
-  COMMAND_PRIORITY_NORMAL,
+  COMMAND_PRIORITY_NORMAL
 } from 'lexical'
 
 import { AdmonitionDrawer } from './admonition-drawer'
@@ -27,14 +27,14 @@ import type { AdmonitionAttributes } from '../../nodes/admonition-node/types'
 export type InsertAdmonitionPayload = Readonly<AdmonitionAttributes>
 
 export const OPEN_ADMONITION_MODAL_COMMAND: LexicalCommand<null> = createCommand(
-  'OPEN_ADMONITION_MODAL_COMMAND',
+  'OPEN_ADMONITION_MODAL_COMMAND'
 )
 
 export const INSERT_ADMONITION_COMMAND: LexicalCommand<AdmonitionAttributes> = createCommand(
-  'INSERT_ADMONITION_COMMAND',
+  'INSERT_ADMONITION_COMMAND'
 )
 
-export default function AdmonitionPlugin(): JSX.Element {
+export function AdmonitionPlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()
@@ -44,12 +44,12 @@ export default function AdmonitionPlugin(): JSX.Element {
       console.error('Error: useModal() from Payload did not work correctly')
     },
     closeModal,
-    isModalOpen,
+    isModalOpen
   } = useModal()
 
   const admonitionDrawerSlug = formatDrawerSlug({
     slug: `lexicalRichText-admonition-insert-${uuid}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function AdmonitionPlugin(): JSX.Element {
           }
           return false
         },
-        COMMAND_PRIORITY_NORMAL,
+        COMMAND_PRIORITY_NORMAL
       ),
 
       editor.registerCommand<InsertAdmonitionPayload>(
@@ -89,8 +89,8 @@ export default function AdmonitionPlugin(): JSX.Element {
           }
           return true
         },
-        COMMAND_PRIORITY_EDITOR,
-      ),
+        COMMAND_PRIORITY_EDITOR
+      )
     )
   }, [editor, admonitionDrawerSlug, toggleModal])
 
@@ -98,7 +98,7 @@ export default function AdmonitionPlugin(): JSX.Element {
     if (title != null && admonitionType != null) {
       const admonitionPayload: AdmonitionAttributes = {
         admonitionType,
-        title,
+        title
       }
 
       editor.dispatchCommand(INSERT_ADMONITION_COMMAND, admonitionPayload)

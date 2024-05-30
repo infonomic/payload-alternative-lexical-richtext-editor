@@ -102,6 +102,8 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
         onSubmit(submitData)
       }
       setSynchronizedFormState(undefined)
+      setImageValue(undefined)
+      setRemoveImage(true)
       onClose()
     }
   }

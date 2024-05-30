@@ -30,7 +30,7 @@ import {
   KEY_DELETE_COMMAND,
   KEY_ENTER_COMMAND,
   KEY_ESCAPE_COMMAND,
-  SELECTION_CHANGE_COMMAND,
+  SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
 import { $isInlineImageNode } from './inline-image-node'
@@ -75,7 +75,7 @@ function LazyImage({
   className,
   imageRef,
   width,
-  height,
+  height
 }: {
   id: string
   collection: string
@@ -101,7 +101,7 @@ function LazyImage({
       data-collection={collection}
       data-position={position}
       style={{
-        display: 'block',
+        display: 'block'
       }}
       draggable="false"
     />
@@ -118,7 +118,7 @@ export default function InlineImageComponent({
   height,
   showCaption,
   caption,
-  nodeKey,
+  nodeKey
 }: {
   id: string
   collection: string
@@ -132,7 +132,6 @@ export default function InlineImageComponent({
   nodeKey: NodeKey
 }): JSX.Element {
   const [editor] = useLexicalComposerContext()
-  // const [initialState, setInitialState] = useState<InlineImageData | undefined>(undefined)
   const { onChange } = useSharedOnChange()
   const { historyState } = useSharedHistoryContext()
   const editDepth = useEditDepth()
@@ -140,12 +139,12 @@ export default function InlineImageComponent({
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey)
   const [selection, setSelection] = useState<RangeSelection | NodeSelection | BaseSelection | null>(
-    null,
+    null
   )
   const config = useConfig()
   const {
     serverURL,
-    routes: { api },
+    routes: { api }
   } = config
 
   const editorState = editor.getEditorState()
@@ -157,14 +156,14 @@ export default function InlineImageComponent({
       console.error('Error: useModal() from Payload did not work correctly')
     },
     closeModal,
-    isModalOpen,
+    isModalOpen
   } = useModal()
 
   // NOTE: set the slug suffix to the document ID so that
   // each image in the editor gets its own slug and modal
   const inlineImageDrawerSlug = formatDrawerSlug({
     slug: `rich-text-inline-image-update-lexical-${id}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   const onDelete = useCallback(
@@ -180,7 +179,7 @@ export default function InlineImageComponent({
       }
       return false
     },
-    [isSelected, nodeKey, setSelected],
+    [isSelected, nodeKey, setSelected]
   )
 
   const onEnter = useCallback(
@@ -206,7 +205,7 @@ export default function InlineImageComponent({
       }
       return false
     },
-    [caption, isSelected, showCaption],
+    [caption, isSelected, showCaption]
   )
 
   const onEscape = useCallback(
@@ -224,7 +223,7 @@ export default function InlineImageComponent({
       }
       return false
     },
-    [caption, editor, setSelected],
+    [caption, editor, setSelected]
   )
 
   useEffect(() => {
@@ -241,7 +240,7 @@ export default function InlineImageComponent({
           activeEditorRef.current = activeEditor
           return false
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand<MouseEvent>(
         CLICK_COMMAND,
@@ -259,7 +258,7 @@ export default function InlineImageComponent({
 
           return false
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         DRAGSTART_COMMAND,
@@ -272,12 +271,12 @@ export default function InlineImageComponent({
           }
           return false
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(KEY_DELETE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
       editor.registerCommand(KEY_BACKSPACE_COMMAND, onDelete, COMMAND_PRIORITY_LOW),
       editor.registerCommand(KEY_ENTER_COMMAND, onEnter, COMMAND_PRIORITY_LOW),
-      editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW),
+      editor.registerCommand(KEY_ESCAPE_COMMAND, onEscape, COMMAND_PRIORITY_LOW)
     )
     return () => {
       isMounted = false
@@ -311,7 +310,7 @@ export default function InlineImageComponent({
               src: imageSource.url,
               altText: data?.altText,
               position: data?.position,
-              showCaption: data?.showCaption,
+              showCaption: data?.showCaption
             }
 
             // We don't set width or height for SVG images
@@ -341,7 +340,7 @@ export default function InlineImageComponent({
   const classNames = cx(
     'InlineImageNode__container',
     { focused: isFocused },
-    { draggable: $isNodeSelection(selection) },
+    { draggable: $isNodeSelection(selection) }
   )
 
   // TODO: consider implementing a single-line custom editor with span and inline

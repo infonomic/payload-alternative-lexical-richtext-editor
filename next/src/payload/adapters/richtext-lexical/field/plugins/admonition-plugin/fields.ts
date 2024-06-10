@@ -25,7 +25,7 @@ export const getMappedFields = (formState: FormState | undefined): MappedField[]
   return [
     {
       name: 'version',
-      cellComponentProps: { name: 'version' },
+      cellComponentProps: { name: 'version', schemaPath: 'version' },
       fieldComponentProps: { name: 'version' },
       fieldIsPresentational: false,
       isFieldAffectingData: true,
@@ -35,7 +35,7 @@ export const getMappedFields = (formState: FormState | undefined): MappedField[]
     },
     {
       name: 'title',
-      cellComponentProps: { name: 'title' },
+      cellComponentProps: { name: 'title', schemaPath: 'title' },
       fieldComponentProps: {
         name: 'title',
         label: 'Title',
@@ -52,7 +52,7 @@ export const getMappedFields = (formState: FormState | undefined): MappedField[]
     },
     {
       name: 'admonitionType',
-      cellComponentProps: { name: 'admonitionType' },
+      cellComponentProps: { name: 'admonitionType', schemaPath: 'admonitionType' },
       fieldComponentProps: {
         name: 'admonitionType',
         label: 'Admonition Type',

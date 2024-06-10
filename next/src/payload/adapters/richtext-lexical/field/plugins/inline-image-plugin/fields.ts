@@ -44,7 +44,7 @@ export const getMappedFields = (
   // },
   {
     name: 'version',
-    cellComponentProps: { name: 'version' },
+    cellComponentProps: { name: 'version', schemaPath: 'version' },
     fieldComponentProps: { name: 'version' },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
@@ -54,7 +54,7 @@ export const getMappedFields = (
   },
   {
     name: 'altText',
-    cellComponentProps: { name: 'altText' },
+    cellComponentProps: { name: 'altText', schemaPath: 'altText' },
     fieldComponentProps: {
       name: 'altText',
       label: 'Alt Text',
@@ -71,7 +71,7 @@ export const getMappedFields = (
   },
   {
     name: 'position',
-    cellComponentProps: { name: 'position' },
+    cellComponentProps: { name: 'position', schemaPath: 'position' },
     fieldComponentProps: {
       name: 'position',
       label: 'Position',
@@ -84,7 +84,7 @@ export const getMappedFields = (
   },
   {
     name: 'showCaption',
-    cellComponentProps: { name: 'showCaption' },
+    cellComponentProps: { name: 'showCaption', schemaPath: 'showCaption' },
     fieldComponentProps: { name: 'showCaption', label: 'Show Caption' },
     fieldIsPresentational: false,
     isFieldAffectingData: true,

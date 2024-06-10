@@ -19,7 +19,7 @@ export const getMappedFields = (
 ): MappedField[] => [
   {
     name: 'version',
-    cellComponentProps: { name: 'version' },
+    cellComponentProps: { name: 'version', schemaPath: 'version' },
     fieldComponentProps: { name: 'version' },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
@@ -29,7 +29,7 @@ export const getMappedFields = (
   },
   {
     name: 'text',
-    cellComponentProps: { name: 'text' },
+    cellComponentProps: { name: 'text', schemaPath: 'text' },
     fieldComponentProps: {
       name: 'text',
       label: 'Text',
@@ -46,7 +46,7 @@ export const getMappedFields = (
   },
   {
     name: 'linkType',
-    cellComponentProps: { name: 'linkType' },
+    cellComponentProps: { name: 'linkType', schemaPath: 'linkType' },
     fieldComponentProps: { name: 'linkType', options: linkOptions },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
@@ -55,7 +55,7 @@ export const getMappedFields = (
   },
   {
     name: 'url',
-    cellComponentProps: { name: 'url' },
+    cellComponentProps: { name: 'url', schemaPath: 'url' },
     fieldComponentProps: {
       name: 'url',
       errorProps: {
@@ -70,7 +70,7 @@ export const getMappedFields = (
   },
   {
     name: 'doc',
-    cellComponentProps: { name: 'doc' },
+    cellComponentProps: { name: 'doc', schemaPath: 'doc' },
     fieldComponentProps: { name: 'doc', relationTo: validRelationships },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
@@ -79,7 +79,7 @@ export const getMappedFields = (
   },
   {
     name: 'newTab',
-    cellComponentProps: { name: 'newTab' },
+    cellComponentProps: { name: 'newTab', schemaPath: 'newTab' },
     fieldComponentProps: { name: 'newTab', label: 'Open in new tab' },
     fieldIsPresentational: false,
     isFieldAffectingData: true,

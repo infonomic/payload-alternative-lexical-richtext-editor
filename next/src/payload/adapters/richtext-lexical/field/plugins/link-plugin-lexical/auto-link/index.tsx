@@ -22,7 +22,7 @@ const MATCHERS = [
   }),
   createLinkMatcherWithRegExp(EMAIL_REGEX, (text) => {
     return `mailto:${text}`
-  }),
+  })
 ]
 
 export default function LexicalAutoLinkPlugin(): JSX.Element {

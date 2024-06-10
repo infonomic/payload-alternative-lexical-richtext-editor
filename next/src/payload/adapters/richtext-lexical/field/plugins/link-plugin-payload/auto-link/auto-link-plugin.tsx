@@ -18,7 +18,7 @@ import {
   type LinkAttributes,
   $createAutoLinkNode,
   $isAutoLinkNode,
-  AutoLinkNode,
+  AutoLinkNode
 } from '../../../nodes/link-nodes-payload'
 import invariant from '../../../shared/invariant'
 
@@ -38,7 +38,7 @@ export type LinkMatcher = (text: string) => LinkMatcherResult | null
 
 export function createLinkMatcherWithRegExp(
   regExp: RegExp,
-  urlTransformer: (text: string) => string = (text) => text,
+  urlTransformer: (text: string) => string = (text) => text
 ) {
   return (text: string) => {
     const match = regExp.exec(text)
@@ -47,7 +47,7 @@ export function createLinkMatcherWithRegExp(
       index: match.index,
       length: match[0].length,
       text: match[0],
-      url: urlTransformer(text),
+      url: urlTransformer(text)
     }
   }
 }
@@ -106,7 +106,7 @@ function isContentAroundIsValid(
   matchStart: number,
   matchEnd: number,
   text: string,
-  node: TextNode,
+  node: TextNode
 ): boolean {
   const contentBeforeIsValid =
     matchStart > 0 ? isSeparator(text[matchStart - 1]) : isPreviousNodeValid(node)
@@ -122,7 +122,7 @@ function isContentAroundIsValid(
 function handleLinkCreation(
   node: TextNode,
   matchers: LinkMatcher[],
-  onChange: ChangeHandler,
+  onChange: ChangeHandler
 ): void {
   const nodeText = node.getTextContent()
   let text = nodeText
@@ -138,25 +138,25 @@ function handleLinkCreation(
       invalidMatchEnd + matchStart,
       invalidMatchEnd + matchEnd,
       nodeText,
-      node,
+      node
     )
 
     if (isValid) {
       let linkTextNode
       if (invalidMatchEnd + matchStart === 0) {
         ;[linkTextNode, remainingTextNode] = remainingTextNode.splitText(
-          invalidMatchEnd + matchLength,
+          invalidMatchEnd + matchLength
         )
       } else {
         ;[, linkTextNode, remainingTextNode] = remainingTextNode.splitText(
           invalidMatchEnd + matchStart,
-          invalidMatchEnd + matchStart + matchLength,
+          invalidMatchEnd + matchStart + matchLength
         )
       }
       const attributes: LinkAttributes = {
         url: match.url,
         linkType: 'custom',
-        ...match.attributes,
+        ...match.attributes
       }
 
       const linkNode = $createAutoLinkNode({ attributes })
@@ -178,7 +178,7 @@ function handleLinkCreation(
 function handleLinkEdit(
   linkNode: AutoLinkNode,
   matchers: LinkMatcher[],
-  onChange: ChangeHandler,
+  onChange: ChangeHandler
 ): void {
   // Check children are simple text
   const children = linkNode.getChildren()
@@ -232,7 +232,7 @@ function handleLinkEdit(
 function handleBadNeighbors(
   textNode: TextNode,
   matchers: LinkMatcher[],
-  onChange: ChangeHandler,
+  onChange: ChangeHandler
 ): void {
   const previousSibling = textNode.getPreviousSibling()
   const nextSibling = textNode.getNextSibling()
@@ -266,7 +266,7 @@ function replaceWithChildren(node: ElementNode): LexicalNode[] {
 function useAutoLink(
   editor: LexicalEditor,
   matchers: LinkMatcher[],
-  onChange?: ChangeHandler,
+  onChange?: ChangeHandler
 ): void {
   useEffect(() => {
     if (!editor.hasNodes([AutoLinkNode])) {
@@ -295,14 +295,14 @@ function useAutoLink(
 
           handleBadNeighbors(textNode, matchers, onChangeWrapped)
         }
-      }),
+      })
     )
   }, [editor, matchers, onChange])
 }
 
 export function AutoLinkPlugin({
   matchers,
-  onChange,
+  onChange
 }: {
   matchers: LinkMatcher[]
   onChange?: ChangeHandler

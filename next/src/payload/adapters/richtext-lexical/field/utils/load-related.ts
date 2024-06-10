@@ -1,4 +1,4 @@
-import type { Config as GeneratedTypes } from 'payload/config'
+import type { GeneratedTypes } from 'payload'
 
 import type { Payload } from 'payload'
 
@@ -7,14 +7,14 @@ export async function loadRelated<T extends keyof GeneratedTypes['collections']>
   value: string,
   relationTo: T,
   depth: number,
-  locale: any,
-): Promise<Partial<GeneratedTypes['collections'][T]> | null> {
+  locale: any
+): Promise<GeneratedTypes['collections'][T] | null> {
   try {
     const relatedDoc = await payload.findByID({
       collection: relationTo,
       id: value,
       depth,
-      locale,
+      locale
     })
     return relatedDoc
   } catch (error) {

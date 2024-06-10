@@ -27,10 +27,11 @@
  * plugin. We should move these to configuration.
  */
 
-import type { Config as GeneratedTypes } from 'payload/config'
+import type { GeneratedTypes } from 'payload'
 import type { FieldHook } from 'payload/types'
 
 import { loadRelated } from './utils/load-related'
+import { collectionAliases } from 'payload-collection-aliases'
 
 import type { SerializedAdmonitionNode } from './nodes/admonition-node'
 import type { SerializedInlineImageNode } from './nodes/inline-image-node'
@@ -41,12 +42,11 @@ import type { Payload } from 'payload'
 type LexicalRichTextFieldBeforeChangeFieldHook = FieldHook<any, SerializedEditorState | null, any>
 
 export const updateLexicalRelationships: LexicalRichTextFieldBeforeChangeFieldHook = async ({
-  data,
-  operation,
+  collection,
   value,
-  req,
-}): Promise<null | SerializedEditorState> => {
-  const { payload } = req
+  req
+}): Promise<SerializedEditorState | null> => {
+  const { payload, locale } = req
 
   if (value == null) {
     return null
@@ -54,7 +54,7 @@ export const updateLexicalRelationships: LexicalRichTextFieldBeforeChangeFieldHo
 
   if (value?.root?.children != null) {
     for (const childNode of value.root.children) {
-      await traverseLexicalField(payload, childNode, '')
+      await traverseLexicalField(payload, childNode, locale ?? '')
     }
   }
   return value
@@ -63,7 +63,7 @@ export const updateLexicalRelationships: LexicalRichTextFieldBeforeChangeFieldHo
 export async function traverseLexicalField(
   payload: Payload,
   node: SerializedLexicalNode & { children?: SerializedLexicalNode[] },
-  locale: string,
+  locale: string
 ): Promise<SerializedLexicalNode> {
   // We include inline-images here because they might contain captions
   // that have links in them - and as with admonition below
@@ -101,7 +101,7 @@ export async function traverseLexicalField(
         attributes.doc.value,
         attributes.doc.relationTo as keyof GeneratedTypes['collections'],
         1,
-        locale,
+        locale
       )
       if (relation != null) {
         // I think these are the only properties we need to build a
@@ -109,8 +109,34 @@ export async function traverseLexicalField(
         // already part of attributes?.doc?.relationTo
         // and so this should be everything that's needed whether building
         // a complete URL, or a framework router link.
-        const { id, title, slug } = relation
-        attributes.doc.data = { id, title, slug }
+
+        // NOTE: This is unique to our requirements, as we sometimes have
+        // titles that contain rich text - for scientific names and italics
+        // etc. So we'll check here to see if there was an unformatted
+        // title - which in most cases there will not be - but still....
+
+        // TODO: collection-based strategy for any special extra data required
+        const { id, title, slug, titleUnformatted } = relation as any
+
+        // NOTE: We sometimes create collections that have a 'real name' and slug,
+        // like 'publications', but want to expose the links we create to collection
+        // items via a front-end route (or alias) - for example 'library', instead
+        // of the collection slug 'publications'. And so we check here if there is a
+        // custom collection alias and if so, add it to our data object.
+        const collectionAlias = collectionAliases.find(
+          (item) => item.slug === attributes?.doc?.relationTo
+        )
+        console.log(collectionAlias)
+        if (collectionAliases != null) {
+          attributes.doc.data = {
+            id,
+            title: titleUnformatted ?? title,
+            slug,
+            collectionAlias: collectionAlias?.alias
+          }
+        } else {
+          attributes.doc.data = { id, title: titleUnformatted ?? title, slug }
+        }
       }
     }
   }

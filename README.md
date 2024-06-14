@@ -53,7 +53,7 @@ Here are the main drivers for us wanting to maintain our own editor:
       "slug": "this-is-a-test-minimal-page"
       }
     },
-  "text": "internal"
+  "text": "Click Me!"
 }
 ```
 We've added a `data` attribute and populated the title and slug for the related document. We do this via a [`beforeChange`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-hook.ts) field hook - which means this additional relationship data is stored in the document and in the database. For most cases, this is all the front end application needs to build a link to another document (router link or other). We don't need the entire related document for each internal link.

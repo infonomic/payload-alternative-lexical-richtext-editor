@@ -1,5 +1,5 @@
 import type { SerializedEditorState, SerializedParagraphNode } from 'lexical'
-import type { RichTextField, Validate } from 'payload/types'
+import type { RichTextField, Validate } from 'payload'
 
 // https://github.com/payloadcms/payload/pull/6435
 export const richTextValidate: Validate<

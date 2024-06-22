@@ -1,9 +1,9 @@
 'use client'
 import * as React from 'react'
 
-import { formatDrawerSlug } from '@payloadcms/ui/elements'
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useEditDepth } from '@payloadcms/ui'
+import { useModal } from '@payloadcms/ui'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { COMMAND_PRIORITY_NORMAL, createCommand, type LexicalCommand } from 'lexical'
 
@@ -16,7 +16,7 @@ export const OPEN_TABLE_MODAL_COMMAND: LexicalCommand<OpenModalType> = createCom
   'OPEN_TABLE_MODAL_COMMAND'
 )
 
-export function TablePluginModals(): JSX.Element {
+export function TablePluginModals(): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()

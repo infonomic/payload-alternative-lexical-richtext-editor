@@ -20,7 +20,7 @@ export function Placeholder({
 }: {
   children: React.ReactNode
   className?: string
-}): JSX.Element {
+}): React.JSX.Element {
   const { config } = useEditorConfig()
   // const classes = cx('Placeholder__root', className, {
   //   Placeholder__with_draggable_blocks: config.options.draggableBlocks,

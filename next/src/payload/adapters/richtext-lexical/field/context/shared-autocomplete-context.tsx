@@ -18,10 +18,14 @@ type HookShape = [suggestion: Suggestion, setSuggestion: PublishFn]
 
 const Context: React.Context<ContextShape> = createContext([
   (_cb) => () => {},
-  (_newSuggestion: Suggestion) => {},
+  (_newSuggestion: Suggestion) => {}
 ])
 
-export const SharedAutocompleteContext = ({ children }: { children: ReactNode }): JSX.Element => {
+export const SharedAutocompleteContext = ({
+  children
+}: {
+  children: ReactNode
+}): React.JSX.Element => {
   const context: ContextShape = useMemo(() => {
     let suggestion: Suggestion | null = null
     const listeners = new Set<CallbackFn>()
@@ -38,7 +42,7 @@ export const SharedAutocompleteContext = ({ children }: { children: ReactNode })
         for (const listener of listeners) {
           listener(newSuggestion)
         }
-      },
+      }
     ]
   }, [])
   return <Context.Provider value={context}>{children}</Context.Provider>

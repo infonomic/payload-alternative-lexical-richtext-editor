@@ -2,9 +2,9 @@
 import * as React from 'react'
 import { useEffect } from 'react'
 
-import { formatDrawerSlug } from '@payloadcms/ui/elements'
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useEditDepth } from '@payloadcms/ui'
+import { useModal } from '@payloadcms/ui'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { mergeRegister, $insertNodeToNearestRoot } from '@lexical/utils'
@@ -34,7 +34,7 @@ export const INSERT_ADMONITION_COMMAND: LexicalCommand<AdmonitionAttributes> = c
   'INSERT_ADMONITION_COMMAND'
 )
 
-export function AdmonitionPlugin(): JSX.Element {
+export function AdmonitionPlugin(): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()

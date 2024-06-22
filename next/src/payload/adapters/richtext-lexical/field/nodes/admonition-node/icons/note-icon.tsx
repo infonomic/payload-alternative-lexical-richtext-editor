@@ -8,7 +8,7 @@ interface Props {
   className?: string
 }
 
-export function NoteIcon({ className, ...rest }: Props): JSX.Element {
+export function NoteIcon({ className, ...rest }: Props): React.JSX.Element {
   return (
     <div className={cx('note-icon', className)} {...rest}>
       <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">

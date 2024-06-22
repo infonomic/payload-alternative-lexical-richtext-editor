@@ -12,7 +12,7 @@ import type {
   EditorConfig,
   LexicalEditor,
   LexicalNode,
-  NodeKey,
+  NodeKey
 } from 'lexical'
 
 const InlineImageComponent = React.lazy(async () => await import('./inline-image-node-component'))
@@ -28,7 +28,7 @@ function convertInlineImageElement(domNode: Node): null | DOMConversionOutput {
   return null
 }
 
-export class InlineImageNode extends DecoratorNode<JSX.Element> {
+export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
   __doc: Doc
   __src: string
   __position: Position
@@ -52,7 +52,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
       node.__height,
       node.__showCaption,
       node.__caption,
-      node.__key,
+      node.__key
     )
   }
 
@@ -66,7 +66,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
       altText,
       width,
       height,
-      showCaption,
+      showCaption
     })
     const nestedEditor = node.__caption
     const editorState = nestedEditor.parseEditorState(caption.editorState)
@@ -80,8 +80,8 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     return {
       img: (node: Node) => ({
         conversion: convertInlineImageElement,
-        priority: 0,
-      }),
+        priority: 0
+      })
     }
   }
 
@@ -94,7 +94,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     height?: number | string,
     showCaption?: boolean,
     caption?: LexicalEditor,
-    key?: NodeKey,
+    key?: NodeKey
   ) {
     super(key)
     this.__doc = doc
@@ -135,7 +135,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
       showCaption: this.__showCaption,
       caption: this.__caption.toJSON(),
       type: 'inline-image',
-      version: 1,
+      version: 1
     }
   }
 
@@ -229,7 +229,7 @@ export class InlineImageNode extends DecoratorNode<JSX.Element> {
     return false
   }
 
-  decorate(): JSX.Element {
+  decorate(): React.JSX.Element {
     return (
       <Suspense fallback={null}>
         <InlineImageComponent
@@ -259,11 +259,11 @@ export function $createInlineImageNode({
   width,
   showCaption,
   caption,
-  key,
+  key
 }: InlineImageAttributes): InlineImageNode {
   const doc: Doc = { value: id, relationTo: collection }
   return $applyNodeReplacement(
-    new InlineImageNode(doc, src, position, altText, width, height, showCaption, caption, key),
+    new InlineImageNode(doc, src, position, altText, width, height, showCaption, caption, key)
   )
 }
 

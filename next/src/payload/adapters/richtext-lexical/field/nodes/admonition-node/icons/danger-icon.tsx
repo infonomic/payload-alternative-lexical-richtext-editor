@@ -8,7 +8,7 @@ interface Props {
   className?: string
 }
 
-export function DangerIcon({ className, ...rest }: Props): JSX.Element {
+export function DangerIcon({ className, ...rest }: Props): React.JSX.Element {
   return (
     <div className={cx('danger-icon', className)} {...rest}>
       <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">

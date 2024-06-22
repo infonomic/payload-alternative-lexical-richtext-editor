@@ -11,7 +11,7 @@ import type {
   EditorConfig,
   LexicalNode,
   NodeKey,
-  LexicalEditor,
+  LexicalEditor
 } from 'lexical'
 
 const AdmonitionNodeComponent = React.lazy(async () => await import('./admonition-node-component'))
@@ -26,7 +26,7 @@ function convertAdmonitionElement(domNode: Node): null | DOMConversionOutput {
   return null
 }
 
-export class AdmonitionNode extends DecoratorNode<JSX.Element> {
+export class AdmonitionNode extends DecoratorNode<React.JSX.Element> {
   __admonitionType: AdmonitionType
   __title: string
   __content: LexicalEditor
@@ -43,7 +43,7 @@ export class AdmonitionNode extends DecoratorNode<JSX.Element> {
     const { admonitionType, title, content } = serializedNode
     const node = $createAdmonitionNode({
       admonitionType,
-      title,
+      title
     })
     const nestedEditor = node.__content
     const editorState = nestedEditor.parseEditorState(content.editorState)
@@ -57,8 +57,8 @@ export class AdmonitionNode extends DecoratorNode<JSX.Element> {
     return {
       div: (node: Node) => ({
         conversion: convertAdmonitionElement,
-        priority: 0,
-      }),
+        priority: 0
+      })
     }
   }
 
@@ -66,7 +66,7 @@ export class AdmonitionNode extends DecoratorNode<JSX.Element> {
     admonitionType: AdmonitionType,
     title: string,
     content?: LexicalEditor,
-    key?: NodeKey,
+    key?: NodeKey
   ) {
     super(key)
     this.__admonitionType = admonitionType
@@ -87,7 +87,7 @@ export class AdmonitionNode extends DecoratorNode<JSX.Element> {
       title: this.__title,
       content: this.__content.toJSON(),
       type: 'admonition',
-      version: 1,
+      version: 1
     }
   }
 
@@ -154,7 +154,7 @@ export class AdmonitionNode extends DecoratorNode<JSX.Element> {
     return false
   }
 
-  decorate(): JSX.Element {
+  decorate(): React.JSX.Element {
     return (
       <AdmonitionNodeComponent
         admonitionType={this.__admonitionType}
@@ -170,7 +170,7 @@ export function $createAdmonitionNode({
   admonitionType,
   title,
   content,
-  key,
+  key
 }: AdmonitionAttributes): AdmonitionNode {
   return $applyNodeReplacement(new AdmonitionNode(admonitionType, title, content, key))
 }

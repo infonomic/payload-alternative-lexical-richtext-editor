@@ -18,7 +18,7 @@ import React, { useEffect } from 'react'
 
 import { createHeadlessEditor } from '@lexical/headless'
 import { $getRoot } from 'lexical'
-import { useTableCell } from '@payloadcms/ui/elements/Table'
+import { useTableCell } from '@payloadcms/ui'
 
 // @ts-expect-error: ignore
 import type { EditorConfig as LexicalEditorConfig } from 'lexical/LexicalEditor'
@@ -61,7 +61,7 @@ export const RichTextCell: React.FC<{
     const headlessEditor = createHeadlessEditor({
       namespace: editorConfig.lexical.namespace,
       nodes: Nodes,
-      theme: editorConfig.lexical.theme,
+      theme: editorConfig.lexical.theme
     })
 
     headlessEditor.setEditorState(headlessEditor.parseEditorState(dataToUse))

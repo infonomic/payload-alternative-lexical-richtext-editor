@@ -19,7 +19,7 @@ export default function Button({
   onClick,
   disabled,
   small,
-  title,
+  title
 }: {
   'data-test-id'?: string
   children: React.ReactNode
@@ -28,7 +28,7 @@ export default function Button({
   onClick: () => void
   small?: boolean
   title?: string
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <button
       type="button"
@@ -37,7 +37,7 @@ export default function Button({
         'Button__root',
         disabled != null && 'Button__disabled',
         small != null && 'Button__small',
-        className,
+        className
       )}
       onClick={onClick}
       title={title}

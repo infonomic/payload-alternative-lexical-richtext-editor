@@ -1,4 +1,4 @@
-import type { Access, FieldAccess } from 'payload/types'
+import type { Access, FieldAccess } from 'payload'
 
 import type { User } from 'payload-types'
 

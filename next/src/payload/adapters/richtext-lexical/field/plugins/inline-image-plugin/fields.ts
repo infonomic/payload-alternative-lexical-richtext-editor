@@ -1,5 +1,5 @@
-import { MappedField } from '@payloadcms/ui/utilities/buildComponentMap'
-import type { FormState, OptionObject } from 'payload/types'
+import { MappedField } from '@payloadcms/ui'
+import type { FormState, OptionObject } from 'payload'
 import { InlineImageData } from './types'
 
 export const positionOptions: OptionObject[] = [

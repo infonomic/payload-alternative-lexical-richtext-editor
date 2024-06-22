@@ -16,14 +16,14 @@ import {
   $isElementNode,
   $isRangeSelection,
   COMMAND_PRIORITY_LOW,
-  PASTE_COMMAND,
+  PASTE_COMMAND
 } from 'lexical'
 
 import {
   type LinkAttributes,
   LinkNode,
   toggleLink,
-  TOGGLE_LINK_COMMAND,
+  TOGGLE_LINK_COMMAND
 } from '../../nodes/link-nodes-payload'
 import { validateUrl, encodeRelativeUrl } from '../../utils/url'
 
@@ -54,7 +54,7 @@ export function LinkPlugin(): null {
           toggleLink(linkAttributes)
           return true
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       validateUrl !== undefined
         ? editor.registerCommand(
@@ -77,7 +77,7 @@ export function LinkPlugin(): null {
               if (!selection.getNodes().some((node) => $isElementNode(node))) {
                 const linkAttributes: LinkAttributes = {
                   linkType: 'custom',
-                  url: clipboardText,
+                  url: clipboardText
                 }
                 editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
                 event.preventDefault()
@@ -85,11 +85,11 @@ export function LinkPlugin(): null {
               }
               return false
             },
-            COMMAND_PRIORITY_LOW,
+            COMMAND_PRIORITY_LOW
           )
         : () => {
             // Don't paste arbitrary text as a link when there's no validate function
-          },
+          }
     )
   }, [editor])
 

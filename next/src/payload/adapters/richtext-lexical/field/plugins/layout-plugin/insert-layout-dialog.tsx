@@ -21,16 +21,16 @@ const LAYOUTS = [
   { label: '2 columns (75% - 25%)', value: '3fr 1fr' },
   { label: '3 columns (equal width)', value: '1fr 1fr 1fr' },
   { label: '3 columns (25% - 50% - 25%)', value: '1fr 2fr 1fr' },
-  { label: '4 columns (equal width)', value: '1fr 1fr 1fr 1fr' },
+  { label: '4 columns (equal width)', value: '1fr 1fr 1fr 1fr' }
 ]
 
 export function InsertLayoutDialog({
   activeEditor,
-  onClose,
+  onClose
 }: {
   activeEditor: LexicalEditor
   onClose: () => void
-}): JSX.Element {
+}): React.JSX.Element {
   const [layout, setLayout] = useState(LAYOUTS[0].value)
   const buttonLabel = LAYOUTS.find((item) => item.value === layout)?.label
 

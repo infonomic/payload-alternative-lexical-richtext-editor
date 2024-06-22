@@ -126,6 +126,9 @@ html[data-theme=dark] .LexicalEditorTheme__textCode {
 .LexicalEditorTheme__link {
   color: rgb(33, 111, 219);
   text-decoration: none;
+  pointer-events: none;
+  text-decoration: none;
+  border-bottom: 1px dotted;
 }
 
 .LexicalEditorTheme__link:hover {
@@ -359,6 +362,7 @@ html[data-theme=dark] .LexicalEditorTheme__code:before {
 .LexicalEditorTheme__ol1 {
   padding: 0;
   margin: 1.5rem 0 1.5rem 1rem;
+  list-style: decimal;
   list-style-position: outside;
 }
 
@@ -421,7 +425,7 @@ html[data-theme=dark] .LexicalEditorTheme__code:before {
   content: '';
   width: 16px;
   height: 16px;
-  top: 2px;
+  top: 7px;
   left: 0;
   cursor: pointer;
   display: block;
@@ -460,7 +464,7 @@ html[data-theme=dark] .LexicalEditorTheme__code:before {
   border-style: solid;
   position: absolute;
   display: block;
-  top: 6px;
+  top: 10px;
   width: 3px;
   left: 7px;
   right: 7px;

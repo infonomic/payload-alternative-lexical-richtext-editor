@@ -1,20 +1,20 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
 
-import { Drawer } from '@payloadcms/ui/elements'
+import { Drawer } from '@payloadcms/ui'
 import { baseClass } from '@payloadcms/ui/elements/DocumentDrawer'
-import { Button } from '@payloadcms/ui/elements'
-import { Form } from '@payloadcms/ui/forms/Form'
-import { RenderFields } from '@payloadcms/ui/forms/RenderFields'
-import { FormSubmit } from '@payloadcms/ui/forms/Submit'
-import { useTranslation } from '@payloadcms/ui/providers/Translation'
+import { Button } from '@payloadcms/ui'
+import { Form } from '@payloadcms/ui'
+import { RenderFields } from '@payloadcms/ui'
+import { FormSubmit } from '@payloadcms/ui'
+import { useTranslation } from '@payloadcms/ui'
 import { v4 as uuid } from 'uuid'
 import { getInitialState, getMappedFields, validateFields } from './fields'
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { useModal } from '@payloadcms/ui'
 
 import type { AdmonitionDrawerProps } from './types'
 import type { AdmonitionType } from '../../nodes/admonition-node/types'
-import type { FormState } from 'payload/types'
+import type { FormState } from 'payload'
 
 import './admonition-drawer.css'
 
@@ -22,12 +22,12 @@ export function AdmonitionDrawer({
   isOpen,
   drawerSlug,
   onSubmit,
-  data: dataFromProps,
+  data: dataFromProps
 }: AdmonitionDrawerProps): React.ReactNode {
   const { t } = useTranslation()
   const { closeModal } = useModal()
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
-    undefined,
+    undefined
   )
   const version = useRef<string>(uuid())
 
@@ -57,7 +57,7 @@ export function AdmonitionDrawer({
       if (onSubmit != null) {
         onSubmit({
           admonitionType: data.admonitionType as AdmonitionType,
-          title: data.title as string,
+          title: data.title as string
         })
         setSynchronizedFormState(undefined)
       }

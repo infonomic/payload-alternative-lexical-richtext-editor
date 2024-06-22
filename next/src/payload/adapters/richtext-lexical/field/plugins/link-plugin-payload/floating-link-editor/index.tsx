@@ -11,10 +11,10 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { LinkDrawer } from '../link-drawer'
-import { formatDrawerSlug } from '@payloadcms/ui/elements/Drawer'
-import { useConfig } from '@payloadcms/ui/providers/Config'
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useConfig } from '@payloadcms/ui'
+import { useEditDepth } from '@payloadcms/ui'
+import { useModal } from '@payloadcms/ui'
 import { useEditorConfig } from '../../../config'
 
 import {
@@ -42,7 +42,7 @@ import { setFloatingElemPositionForLinkEditor } from '../../../utils/setFloating
 import { sanitizeUrl } from '../../../utils/url'
 
 import type { Dispatch } from 'react'
-import type { ClientConfig } from 'payload/types'
+import type { ClientConfig } from 'payload'
 import type { LinkData } from '../types'
 import type { LexicalEditor, NodeSelection, RangeSelection, BaseSelection } from 'lexical'
 import type { LinkAttributes } from '../../../nodes/link-nodes-payload'
@@ -51,7 +51,7 @@ import './index.scss'
 
 function createPreviewLink(config: ClientConfig, url: string | undefined): string | undefined {
   if (url?.startsWith('/') ?? false) {
-    return `${config?.custom?.frontendPreviewURL}${url}`
+    return `${config.serverURL}${url}`
   } else {
     return url
   }
@@ -67,7 +67,7 @@ function FloatingLinkEditor({
   isLink: boolean
   setIsLink: Dispatch<boolean>
   anchorElem: HTMLElement
-}): JSX.Element {
+}): React.JSX.Element {
   const editorRef = useRef<HTMLDivElement | null>(null)
   const [linkUrl, setLinkUrl] = useState('')
   const [linkLabel, setLinkLabel] = useState('')
@@ -276,6 +276,7 @@ function FloatingLinkEditor({
               {linkLabel != null && linkLabel.length > 0 ? linkLabel : linkUrl}
             </a>
             <div
+              aria-label="Edit link"
               className="link-edit"
               role="button"
               tabIndex={0}
@@ -287,6 +288,7 @@ function FloatingLinkEditor({
               }}
             />
             <div
+              aria-label="Remove link"
               className="link-trash"
               role="button"
               tabIndex={0}
@@ -316,7 +318,7 @@ function FloatingLinkEditor({
 function useFloatingLinkEditorToolbar(
   editor: LexicalEditor,
   anchorElem: HTMLElement
-): JSX.Element | null {
+): React.JSX.Element | null {
   const [activeEditor, setActiveEditor] = useState(editor)
   const [isLink, setIsLink] = useState(false)
 
@@ -385,7 +387,7 @@ export function FloatingLinkEditorPlugin({
   anchorElem = document.body
 }: {
   anchorElem?: HTMLElement
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext()
   return useFloatingLinkEditorToolbar(editor, anchorElem)
 }

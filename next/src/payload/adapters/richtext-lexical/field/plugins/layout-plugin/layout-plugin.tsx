@@ -15,18 +15,18 @@ import {
   $createParagraphNode,
   $getNodeByKey,
   COMMAND_PRIORITY_EDITOR,
-  createCommand,
+  createCommand
 } from 'lexical'
 
 import {
   $createLayoutContainerNode,
   $isLayoutContainerNode,
-  LayoutContainerNode,
+  LayoutContainerNode
 } from '../../nodes/layout-container-node/layout-container-node'
 import {
   $createLayoutItemNode,
   $isLayoutItemNode,
-  LayoutItemNode,
+  LayoutItemNode
 } from '../../nodes/layout-container-node/layout-item-node'
 
 import type { ElementNode, LexicalCommand, LexicalNode, NodeKey } from 'lexical'
@@ -43,7 +43,7 @@ export function LayoutPlugin(): null {
   useEffect(() => {
     if (!editor.hasNodes([LayoutContainerNode, LayoutItemNode])) {
       throw new Error(
-        'LayoutPlugin: LayoutContainerNode, or LayoutItemNode not registered on editor',
+        'LayoutPlugin: LayoutContainerNode, or LayoutItemNode not registered on editor'
       )
     }
 
@@ -65,7 +65,7 @@ export function LayoutPlugin(): null {
 
           return true
         },
-        COMMAND_PRIORITY_EDITOR,
+        COMMAND_PRIORITY_EDITOR
       ),
       editor.registerCommand(
         UPDATE_LAYOUT_COMMAND,
@@ -100,7 +100,7 @@ export function LayoutPlugin(): null {
 
           return true
         },
-        COMMAND_PRIORITY_EDITOR,
+        COMMAND_PRIORITY_EDITOR
       ),
       // Structure enforcing transformers for each node type. In case nesting structure is not
       // "Container > Item" it'll unwrap nodes and convert it back
@@ -123,7 +123,7 @@ export function LayoutPlugin(): null {
           }
           node.remove()
         }
-      }),
+      })
     )
   }, [editor])
 

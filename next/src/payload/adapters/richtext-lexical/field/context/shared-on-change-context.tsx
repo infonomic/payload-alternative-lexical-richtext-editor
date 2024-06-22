@@ -12,11 +12,11 @@ const Context: React.Context<ContextType> = createContext({})
 
 export const SharedOnChangeContext = ({
   children,
-  onChange,
+  onChange
 }: {
   children: ReactNode
   onChange: (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void
-}): JSX.Element => {
+}): React.JSX.Element => {
   const sharedOnChangeContext = useMemo(() => ({ onChange }), [onChange])
   return <Context.Provider value={sharedOnChangeContext}>{children}</Context.Provider>
 }

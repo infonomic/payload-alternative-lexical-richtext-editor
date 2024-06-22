@@ -29,6 +29,6 @@ const MATCHERS = [
   })
 ]
 
-export function AutoLinkPlugin(): JSX.Element {
+export function AutoLinkPlugin(): React.JSX.Element {
   return <LexicalAutoLinkPlugin matchers={MATCHERS} />
 }

@@ -3,7 +3,7 @@ import { en } from 'payload/i18n/en'
 import { lexicalEditor } from '@/payload/adapters/richtext-lexical'
 
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { buildConfig } from 'payload/config'
+import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 

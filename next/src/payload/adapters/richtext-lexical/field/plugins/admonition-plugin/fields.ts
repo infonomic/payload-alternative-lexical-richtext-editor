@@ -1,5 +1,5 @@
-import type { FormState, OptionObject } from 'payload/types'
-import { MappedField } from '@payloadcms/ui/utilities/buildComponentMap'
+import type { FormState, OptionObject } from 'payload'
+import { MappedField } from '@payloadcms/ui'
 import { AdmonitionType } from '../../nodes/admonition-node'
 
 export const admonitionTypeOptions: OptionObject[] = [

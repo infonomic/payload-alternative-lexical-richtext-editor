@@ -270,7 +270,7 @@ function extractCellsFromRows(
   return newRows
 }
 
-function TableCellEditor({ cellEditor }: { cellEditor: LexicalEditor }): JSX.Element | null {
+function TableCellEditor({ cellEditor }: { cellEditor: LexicalEditor }): React.JSX.Element | null {
   const { cellEditorConfig, cellEditorPlugins } = useContext(CellContext)
 
   if (cellEditorPlugins === null || cellEditorConfig === null) {
@@ -323,7 +323,7 @@ function TableActionMenu({
   rows: Rows
   setSortingOptions: (options: null | SortOptions) => void
   sortingOptions: null | SortOptions
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   const dropDownRef = useRef<null | HTMLDivElement>(null)
 
   useEffect(() => {
@@ -561,7 +561,7 @@ function TableCell({
   rows: Rows
   setSortingOptions: (options: null | SortOptions) => void
   sortingOptions: null | SortOptions
-}): JSX.Element {
+}): React.JSX.Element {
   const [showMenu, setShowMenu] = useState(false)
   const menuRootRef = useRef(null)
   const isHeader = cell.type !== 'normal'
@@ -657,7 +657,7 @@ export default function TableComponent({
   nodeKey: NodeKey
   rows: Rows
   theme: EditorThemeClasses
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey)
   const resizeMeasureRef = useRef<{ size: number; point: number }>({
     point: 0,
@@ -1119,8 +1119,8 @@ export default function TableComponent({
         return clipboardData instanceof DataTransfer
           ? clipboardData.getData(type)
           : clipboardData instanceof ClipboardItem
-          ? await (await clipboardData.getType(type)).text()
-          : ''
+            ? await (await clipboardData.getType(type)).text()
+            : ''
       } catch {
         return ''
       }

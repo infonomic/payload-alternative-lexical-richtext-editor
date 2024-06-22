@@ -1,20 +1,20 @@
 'use client'
 import React, { useState, useRef, useMemo, useEffect } from 'react'
-import { Button } from '@payloadcms/ui/elements'
-import { useConfig } from '@payloadcms/ui/providers/Config'
-import { UploadInput } from '@payloadcms/ui/fields/Upload'
-import { Drawer } from '@payloadcms/ui/elements'
-import { Form } from '@payloadcms/ui/forms/Form'
-import { RenderFields } from '@payloadcms/ui/forms/RenderFields'
-import { FormSubmit } from '@payloadcms/ui/forms/Submit'
-import { useTranslation } from '@payloadcms/ui/providers/Translation'
+import { Button } from '@payloadcms/ui'
+import { useConfig } from '@payloadcms/ui'
+import { UploadInput } from '@payloadcms/ui'
+import { Drawer } from '@payloadcms/ui'
+import { Form } from '@payloadcms/ui'
+import { RenderFields } from '@payloadcms/ui'
+import { FormSubmit } from '@payloadcms/ui'
+import { useTranslation } from '@payloadcms/ui'
 
 import { useEditorConfig } from '../../config'
 import { getMappedFields, getInitialState, validateFields } from './fields'
 
 import { v4 as uuid } from 'uuid'
 
-import type { FormState } from 'payload/types'
+import type { FormState } from 'payload'
 import type { InlineImageData, InlineImageDrawerProps } from './types'
 import type { Position } from '../../nodes/inline-image-node'
 
@@ -36,6 +36,8 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
     routes: { api },
     serverURL
   } = useConfig()
+
+  console.debug('Collection:', collections)
 
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
     undefined

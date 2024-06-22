@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { CLEAR_EDITOR_COMMAND } from 'lexical'
 
-export function Debug(): JSX.Element {
+export function Debug(): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
 
   function handleOnSave(): void {

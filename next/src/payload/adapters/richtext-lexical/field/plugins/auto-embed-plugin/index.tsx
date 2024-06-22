@@ -35,7 +35,7 @@ interface PlaygroundEmbedConfig extends EmbedConfig {
   contentName: string
 
   // Icon for display.
-  icon?: JSX.Element
+  icon?: React.JSX.Element
 
   // An example of a matching url https://twitter.com/jack/status/20
   exampleUrl: string
@@ -191,7 +191,7 @@ function AutoEmbedMenuItem({
   onClick: () => void
   onMouseEnter: () => void
   option: AutoEmbedOption
-}): JSX.Element {
+}): React.JSX.Element {
   let className = 'item'
   if (isSelected) {
     className += ' selected'
@@ -223,7 +223,7 @@ function AutoEmbedMenu({
   onOptionClick: (option: AutoEmbedOption, index: number) => void
   onOptionMouseEnter: (index: number) => void
   options: AutoEmbedOption[]
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <div className="typeahead-popover">
       <ul>
@@ -262,7 +262,7 @@ export function AutoEmbedDialog({
 }: {
   embedConfig: PlaygroundEmbedConfig
   onClose: () => void
-}): JSX.Element {
+}): React.JSX.Element {
   const [text, setText] = useState('')
   const [editor] = useLexicalComposerContext()
   const [embedResult, setEmbedResult] = useState<EmbedMatchResult | null>(null)
@@ -318,7 +318,7 @@ export function AutoEmbedDialog({
   )
 }
 
-export function AutoEmbedPlugin(): JSX.Element {
+export function AutoEmbedPlugin(): React.JSX.Element {
   const [modal, showModal] = useModal()
 
   const openEmbedModal = (embedConfig: PlaygroundEmbedConfig): void => {

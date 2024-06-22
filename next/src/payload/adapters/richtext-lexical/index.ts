@@ -7,7 +7,7 @@
  * Adapted from https://github.com/payloadcms/payload/tree/main/packages/richtext-lexical
  */
 
-import { withNullableJSONSchemaType } from 'payload/utilities'
+import { withNullableJSONSchemaType } from 'payload'
 import { withMergedProps } from '@payloadcms/ui/elements/withMergedProps'
 
 import { RichTextCell } from './cell'

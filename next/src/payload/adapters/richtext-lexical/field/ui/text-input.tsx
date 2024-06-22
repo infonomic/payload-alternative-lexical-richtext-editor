@@ -27,7 +27,7 @@ export default function TextInput({
   placeholder = '',
   'data-test-id': dataTestId,
   type = 'text'
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   return (
     <div className="Input__wrapper">
       <label className="Input__label">{label}</label>

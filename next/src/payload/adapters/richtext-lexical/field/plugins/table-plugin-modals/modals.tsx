@@ -10,10 +10,10 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import * as React from 'react'
 
-import { Button } from '@payloadcms/ui/elements'
-import { Drawer } from '@payloadcms/ui/elements'
-import { useModal } from '@payloadcms/ui/elements/Modal'
-import { TextInput } from '@payloadcms/ui/fields/Text'
+import { Button } from '@payloadcms/ui'
+import { Drawer } from '@payloadcms/ui'
+import { useModal } from '@payloadcms/ui'
+import { TextInput } from '@payloadcms/ui'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { INSERT_TABLE_COMMAND } from '@lexical/table'
@@ -25,7 +25,7 @@ import {
   type Klass,
   type LexicalCommand,
   type LexicalEditor,
-  type LexicalNode,
+  type LexicalNode
 } from 'lexical'
 
 import { $createTableNodeWithDimensions, TableNode } from '../../nodes/table-nodes'
@@ -41,10 +41,10 @@ export type InsertTableCommandPayload = Readonly<{
 
 export interface CellContextShape {
   cellEditorConfig: null | CellEditorConfig
-  cellEditorPlugins: null | JSX.Element | JSX.Element[]
+  cellEditorPlugins: null | React.JSX.Element | React.JSX.Element[]
   set: (
     cellEditorConfig: null | CellEditorConfig,
-    cellEditorPlugins: null | JSX.Element | JSX.Element[],
+    cellEditorPlugins: null | React.JSX.Element | React.JSX.Element[]
   ) => void
 }
 
@@ -57,7 +57,7 @@ export type CellEditorConfig = Readonly<{
 }>
 
 export const INSERT_NEW_TABLE_COMMAND: LexicalCommand<InsertTableCommandPayload> = createCommand(
-  'INSERT_NEW_TABLE_COMMAND',
+  'INSERT_NEW_TABLE_COMMAND'
 )
 
 export const CellContext = createContext<CellContextShape>({
@@ -65,16 +65,16 @@ export const CellContext = createContext<CellContextShape>({
   cellEditorPlugins: null,
   set: () => {
     // Empty
-  },
+  }
 })
 
-export function TableContext({ children }: { children: JSX.Element }): JSX.Element {
+export function TableContext({ children }: { children: React.JSX.Element }): React.JSX.Element {
   const [contextValue, setContextValue] = useState<{
     cellEditorConfig: null | CellEditorConfig
-    cellEditorPlugins: null | JSX.Element | JSX.Element[]
+    cellEditorPlugins: null | React.JSX.Element | React.JSX.Element[]
   }>({
     cellEditorConfig: null,
-    cellEditorPlugins: null,
+    cellEditorPlugins: null
   })
   return (
     <CellContext.Provider
@@ -84,9 +84,9 @@ export function TableContext({ children }: { children: JSX.Element }): JSX.Eleme
           cellEditorPlugins: contextValue.cellEditorPlugins,
           set: (cellEditorConfig, cellEditorPlugins) => {
             setContextValue({ cellEditorConfig, cellEditorPlugins })
-          },
+          }
         }),
-        [contextValue.cellEditorConfig, contextValue.cellEditorPlugins],
+        [contextValue.cellEditorConfig, contextValue.cellEditorPlugins]
       )}
     >
       {children}
@@ -97,7 +97,7 @@ export function TableContext({ children }: { children: JSX.Element }): JSX.Eleme
 const baseClass = 'rich-text-table-modal'
 
 // eslint-disable-next-line no-empty-pattern
-export function InsertTableDialog({ drawerSlug }: { drawerSlug: string }): JSX.Element {
+export function InsertTableDialog({ drawerSlug }: { drawerSlug: string }): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const [activeEditor] = useState(editor)
   const { closeModal } = useModal()
@@ -119,7 +119,7 @@ export function InsertTableDialog({ drawerSlug }: { drawerSlug: string }): JSX.E
   const handleOnSubmit = (): void => {
     activeEditor.dispatchCommand(INSERT_TABLE_COMMAND, {
       columns,
-      rows,
+      rows
     })
 
     closeModal(drawerSlug)
@@ -170,7 +170,7 @@ export function InsertTableDialog({ drawerSlug }: { drawerSlug: string }): JSX.E
 }
 
 // eslint-disable-next-line no-empty-pattern
-export function InsertNewTableDialog({ drawerSlug }: { drawerSlug: string }): JSX.Element {
+export function InsertNewTableDialog({ drawerSlug }: { drawerSlug: string }): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const [activeEditor] = useState(editor)
   const { closeModal } = useModal()
@@ -244,11 +244,11 @@ export function InsertNewTableDialog({ drawerSlug }: { drawerSlug: string }): JS
 
 export function TablePlugin({
   cellEditorConfig,
-  children,
+  children
 }: {
   cellEditorConfig: CellEditorConfig
-  children: JSX.Element | JSX.Element[]
-}): JSX.Element | null {
+  children: React.JSX.Element | React.JSX.Element[]
+}): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext()
   const cellContext = useContext(CellContext)
 
@@ -265,13 +265,13 @@ export function TablePlugin({
         const tableNode = $createTableNodeWithDimensions(
           Number(rows),
           Number(columns),
-          includeHeaders,
+          includeHeaders
         )
         $insertNodes([tableNode])
 
         return true
       },
-      COMMAND_PRIORITY_EDITOR,
+      COMMAND_PRIORITY_EDITOR
     )
   }, [cellContext, cellEditorConfig, children, editor])
 

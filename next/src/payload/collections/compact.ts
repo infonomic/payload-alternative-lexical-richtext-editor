@@ -1,5 +1,5 @@
 import { lexicalRichTextCompact } from '../fields/richtext-compact'
-import { type CollectionConfig } from 'payload/types'
+import { type CollectionConfig } from 'payload'
 import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
 import { slugField } from '@/payload/fields/slug'
 

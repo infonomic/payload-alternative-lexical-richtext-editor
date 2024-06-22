@@ -17,11 +17,11 @@ import './placeholder.scss'
 // appear inside caption areas for images.
 export default function PlaceholderInline({
   children,
-  className,
+  className
 }: {
   children: React.ReactNode
   className?: string
-}): JSX.Element {
+}): React.JSX.Element {
   const classes = cx('Placeholder__root', className)
   return <span className={classes}>{children}</span>
 }

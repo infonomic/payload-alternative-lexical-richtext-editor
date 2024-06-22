@@ -1,4 +1,4 @@
-import type { Field, FormState } from 'payload/types'
+import type { Field, FormState } from 'payload'
 
 import type { Position } from '../../nodes/inline-image-node/types'
 

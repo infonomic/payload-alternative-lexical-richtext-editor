@@ -1,5 +1,5 @@
 import type { SerializedEditorState, SerializedParagraphNode } from 'lexical'
-import type { Validate } from 'payload/types'
+import type { Validate } from 'payload'
 
 export const richTextValidate: Validate<
   SerializedEditorState,

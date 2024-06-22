@@ -9,9 +9,9 @@
 import * as React from 'react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { formatDrawerSlug } from '@payloadcms/ui/elements'
-import { useModal as usePayloadModal } from '@payloadcms/ui/elements/Modal'
+import { useEditDepth } from '@payloadcms/ui'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useModal as usePayloadModal } from '@payloadcms/ui'
 
 import {
   $createCodeNode,
@@ -134,7 +134,7 @@ function BlockFormatDropDown({
   rootType: keyof typeof rootTypeToRootName
   editor: LexicalEditor
   disabled?: boolean
-}): JSX.Element {
+}): React.JSX.Element {
   const {
     config: {
       options: { checkListPlugin, listPlugin, codeHighlightPlugin }
@@ -318,11 +318,11 @@ function BlockFormatDropDown({
   )
 }
 
-function Divider(): JSX.Element {
+function Divider(): React.JSX.Element {
   return <div className="divider" />
 }
 
-export function ToolbarPlugin(): JSX.Element {
+export function ToolbarPlugin(): React.JSX.Element {
   const [modal, showModal] = useModal()
   const [editor] = useLexicalComposerContext()
   const [activeEditor, setActiveEditor] = useState(editor)
@@ -540,16 +540,26 @@ export function ToolbarPlugin(): JSX.Element {
 
   const insertLink = useCallback(() => {
     if (!isLink) {
-      const linkAttributes: LinkAttributes = {
-        linkType: 'custom',
-        url: 'https://'
-      }
-      editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
-      openModal(linkDrawerSlug)
+      // Only call TOGGLE_LINK_COMMAND and openModal if there is
+      // text selected (at least one character).
+      const editorState = activeEditor.getEditorState()
+      editorState.read(() => {
+        const selection = $getSelection()
+        if ($isRangeSelection(selection)) {
+          if (selection.focus.offset !== selection.anchor.offset) {
+            const linkAttributes: LinkAttributes = {
+              linkType: 'custom',
+              url: 'https://'
+            }
+            editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
+            openModal(linkDrawerSlug)
+          }
+        }
+      })
     } else {
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)
     }
-  }, [editor, isLink, linkDrawerSlug, openModal])
+  }, [editor, isLink, linkDrawerSlug, openModal, activeEditor])
 
   const onCodeLanguageSelect = useCallback(
     (value: string) => {

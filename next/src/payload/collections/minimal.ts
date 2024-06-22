@@ -1,4 +1,4 @@
-import { type CollectionConfig } from 'payload/types'
+import { type CollectionConfig } from 'payload'
 import { lexicalRichTextMinimal } from '@/payload/fields/richtext-minimal'
 import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
 import { slugField } from '@/payload/fields/slug'

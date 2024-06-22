@@ -22,7 +22,7 @@ function PortalImpl({
   closeOnClickOutside: boolean
   onClose: () => void
   title: string
-}): JSX.Element {
+}): React.JSX.Element {
   const modalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export default function Modal({
   closeOnClickOutside?: boolean
   onClose: () => void
   title: string
-}): JSX.Element {
+}): React.JSX.Element {
   return createPortal(
     <PortalImpl onClose={onClose} title={title} closeOnClickOutside={closeOnClickOutside}>
       {children}

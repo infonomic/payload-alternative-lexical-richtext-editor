@@ -12,10 +12,10 @@
 
 import React, { useEffect } from 'react'
 
-import { formatDrawerSlug } from '@payloadcms/ui/elements'
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { useConfig } from '@payloadcms/ui/providers/Config'
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useEditDepth } from '@payloadcms/ui'
+import { useConfig } from '@payloadcms/ui'
+import { useModal } from '@payloadcms/ui'
 
 import { requests } from '@payloadcms/ui/utilities/api'
 
@@ -67,7 +67,7 @@ export const INSERT_INLINE_IMAGE_COMMAND: LexicalCommand<InlineImageAttributes> 
   'INSERT_INLINE_IMAGE_COMMAND'
 )
 
-export function InlineImagePlugin({ collection }: { collection: string }): JSX.Element {
+export function InlineImagePlugin({ collection }: { collection: string }): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()

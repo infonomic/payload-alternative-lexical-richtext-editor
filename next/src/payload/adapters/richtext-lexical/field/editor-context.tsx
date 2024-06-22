@@ -12,7 +12,7 @@ import { Nodes } from './nodes'
 import type { EditorConfig } from './config'
 import type { InitialConfigType } from '@lexical/react/LexicalComposer'
 import type { LexicalEditor, EditorState, SerializedEditorState } from 'lexical'
-import { RichTextFieldProps } from 'payload/types'
+import { RichTextFieldProps } from 'payload'
 import { AdapterProps } from '../types'
 
 // Catch any errors that occur during Lexical updates and log them
@@ -30,7 +30,7 @@ export function EditorContext(props: {
   path: string
   readOnly: boolean
   value: SerializedEditorState
-}): JSX.Element {
+}): React.JSX.Element {
   const { editorConfig, onChange, path, readOnly } = props
   const { value } = props
 
@@ -43,7 +43,7 @@ export function EditorContext(props: {
       editorState: value != null ? JSON.stringify(value) : undefined,
       theme: editorConfig.lexical.theme,
       nodes: [...Nodes],
-      onError,
+      onError
     }
     setInitialConfig(newInitialConfig)
   }, [editorConfig, readOnly, value])

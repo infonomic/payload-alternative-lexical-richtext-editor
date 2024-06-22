@@ -1,4 +1,4 @@
-import type { RichTextAdapter, RichTextFieldProps } from 'payload/types'
+import type { RichTextAdapter, RichTextFieldProps } from 'payload'
 
 import type { EditorConfig, EditorSettings } from './field/config/types'
 import type { SerializedEditorState } from 'lexical'

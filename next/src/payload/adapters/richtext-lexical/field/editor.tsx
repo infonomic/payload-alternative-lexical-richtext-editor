@@ -44,7 +44,7 @@ import type { EditorState, LexicalEditor } from 'lexical'
 
 import './editor.scss'
 
-export function Editor(): JSX.Element {
+export function Editor(): React.JSX.Element {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null)
   const [isSmallWidthViewport, setIsSmallWidthViewport] = useState<boolean>(false)
   const { onChange } = useSharedOnChange()

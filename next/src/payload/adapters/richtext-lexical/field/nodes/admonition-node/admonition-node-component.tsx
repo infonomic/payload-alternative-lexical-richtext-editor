@@ -2,9 +2,9 @@
 import * as React from 'react'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
-import { formatDrawerSlug } from '@payloadcms/ui/elements'
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useEditDepth } from '@payloadcms/ui'
+import { useModal } from '@payloadcms/ui'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
@@ -65,7 +65,7 @@ export default function AdmonitionNodeComponent({
   title: string
   content: LexicalEditor
   nodeKey: NodeKey
-}): JSX.Element {
+}): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const editDepth = useEditDepth()
   const buttonRef = useRef<HTMLButtonElement | null>(null)

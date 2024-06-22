@@ -7,18 +7,18 @@ import * as React from 'react'
 import { useCallback } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { FieldDescription } from '@payloadcms/ui/forms/FieldDescription'
-import { FieldError } from '@payloadcms/ui/forms/FieldError'
-import { FieldLabel } from '@payloadcms/ui/forms/FieldLabel'
-import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider'
-import { useField } from '@payloadcms/ui/forms/useField'
-import { withCondition } from '@payloadcms/ui/forms/withCondition'
+import { FieldDescription } from '@payloadcms/ui'
+import { FieldError } from '@payloadcms/ui'
+import { FieldLabel } from '@payloadcms/ui'
+import { useFieldProps } from '@payloadcms/ui'
+import { useField } from '@payloadcms/ui'
+import { withCondition } from '@payloadcms/ui'
 
 import { richTextValidate } from '../validate/validate-client'
 import { EditorContext } from './editor-context'
 
 import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
-import type { RichTextFieldProps } from 'payload/types'
+import type { RichTextFieldProps } from 'payload'
 import type { AdapterProps } from '../types'
 
 import './field.scss'
@@ -120,7 +120,7 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
   )
 }
 
-function fallbackRender({ error, resetErrorBoundary }: any): JSX.Element {
+function fallbackRender({ error, resetErrorBoundary }: any): React.JSX.Element {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
   return (
     <div className="errorBoundary" role="alert">

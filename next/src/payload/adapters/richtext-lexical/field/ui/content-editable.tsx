@@ -15,7 +15,7 @@ import { useEditorConfig } from '../config'
 
 import './content-editable.scss'
 
-export function ContentEditable({ className }: { className?: string }): JSX.Element {
+export function ContentEditable({ className }: { className?: string }): React.JSX.Element {
   const { config } = useEditorConfig()
   // const classes = cx('ContentEditable__root', className, {
   //   ContentEditable__with_draggable_blocks: config.options.draggableBlocks

@@ -2,12 +2,12 @@
 import * as React from 'react'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
-import { formatDrawerSlug } from '@payloadcms/ui/elements'
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { useConfig } from '@payloadcms/ui/providers/Config'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useEditDepth } from '@payloadcms/ui'
+import { useConfig } from '@payloadcms/ui'
 import { requests } from '@payloadcms/ui/utilities/api'
 
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { useModal } from '@payloadcms/ui'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
@@ -86,7 +86,7 @@ function LazyImage({
   height?: number | string
   width?: number | string
   imageRef: { current: null | HTMLImageElement }
-}): JSX.Element {
+}): React.JSX.Element {
   void useSuspenseImage(src)
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -130,7 +130,7 @@ export default function InlineImageComponent({
   showCaption: boolean
   caption: LexicalEditor
   nodeKey: NodeKey
-}): JSX.Element {
+}): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { onChange } = useSharedOnChange()
   const { historyState } = useSharedHistoryContext()

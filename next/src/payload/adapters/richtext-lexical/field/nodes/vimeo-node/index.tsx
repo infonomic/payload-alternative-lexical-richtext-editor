@@ -36,7 +36,12 @@ type VimeoComponentProps = Readonly<{
   videoID: string
 }>
 
-function VimeoComponent({ className, format, nodeKey, videoID }: VimeoComponentProps): JSX.Element {
+function VimeoComponent({
+  className,
+  format,
+  nodeKey,
+  videoID
+}: VimeoComponentProps): React.JSX.Element {
   return (
     <BlockWithAlignableContents className={className} format={format} nodeKey={nodeKey}>
       <iframe
@@ -142,7 +147,7 @@ export class VimeoNode extends DecoratorBlockNode {
     return `https://vimeo.com/${this.__id}`
   }
 
-  decorate(_editor: LexicalEditor, config: EditorConfig): JSX.Element {
+  decorate(_editor: LexicalEditor, config: EditorConfig): React.JSX.Element {
     const embedBlockTheme = config.theme.embedBlock ?? {}
     const className = {
       base: embedBlockTheme.base ?? '',

@@ -34,13 +34,16 @@ const basicColors = [
   '#000000',
   '#4a4a4a',
   '#9b9b9b',
-  '#ffffff',
+  '#ffffff'
 ]
 
 const WIDTH = 214
 const HEIGHT = 150
 
-export default function ColorPicker({ color, onChange }: Readonly<ColorPickerProps>): JSX.Element {
+export default function ColorPicker({
+  color,
+  onChange
+}: Readonly<ColorPickerProps>): React.JSX.Element {
   const [selfColor, setSelfColor] = useState(transformColor('hex', color))
   const [inputColor, setInputColor] = useState(color)
   const innerDivRef = useRef(null)
@@ -48,16 +51,16 @@ export default function ColorPicker({ color, onChange }: Readonly<ColorPickerPro
   const saturationPosition = useMemo(
     () => ({
       x: (selfColor.hsv.s / 100) * WIDTH,
-      y: ((100 - selfColor.hsv.v) / 100) * HEIGHT,
+      y: ((100 - selfColor.hsv.v) / 100) * HEIGHT
     }),
-    [selfColor.hsv.s, selfColor.hsv.v],
+    [selfColor.hsv.s, selfColor.hsv.v]
   )
 
   const huePosition = useMemo(
     () => ({
-      x: (selfColor.hsv.h / 360) * WIDTH,
+      x: (selfColor.hsv.h / 360) * WIDTH
     }),
-    [selfColor.hsv],
+    [selfColor.hsv]
   )
 
   const onSetHex = (hex: string): void => {
@@ -72,7 +75,7 @@ export default function ColorPicker({ color, onChange }: Readonly<ColorPickerPro
     const newHsv = {
       ...selfColor.hsv,
       s: (x / WIDTH) * 100,
-      v: 100 - (y / HEIGHT) * 100,
+      v: 100 - (y / HEIGHT) * 100
     }
     const newColor = transformColor('hsv', newHsv)
     setSelfColor(newColor)
@@ -128,7 +131,7 @@ export default function ColorPicker({ color, onChange }: Readonly<ColorPickerPro
           style={{
             backgroundColor: selfColor.hex,
             left: saturationPosition.x,
-            top: saturationPosition.y,
+            top: saturationPosition.y
           }}
         />
       </MoveWrapper>
@@ -137,7 +140,7 @@ export default function ColorPicker({ color, onChange }: Readonly<ColorPickerPro
           className="color-picker-hue_cursor"
           style={{
             backgroundColor: `hsl(${selfColor.hsv.h}, 100%, 50%)`,
-            left: huePosition.x,
+            left: huePosition.x
           }}
         />
       </MoveWrapper>
@@ -155,10 +158,15 @@ interface MoveWrapperProps {
   className?: string
   style?: React.CSSProperties
   onChange: (position: Position) => void
-  children: JSX.Element
+  children: React.JSX.Element
 }
 
-function MoveWrapper({ className, style, onChange, children }: MoveWrapperProps): JSX.Element {
+function MoveWrapper({
+  className,
+  style,
+  onChange,
+  children
+}: MoveWrapperProps): React.JSX.Element {
   const divRef = useRef<HTMLDivElement>(null)
 
   const move = (e: React.MouseEvent | MouseEvent): void => {
@@ -256,7 +264,7 @@ function hex2rgb(hex: string): RGB {
   return {
     b: rbgArr[2],
     g: rbgArr[1],
-    r: rbgArr[0],
+    r: rbgArr[0]
   }
 }
 

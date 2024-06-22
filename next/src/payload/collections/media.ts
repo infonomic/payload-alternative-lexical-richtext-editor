@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-import type { CollectionConfig } from 'payload/types'
+import type { CollectionConfig } from 'payload'
 
 import { isAdmin, isAdminOrEditor } from '../access'
 import { validateFilename } from '../validation/validate-filename'
@@ -30,8 +30,11 @@ export const Media: CollectionConfig = {
     enableRichTextLink: false,
     enableRichTextRelationship: false,
     group: 'Uploads',
-    // @ts-ignore
-    description: MediaCollectionDescription,
+    components: {
+      edit: {
+        Description: MediaCollectionDescription,
+      },
+    },
   },
   access: {
     create: isAdminOrEditor,

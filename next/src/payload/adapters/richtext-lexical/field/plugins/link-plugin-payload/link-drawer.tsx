@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react'
 
-import { Drawer } from '@payloadcms/ui/elements/Drawer'
-import { Button } from '@payloadcms/ui/elements'
-import { Form } from '@payloadcms/ui/forms/Form'
-import { RenderFields } from '@payloadcms/ui/forms/RenderFields'
-import { FormSubmit } from '@payloadcms/ui/forms/Submit'
-import { useTranslation } from '@payloadcms/ui/providers/Translation'
-import { useConfig } from '@payloadcms/ui/providers/Config'
+import { Drawer } from '@payloadcms/ui'
+import { Button } from '@payloadcms/ui'
+import { Form } from '@payloadcms/ui'
+import { RenderFields } from '@payloadcms/ui'
+import { FormSubmit } from '@payloadcms/ui'
+import { useTranslation } from '@payloadcms/ui'
+import { useConfig } from '@payloadcms/ui'
 
 import { getMappedFields, getInitialState, validateFields } from './fields'
 
 import { v4 as uuid } from 'uuid'
 
 import type { LinkDrawerProps, LinkData } from './types'
-import type { FormState } from 'payload/types'
+import type { FormState } from 'payload'
 
 import './link-drawer.css'
 

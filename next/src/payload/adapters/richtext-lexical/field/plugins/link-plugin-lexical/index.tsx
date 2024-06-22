@@ -12,6 +12,6 @@ import * as React from 'react'
 
 import { validateUrl } from '../../utils/url'
 
-export default function LinkPlugin(): JSX.Element {
+export default function LinkPlugin(): React.JSX.Element {
   return <LexicalLinkPlugin validateUrl={validateUrl} />
 }

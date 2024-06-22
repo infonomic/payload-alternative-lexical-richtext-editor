@@ -26,7 +26,7 @@ export function DropDownItem({
   className: string
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
   title?: string
-}): JSX.Element {
+}): React.JSX.Element {
   const ref = useRef<HTMLButtonElement>(null)
 
   const dropDownContext = React.useContext(DropDownContext)
@@ -39,6 +39,7 @@ export function DropDownItem({
 
   useEffect(() => {
     if (ref?.current != null) {
+      // @ts-expect-error: TODO
       registerItem(ref)
     }
   }, [ref, registerItem])
@@ -58,7 +59,7 @@ function DropDownItems({
   children: React.ReactNode
   dropDownRef: React.Ref<HTMLDivElement>
   onClose: () => void
-}): JSX.Element {
+}): React.JSX.Element {
   const [items, setItems] = useState<Array<React.RefObject<HTMLButtonElement>>>()
   const [highlightedItem, setHighlightedItem] = useState<React.RefObject<HTMLButtonElement>>()
 
@@ -136,7 +137,7 @@ export default function DropDown({
   buttonLabel?: string
   children: ReactNode
   stopCloseOnClickSelf?: boolean
-}): JSX.Element {
+}): React.JSX.Element {
   const dropDownRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [showDropDown, setShowDropDown] = useState(false)

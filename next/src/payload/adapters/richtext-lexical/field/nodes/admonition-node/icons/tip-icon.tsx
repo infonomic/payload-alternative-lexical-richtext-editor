@@ -8,7 +8,7 @@ interface Props {
   className?: string
 }
 
-export function TipIcon({ className, ...rest }: Props): JSX.Element {
+export function TipIcon({ className, ...rest }: Props): React.JSX.Element {
   return (
     <div className={cx('tip-icon', className)} {...rest}>
       <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24">

@@ -33,19 +33,19 @@
     "@lexical/selection": "^0.16.0",
     "@lexical/table": "^0.16.0",
     "@lexical/utils": "^0.16.0",
-    "@payloadcms/db-mongodb": "3.0.0-beta.43",
-    "@payloadcms/db-postgres": "3.0.0-beta.43",
-    "@payloadcms/next": "3.0.0-beta.43",
-    "@payloadcms/ui": "3.0.0-beta.43",
+    "@payloadcms/db-mongodb": "3.0.0-beta.53",
+    "@payloadcms/db-postgres": "3.0.0-beta.53",
+    "@payloadcms/next": "3.0.0-beta.53",
+    "@payloadcms/ui": "3.0.0-beta.53",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "json-schema": "^0.4.0",
     "lexical": "^0.16.0",
-    "next": "14.3.0-canary.68",
-    "payload": "3.0.0-beta.43",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "next": "15.0.0-rc.0",
+    "payload": "3.0.0-beta.53",
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-dom": "19.0.0-rc-f994737d14-20240522",
     "react-error-boundary": "^4.0.13",
     "sharp": "0.32.6",
     "uuid": "^9.0.1"
@@ -53,13 +53,23 @@
   "devDependencies": {
     "@types/json-schema": "^7.0.15",
     "@types/node": "^20.14.2",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "npm:types-react@19.0.0-beta.2",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
     "@types/uuid": "^9.0.8",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.0",
     "tsx": "^4.15.1",
     "typescript": "^5.4.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-beta.2",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
+    }
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@19.0.0-beta.2",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
   }
 }

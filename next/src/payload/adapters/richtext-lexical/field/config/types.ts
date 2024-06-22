@@ -1,4 +1,3 @@
-import { FieldMap } from '@payloadcms/ui/utilities/buildComponentMap'
 // @ts-ignore
 import type { EditorConfig as LexicalEditorConfig } from 'lexical/LexicalEditor'
 

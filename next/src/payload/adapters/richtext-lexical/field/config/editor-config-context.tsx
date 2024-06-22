@@ -21,16 +21,16 @@ interface ContextType {
 const Context: React.Context<ContextType> = createContext({
   setOption: (name: OptionName, value: boolean) => {},
   config: DEFAULT_EDITOR_SETTINGS,
-  uuid: generateQuickGuid(),
+  uuid: generateQuickGuid()
 })
 
 export const EditorConfigContext = ({
   children,
-  config: configFromProps,
+  config: configFromProps
 }: {
   children: React.ReactNode
   config?: EditorSettings
-}): JSX.Element => {
+}): React.JSX.Element => {
   const [config, setConfig] = useState(configFromProps ?? DEFAULT_EDITOR_SETTINGS)
 
   // I'm assuming we've included the editor as a dependency on the useMemo
@@ -48,7 +48,7 @@ export const EditorConfigContext = ({
 
   const editorContext = useMemo(
     () => ({ setOption, config, uuid: generateQuickGuid() }),
-    [config, setOption],
+    [config, setOption]
   )
 
   return <Context.Provider value={editorContext}>{children}</Context.Provider>

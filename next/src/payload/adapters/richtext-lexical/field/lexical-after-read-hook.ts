@@ -11,7 +11,7 @@
  */
 
 import type { GeneratedTypes } from 'payload'
-import type { FieldHook } from 'payload/types'
+import type { FieldHook } from 'payload'
 
 import { loadRelated } from './utils/load-related'
 

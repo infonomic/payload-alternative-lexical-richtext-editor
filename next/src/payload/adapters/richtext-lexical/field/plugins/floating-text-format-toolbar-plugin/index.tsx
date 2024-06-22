@@ -13,9 +13,9 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import * as React from 'react'
 import { createPortal } from 'react-dom'
 
-import { formatDrawerSlug } from '@payloadcms/ui/elements'
-import { useEditDepth } from '@payloadcms/ui/providers/EditDepth'
-import { useModal } from '@payloadcms/ui/elements/Modal'
+import { formatDrawerSlug } from '@payloadcms/ui'
+import { useEditDepth } from '@payloadcms/ui'
+import { useModal } from '@payloadcms/ui'
 
 import { $isCodeHighlightNode } from '@lexical/code'
 // import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
@@ -65,7 +65,7 @@ function TextFormatFloatingToolbar({
   isSubscript: boolean
   isSuperscript: boolean
   isUnderline: boolean
-}): JSX.Element {
+}): React.JSX.Element {
   const popupCharStylesEditorRef = useRef<HTMLDivElement | null>(null)
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()
@@ -78,12 +78,22 @@ function TextFormatFloatingToolbar({
 
   const insertLink = useCallback(() => {
     if (!isLink) {
-      const linkAttributes: LinkAttributes = {
-        linkType: 'custom',
-        url: 'https://'
-      }
-      editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
-      openModal(linkDrawerSlug)
+      // Only call TOGGLE_LINK_COMMAND and openModal if there is
+      // text selected (at least one character).
+      const editorState = editor.getEditorState()
+      editorState.read(() => {
+        const selection = $getSelection()
+        if ($isRangeSelection(selection)) {
+          if (selection.focus.offset !== selection.anchor.offset) {
+            const linkAttributes: LinkAttributes = {
+              linkType: 'custom',
+              url: 'https://'
+            }
+            editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
+            openModal(linkDrawerSlug)
+          }
+        }
+      })
     } else {
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)
     }
@@ -304,7 +314,7 @@ function TextFormatFloatingToolbar({
 function useFloatingTextFormatToolbar(
   editor: LexicalEditor,
   anchorElem: HTMLElement
-): JSX.Element | null {
+): React.JSX.Element | null {
   const [isText, setIsText] = useState(false)
   const [isLink, setIsLink] = useState(false)
   const [isBold, setIsBold] = useState(false)
@@ -416,7 +426,7 @@ export function FloatingTextFormatToolbarPlugin({
   anchorElem = document.body
 }: {
   anchorElem?: HTMLElement
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext()
   return useFloatingTextFormatToolbar(editor, anchorElem)
 }

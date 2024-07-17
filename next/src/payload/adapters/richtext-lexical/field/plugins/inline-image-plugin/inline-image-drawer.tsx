@@ -14,7 +14,7 @@ import { getMappedFields, getInitialState, validateFields } from './fields'
 
 import { v4 as uuid } from 'uuid'
 
-import type { FormState } from 'payload'
+import type { FormState, CollectionSlug } from 'payload'
 import type { InlineImageData, InlineImageDrawerProps } from './types'
 import type { Position } from '../../nodes/inline-image-node'
 
@@ -129,7 +129,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
           <UploadInput
             api={api}
             collection={collection}
-            relationTo={config.inlineImageUploadCollection}
+            relationTo={config.inlineImageUploadCollection as CollectionSlug}
             serverURL={serverURL}
             required={true}
             value={getImageValue()}

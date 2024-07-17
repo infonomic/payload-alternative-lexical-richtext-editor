@@ -2,6 +2,8 @@ import type { FormState, OptionObject } from 'payload'
 import { MappedField } from '@payloadcms/ui'
 import { LinkData } from './types'
 
+import type { CollectionSlug } from 'payload'
+
 export const linkOptions: OptionObject[] = [
   {
     label: 'Custom',
@@ -71,7 +73,7 @@ export const getMappedFields = (
   {
     name: 'doc',
     cellComponentProps: { name: 'doc', schemaPath: 'doc' },
-    fieldComponentProps: { name: 'doc', relationTo: validRelationships },
+    fieldComponentProps: { name: 'doc', relationTo: validRelationships as CollectionSlug[] },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,

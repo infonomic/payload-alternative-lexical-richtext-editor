@@ -1,4 +1,4 @@
-import type { FieldHook } from 'payload/types'
+import type { FieldHook } from 'payload'
 
 import { findField } from './findField'
 

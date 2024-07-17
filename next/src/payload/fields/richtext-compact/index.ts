@@ -1,4 +1,4 @@
-import type { Field } from 'payload/types'
+import type { Field } from 'payload'
 
 import { lexicalEditor } from '../../adapters/richtext-lexical'
 import type { LexicalRichTextAdapter } from '../../adapters/richtext-lexical/types'

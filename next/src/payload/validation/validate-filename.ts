@@ -16,7 +16,7 @@ const getFilenameError = (filename: string | null | undefined): string | null =>
 
   const basename = path.parse(filename).name
 
-  if (basename.length > 50) {
+  if (basename.length > 70) {
     return 'Filename is too long'
   } else if (!FILENAME_REGEX.test(basename)) {
     return 'Filename contains invalid characters'
@@ -31,11 +31,13 @@ const getFilenameError = (filename: string | null | undefined): string | null =>
 export const validateFilename: CollectionBeforeValidateHook = ({ data }) => {
   const message = getFilenameError(data?.filename)
   if (message != null) {
-    throw new ValidationError([
-      {
-        field: 'file',
-        message,
-      },
-    ])
+    throw new ValidationError({
+      errors: [
+        {
+          field: 'file',
+          message,
+        },
+      ],
+    })
   }
 }

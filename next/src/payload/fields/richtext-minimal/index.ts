@@ -1,4 +1,4 @@
-import type { Field } from 'payload/types'
+import type { Field } from 'payload'
 
 import { lexicalEditor } from '../../adapters/richtext-lexical'
 import { populateLexicalRelationships } from '../../adapters/richtext-lexical/field/lexical-after-read-hook'

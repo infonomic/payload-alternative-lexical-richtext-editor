@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-export function MediaCollectionDescription(): JSX.Element {
+export function MediaCollectionDescription(): React.JSX.Element {
   return (
     <div style={{ paddingRight: '12px' }}>
       <div style={{ lineHeight: '1.5rem', fontSize: '1.2rem', marginBottom: '0.5rem' }}>

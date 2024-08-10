@@ -27,20 +27,20 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
   drawerSlug,
   onSubmit,
   onClose,
-  data: dataFromProps
+  data: dataFromProps,
 }) => {
   const { config } = useEditorConfig()
   const { t } = useTranslation()
   const {
     collections,
     routes: { api },
-    serverURL
+    serverURL,
   } = useConfig()
 
   console.debug('Collection:', collections)
 
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
-    undefined
+    undefined,
   )
   const version = useRef<string>(uuid())
   const [imageValue, setImageValue] = useState<string | undefined>(dataFromProps?.id)
@@ -63,7 +63,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
 
   const collection = useMemo(
     () => collections.find((coll) => coll.slug === config.inlineImageUploadCollection),
-    [config.inlineImageUploadCollection, collections]
+    [config.inlineImageUploadCollection, collections],
   )
 
   const handleOnImageChange = (value: { id: string }) => {
@@ -99,7 +99,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
           id: getImageValue(),
           altText: data.altText as string,
           position: data.position as Position,
-          showCaption: data.showCaption as boolean
+          showCaption: data.showCaption as boolean,
         }
         onSubmit(submitData)
       }
@@ -129,6 +129,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
           <UploadInput
             api={api}
             collection={collection}
+            allowNewUpload={true}
             relationTo={config.inlineImageUploadCollection as CollectionSlug}
             serverURL={serverURL}
             required={true}

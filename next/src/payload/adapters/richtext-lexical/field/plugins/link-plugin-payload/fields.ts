@@ -1,5 +1,5 @@
 import type { FormState, OptionObject } from 'payload'
-import { MappedField } from '@payloadcms/ui'
+import { MappedField } from 'payload'
 import { LinkData } from './types'
 
 import type { CollectionSlug } from 'payload'
@@ -7,87 +7,93 @@ import type { CollectionSlug } from 'payload'
 export const linkOptions: OptionObject[] = [
   {
     label: 'Custom',
-    value: 'custom'
+    value: 'custom',
   },
   {
     label: 'Internal',
-    value: 'internal'
-  }
+    value: 'internal',
+  },
 ]
 
 export const getMappedFields = (
   formState: FormState | undefined,
-  validRelationships: string[]
+  validRelationships: string[],
 ): MappedField[] => [
   {
     name: 'version',
     cellComponentProps: { name: 'version', schemaPath: 'version' },
-    fieldComponentProps: { name: 'version' },
+    fieldComponentProps: { name: 'version', type: 'text' },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
     isHidden: true,
-    type: 'text'
+    type: 'text',
   },
   {
     name: 'text',
     cellComponentProps: { name: 'text', schemaPath: 'text' },
     fieldComponentProps: {
       name: 'text',
+      type: 'text',
       label: 'Text',
       errorProps: {
         showError: formState?.text?.valid === false,
-        message: 'Please enter text for this link.'
+        message: 'Please enter text for this link.',
       },
-      required: true
+      required: true,
     },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'text'
+    type: 'text',
   },
   {
     name: 'linkType',
     cellComponentProps: { name: 'linkType', schemaPath: 'linkType' },
-    fieldComponentProps: { name: 'linkType', options: linkOptions },
+    fieldComponentProps: { name: 'linkType', type: 'radio', options: linkOptions },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'radio'
+    type: 'radio',
   },
   {
     name: 'url',
     cellComponentProps: { name: 'url', schemaPath: 'url' },
     fieldComponentProps: {
       name: 'url',
+      type: 'text',
       errorProps: {
         showError: formState?.url?.valid === false,
-        message: 'Please enter a url for this link.'
-      }
+        message: 'Please enter a url for this link.',
+      },
     },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'text'
+    type: 'text',
   },
   {
     name: 'doc',
     cellComponentProps: { name: 'doc', schemaPath: 'doc' },
-    fieldComponentProps: { name: 'doc', relationTo: validRelationships as CollectionSlug[] },
+    fieldComponentProps: {
+      name: 'doc',
+      type: 'relationship',
+      relationTo: validRelationships as CollectionSlug[],
+    },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'relationship'
+    type: 'relationship',
   },
   {
     name: 'newTab',
     cellComponentProps: { name: 'newTab', schemaPath: 'newTab' },
-    fieldComponentProps: { name: 'newTab', label: 'Open in new tab' },
+    fieldComponentProps: { name: 'newTab', type: 'checkbox', label: 'Open in new tab' },
     fieldIsPresentational: false,
     isFieldAffectingData: true,
     localized: false,
-    type: 'checkbox'
-  }
+    type: 'checkbox',
+  },
 ]
 
 export function getInitialState(data: LinkData | undefined): FormState {
@@ -95,23 +101,23 @@ export function getInitialState(data: LinkData | undefined): FormState {
     version: {
       value: '',
       initialValue: '',
-      valid: true
+      valid: true,
     },
     text: {
       value: data?.text,
       initialValue: data?.text,
-      valid: true
+      valid: true,
     },
     linkType: {
       value: data?.fields?.linkType ?? 'custom',
       initialValue: data?.fields?.linkType ?? 'custom',
-      valid: true
+      valid: true,
     },
     url: {
       value: data?.fields?.url,
       initialValue: data?.fields?.url,
       valid: true,
-      passesCondition: data?.fields?.linkType === 'custom'
+      passesCondition: data?.fields?.linkType === 'custom',
     },
     doc: {
       value:
@@ -123,13 +129,13 @@ export function getInitialState(data: LinkData | undefined): FormState {
           ? { value: data.fields.doc.value, relationTo: data.fields.doc.relationTo }
           : {},
       valid: true,
-      passesCondition: data?.fields?.linkType === 'internal'
+      passesCondition: data?.fields?.linkType === 'internal',
     },
     newTab: {
       value: data?.fields?.newTab ?? false,
       initialValue: data?.fields?.newTab ?? false,
-      valid: true
-    }
+      valid: true,
+    },
   }
 }
 
@@ -160,6 +166,6 @@ export function validateFields(fields: FormState): { valid: boolean; fields: For
   // Return
   return {
     valid,
-    fields
+    fields,
   }
 }

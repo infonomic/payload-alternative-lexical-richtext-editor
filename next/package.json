@@ -37,6 +37,7 @@
     "@payloadcms/db-postgres": "3.0.0-beta.77",
     "@payloadcms/next": "3.0.0-beta.77",
     "@payloadcms/ui": "3.0.0-beta.77",
+    "babel-plugin-react-compiler": "^0.0.0-experimental-592953e-20240517",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",

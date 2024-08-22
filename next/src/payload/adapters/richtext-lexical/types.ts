@@ -1,4 +1,4 @@
-import type { RichTextAdapter, RichTextFieldProps } from 'payload'
+import type { RichTextAdapter } from 'payload'
 
 import type { EditorConfig, EditorSettings } from './field/config/types'
 import type { SerializedEditorState } from 'lexical'
@@ -14,6 +14,10 @@ export interface AdapterProps {
   editorConfig: EditorConfig
 }
 
-export type LexicalRichTextAdapter = RichTextAdapter<SerializedEditorState, AdapterProps, any> & {
+export type LexicalRichTextAdapter = RichTextAdapter<
+  SerializedEditorState,
+  AdapterProps,
+  object
+> & {
   editorConfig: EditorConfig
 }

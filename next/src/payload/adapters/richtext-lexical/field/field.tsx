@@ -3,69 +3,97 @@
  * Originally based on https://github.com/AlessioGr/payload-plugin-lexical
  */
 
-import * as React from 'react'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
+
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { FieldDescription } from '@payloadcms/ui'
-import { FieldError } from '@payloadcms/ui'
-import { FieldLabel } from '@payloadcms/ui'
-import { useFieldProps } from '@payloadcms/ui'
-import { useField } from '@payloadcms/ui'
-import { withCondition } from '@payloadcms/ui'
+import {
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  useField,
+  useFieldProps,
+  withCondition
+} from '@payloadcms/ui'
 
-import { richTextValidate } from '../validate/validate-client'
+import { richTextValidate } from '../validate/validate-server'
 import { EditorContext } from './editor-context'
 
 import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
 import type { RichTextFieldProps } from 'payload'
 import type { AdapterProps } from '../types'
+import type { EditorConfig } from './config'
 
 import './field.scss'
+import './themes/lexical-editor-theme.scss'
 
 const baseClass = 'lexicalRichTextEditor'
 
-const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps, any>> = (
-  props
-) => {
+const RichText: React.FC<
+  {
+    readonly editorConfig: EditorConfig
+  } & RichTextFieldProps<SerializedEditorState, AdapterProps, object>
+> = (props) => {
   const {
-    name,
-    label,
-    admin: { className = '', description = '', readOnly = false, style = null, width = '' } = {},
     editorConfig,
-    path: pathFromProps,
-    required,
+    field,
+    labelProps,
+    descriptionProps,
+    errorProps,
+    field: {
+      name,
+      _path: pathFromProps,
+      admin: { className, description, readOnly: readOnlyFromAdmin, style, width } = {},
+      label,
+      required
+    },
+    readOnly: readOnlyFromTopLevelProps,
     validate = richTextValidate
   } = props
+
+  const readOnlyFromProps = readOnlyFromTopLevelProps || readOnlyFromAdmin
 
   const memoizedValidate = useCallback(
     (value: any, validationOptions: any) => {
       if (typeof validate === 'function') {
         return validate(value, { ...validationOptions, props, required })
+      } else {
+        return true
       }
     },
     // Important: do not add props to the dependencies array.
     // This would cause an infinite loop and endless re-rendering.
     // Removing props from the dependencies array fixed this issue: https://github.com/payloadcms/payload/issues/3709
-    [validate, required, props]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [validate, required]
   )
 
-  const { path: pathFromContext } = useFieldProps()
-  const path = pathFromContext || pathFromProps || name
+  const { path: pathFromContext, readOnly: readOnlyFromContext } = useFieldProps()
 
-  const field = useField<SerializedEditorState>({
-    path,
+  const fieldType = useField<SerializedEditorState>({
+    path: pathFromContext ?? pathFromProps ?? name,
     validate: memoizedValidate
   })
 
-  const { showError, errorMessage, initialValue, value, setValue } = field
+  const {
+    formInitializing,
+    formProcessing,
+    initialValue,
+    path,
+    setValue,
+    showError,
+    errorMessage,
+    value
+  } = fieldType
+
+  const disabled = readOnlyFromProps || readOnlyFromContext || formProcessing || formInitializing
 
   const classes = [
     baseClass,
     'field-type',
     className,
     showError && 'error',
-    readOnly && `${baseClass}--read-only`
+    disabled && `${baseClass}--read-only`
   ]
     .filter(Boolean)
     .join(' ')
@@ -79,25 +107,27 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
       }}
     >
       <div className={`${baseClass}__wrap`}>
-        <FieldError showError={showError} message={errorMessage ?? ''} />
+        <FieldError field={field} showError={showError} message={errorMessage ?? ''} />
         <FieldLabel
+          field={field}
           htmlFor={`field-${path.replace(/\./gi, '__')}`}
           label={label}
           required={required}
         />
+
         <ErrorBoundary fallbackRender={fallbackRender} onReset={() => {}}>
           <EditorContext
             editorConfig={editorConfig}
             fieldProps={props}
             path={path}
-            readOnly={readOnly}
+            readOnly={disabled}
             value={value}
             key={JSON.stringify({ initialValue, path })} // makes sure lexical is completely re-rendered when initialValue changes, bypassing the lexical-internal value memoization. That way, external changes to the form will update the editor. More infos in PR description (https://github.com/payloadcms/payload/pull/5010)
             // NOTE: 2023-05-15 disabled the deepEqual since we've set ignoreSelectionChange={true}
             // in our OnChangePlugin instances - and so a call here means that something
             // must have changed - so no need to do the comparison.
             onChange={(editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => {
-              if (!readOnly) {
+              if (!disabled) {
                 const serializedEditorState = editorState.toJSON()
                 // TODO: 2024-01-30 - re-test this.
                 // NOTE: 2023-06-28 fix for setValue below. For some reason when
@@ -114,7 +144,7 @@ const RichText: React.FC<RichTextFieldProps<SerializedEditorState, AdapterProps,
             }}
           />
         </ErrorBoundary>
-        <FieldDescription description={description as string} />
+        <FieldDescription field={field} description={description as string} />
       </div>
     </div>
   )

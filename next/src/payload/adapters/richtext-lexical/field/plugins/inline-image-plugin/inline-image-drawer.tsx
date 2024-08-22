@@ -10,7 +10,7 @@ import { FormSubmit } from '@payloadcms/ui'
 import { useTranslation } from '@payloadcms/ui'
 
 import { useEditorConfig } from '../../config'
-import { getMappedFields, getInitialState, validateFields } from './fields'
+import { getFields, getInitialState, validateFields } from './fields'
 
 import { v4 as uuid } from 'uuid'
 
@@ -27,20 +27,22 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
   drawerSlug,
   onSubmit,
   onClose,
-  data: dataFromProps,
+  data: dataFromProps
 }) => {
   const { config } = useEditorConfig()
   const { t } = useTranslation()
   const {
-    collections,
-    routes: { api },
-    serverURL,
+    config: {
+      collections,
+      routes: { api },
+      serverURL
+    }
   } = useConfig()
 
   console.debug('Collection:', collections)
 
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
-    undefined,
+    undefined
   )
   const version = useRef<string>(uuid())
   const [imageValue, setImageValue] = useState<string | undefined>(dataFromProps?.id)
@@ -63,7 +65,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
 
   const collection = useMemo(
     () => collections.find((coll) => coll.slug === config.inlineImageUploadCollection),
-    [config.inlineImageUploadCollection, collections],
+    [config.inlineImageUploadCollection, collections]
   )
 
   const handleOnImageChange = (value: { id: string }) => {
@@ -99,7 +101,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
           id: getImageValue(),
           altText: data.altText as string,
           position: data.position as Position,
-          showCaption: data.showCaption as boolean,
+          showCaption: data.showCaption as boolean
         }
         onSubmit(submitData)
       }
@@ -128,8 +130,8 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
         <div className="inline-image-plugin--modal-image">
           <UploadInput
             api={api}
-            collection={collection}
             allowNewUpload={true}
+            collection={collection}
             relationTo={config.inlineImageUploadCollection as CollectionSlug}
             serverURL={serverURL}
             required={true}
@@ -139,7 +141,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
           />
         </div>
         <RenderFields
-          fieldMap={getMappedFields(config.inlineImageUploadCollection, synchronizedFormState)}
+          fields={getFields(config.inlineImageUploadCollection, synchronizedFormState)}
           forceRender
           path=""
           readOnly={false}

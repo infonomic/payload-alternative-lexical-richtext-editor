@@ -12,7 +12,8 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "ci": "payload migrate && pnpm build",
     "generate:types": "payload generate:types",
-    "standalone-script": "tsx ./src/scripts/standalone-script.ts"
+    "generate:schema": "payload-graphql generate:schema",
+    "generate:importmap": "payload generate:importmap"
   },
   "engines": {
     "node": "^18.20.2 || >=20.6.0"
@@ -33,10 +34,10 @@
     "@lexical/selection": "^0.17.0",
     "@lexical/table": "^0.17.0",
     "@lexical/utils": "^0.17.0",
-    "@payloadcms/db-mongodb": "3.0.0-beta.77",
-    "@payloadcms/db-postgres": "3.0.0-beta.77",
-    "@payloadcms/next": "3.0.0-beta.77",
-    "@payloadcms/ui": "3.0.0-beta.77",
+    "@payloadcms/db-mongodb": "3.0.0-beta.90",
+    "@payloadcms/db-postgres": "3.0.0-beta.90",
+    "@payloadcms/next": "3.0.0-beta.90",
+    "@payloadcms/ui": "3.0.0-beta.90",
     "babel-plugin-react-compiler": "^0.0.0-experimental-592953e-20240517",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
@@ -44,7 +45,7 @@
     "json-schema": "^0.4.0",
     "lexical": "^0.17.0",
     "next": "15.0.0-canary.104",
-    "payload": "3.0.0-beta.77",
+    "payload": "3.0.0-beta.90",
     "react": "^19.0.0-rc-06d0b89e-20240801",
     "react-dom": "^19.0.0-rc-06d0b89e-20240801",
     "react-error-boundary": "^4.0.13",

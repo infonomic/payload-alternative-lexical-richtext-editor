@@ -141,7 +141,7 @@ export default function InlineImageComponent({
   const [selection, setSelection] = useState<RangeSelection | NodeSelection | BaseSelection | null>(
     null
   )
-  const config = useConfig()
+  const { config } = useConfig()
   const {
     serverURL,
     routes: { api }

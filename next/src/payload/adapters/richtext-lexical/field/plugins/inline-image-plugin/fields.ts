@@ -1,40 +1,36 @@
-import { MappedField } from 'payload'
-import type { CollectionSlug, FormState, OptionObject } from 'payload'
+import { ClientField } from 'payload'
+import type { FormState, OptionObject } from 'payload'
 import { InlineImageData } from './types'
 
 export const positionOptions: OptionObject[] = [
   {
     label: 'Left',
-    value: 'left',
+    value: 'left'
   },
   {
     label: 'Right',
-    value: 'right',
+    value: 'right'
   },
   {
     label: 'Full',
-    value: 'full',
+    value: 'full'
   },
   {
     label: 'Wide',
-    value: 'wide',
-  },
+    value: 'wide'
+  }
 ]
 
-export const getMappedFields = (
-  collection: string,
-  formState: FormState | undefined,
-): MappedField[] => [
+export const getFields = (collection: string, formState: FormState | undefined): ClientField[] => [
   // TODO: Investigate - would love to have used formState and RenderFields / MappedFields
   // for the Image upload field, but for some reason I could not get a return value
   // for the selected image via handleFormOnChange or handleFormOnSubmit :-(
   // {
   //   name: 'image',
-  //   cellComponentProps: { name: 'image', schemaPath: 'image' },
+  //   cellComponentProps: { name: 'image' },
   //   fieldComponentProps: {
   //     name: 'image',
-  //     type: 'upload',
-  //     relationTo: collection as CollectionSlug,
+  //     relationTo: collection,
   //     path: 'inline-image',
   //     required: true,
   //   },
@@ -43,57 +39,35 @@ export const getMappedFields = (
   //   localized: false,
   //   type: 'upload',
   // },
+  // @ts-expect-error: type error
   {
     name: 'version',
-    cellComponentProps: { name: 'version', schemaPath: 'version' },
-    fieldComponentProps: { name: 'version', type: 'text' },
-    fieldIsPresentational: false,
-    isFieldAffectingData: true,
     localized: false,
-    isHidden: true,
     type: 'text',
+    admin: {
+      hidden: true
+    }
   },
   {
     name: 'altText',
-    cellComponentProps: { name: 'altText', schemaPath: 'altText' },
-    fieldComponentProps: {
-      name: 'altText',
-      type: 'text',
-      label: 'Alt Text',
-      errorProps: {
-        showError: formState?.altText?.valid === false,
-        message: 'Please enter alternative text for this image.',
-      },
-      required: true,
-    },
-    fieldIsPresentational: false,
-    isFieldAffectingData: true,
+    required: true,
+    label: 'Alt Text',
     localized: false,
-    type: 'text',
+    type: 'text'
   },
   {
     name: 'position',
-    cellComponentProps: { name: 'position', schemaPath: 'position' },
-    fieldComponentProps: {
-      name: 'position',
-      type: 'select',
-      label: 'Position',
-      options: positionOptions,
-    },
-    fieldIsPresentational: false,
-    isFieldAffectingData: true,
     localized: false,
-    type: 'select',
+    label: 'Position',
+    options: positionOptions,
+    type: 'select'
   },
   {
     name: 'showCaption',
-    cellComponentProps: { name: 'showCaption', schemaPath: 'showCaption' },
-    fieldComponentProps: { name: 'showCaption', type: 'checkbox', label: 'Show Caption' },
-    fieldIsPresentational: false,
-    isFieldAffectingData: true,
+    label: 'Show Caption',
     localized: false,
-    type: 'checkbox',
-  },
+    type: 'checkbox'
+  }
 ]
 
 export function getInitialState(data: InlineImageData | undefined): FormState {
@@ -109,23 +83,23 @@ export function getInitialState(data: InlineImageData | undefined): FormState {
     version: {
       value: '',
       initialValue: '',
-      valid: true,
+      valid: true
     },
     altText: {
       value: data?.altText,
       initialValue: data?.altText,
-      valid: true,
+      valid: true
     },
     position: {
       value: data?.position ?? 'left',
       initialValue: data?.position ?? 'left',
-      valid: true,
+      valid: true
     },
     showCaption: {
       value: data?.showCaption ?? false,
       initialValue: data?.showCaption ?? false,
-      valid: true,
-    },
+      valid: true
+    }
   }
 }
 
@@ -145,6 +119,6 @@ export function validateFields(fields: FormState): { valid: boolean; fields: For
   // Return
   return {
     valid,
-    fields,
+    fields
   }
 }

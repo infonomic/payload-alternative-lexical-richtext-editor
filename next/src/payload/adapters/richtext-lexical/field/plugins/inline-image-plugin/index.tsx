@@ -71,7 +71,7 @@ export function InlineImagePlugin({ collection }: { collection: string }): React
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()
-  const config = useConfig()
+  const { config } = useConfig()
   const {
     serverURL,
     routes: { api }

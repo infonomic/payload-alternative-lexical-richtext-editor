@@ -1,70 +1,51 @@
 import type { FormState, OptionObject } from 'payload'
-import { MappedField } from 'payload'
+import { ClientField } from 'payload'
 import { AdmonitionType } from '../../nodes/admonition-node'
 
 export const admonitionTypeOptions: OptionObject[] = [
   {
     label: 'Note',
-    value: 'note',
+    value: 'note'
   },
   {
     label: 'Tip',
-    value: 'tip',
+    value: 'tip'
   },
   {
     label: 'Warning',
-    value: 'warning',
+    value: 'warning'
   },
   {
     label: 'Danger',
-    value: 'danger',
-  },
+    value: 'danger'
+  }
 ]
 
-export const getMappedFields = (formState: FormState | undefined): MappedField[] => {
+export const getFields = (formState: FormState | undefined): ClientField[] => {
   return [
+    // @ts-expect-error: type error
     {
       name: 'version',
-      cellComponentProps: { name: 'version', schemaPath: 'version' },
-      fieldComponentProps: { name: 'version', type: 'text' },
-      fieldIsPresentational: false,
-      isFieldAffectingData: true,
       localized: false,
-      isHidden: true,
       type: 'text',
+      admin: {
+        hidden: true
+      }
     },
     {
       name: 'title',
-      cellComponentProps: { name: 'title', schemaPath: 'title' },
-      fieldComponentProps: {
-        type: 'text',
-        name: 'title',
-        label: 'Title',
-        errorProps: {
-          showError: formState?.title?.valid === false,
-          message: 'Please enter title for this admonition.',
-        },
-        required: true,
-      },
-      fieldIsPresentational: false,
-      isFieldAffectingData: true,
       localized: false,
-      type: 'text',
+      label: 'Title',
+      required: true,
+      type: 'text'
     },
     {
       name: 'admonitionType',
-      cellComponentProps: { name: 'admonitionType', schemaPath: 'admonitionType' },
-      fieldComponentProps: {
-        name: 'admonitionType',
-        type: 'radio',
-        label: 'Admonition Type',
-        options: admonitionTypeOptions,
-      },
-      fieldIsPresentational: false,
-      isFieldAffectingData: true,
       localized: false,
       type: 'radio',
-    },
+      label: 'Type',
+      options: admonitionTypeOptions
+    }
   ]
 }
 
@@ -76,18 +57,18 @@ export function getInitialState(data: {
     version: {
       value: '',
       initialValue: '',
-      valid: true,
+      valid: true
     },
     title: {
       value: data?.title,
       initialValue: data?.title,
-      valid: true,
+      valid: true
     },
     admonitionType: {
       value: data?.admonitionType ?? 'note',
       initialValue: data?.admonitionType ?? 'note',
-      valid: true,
-    },
+      valid: true
+    }
   }
 }
 
@@ -107,6 +88,6 @@ export function validateFields(fields: FormState): { valid: boolean; fields: For
   // Return
   return {
     valid,
-    fields,
+    fields
   }
 }

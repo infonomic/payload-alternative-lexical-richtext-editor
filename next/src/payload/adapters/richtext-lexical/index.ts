@@ -8,10 +8,6 @@
  */
 
 import { withNullableJSONSchemaType } from 'payload'
-import { withMergedProps } from '@payloadcms/ui/elements/withMergedProps'
-
-import { RichTextCell } from './cell'
-import { RichTextField } from './field/field-component'
 
 import { defaultEditorConfig, EditorSettings } from './field/config'
 import { cloneDeep } from './field/utils/cloneDeep'
@@ -49,23 +45,50 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
 
   const editorConfig: EditorConfig = {
     settings,
-    lexical
+    lexical,
   }
 
   return {
-    CellComponent: withMergedProps({
-      Component: RichTextCell,
-      toMergeIntoProps: { editorConfig }
-    }),
-    FieldComponent: withMergedProps({
-      Component: RichTextField,
-      toMergeIntoProps: { editorConfig }
-    }),
+    CellComponent: {
+      clientProps: {
+        // admin: props?.admin,
+        editorConfig,
+      },
+      path: '/payload/adapters/richtext-lexical/cell/index#RichTextCell',
+    },
+    // CellComponent: withMergedProps({
+    //   Component: RichTextCell,
+    //   toMergeIntoProps: { editorConfig }
+    // }),
+    FieldComponent: {
+      clientProps: {
+        // admin: props?.admin,
+        editorConfig,
+      },
+      path: '/payload/adapters/richtext-lexical/field/field-component#RichTextField',
+    },
+    // FieldComponent: withMergedProps({
+    //   Component: RichTextField,
+    //   toMergeIntoProps: { editorConfig }
+    // }),
     editorConfig,
-    generateComponentMap: () => new Map(),
-    outputSchema: ({ field, isRequired }) => {
-      const outputSchema: JSONSchema4 = {
-        // NOTE: Directly from https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/index.ts
+    generateImportMap: ({ addToImportMap }: any) => {
+      addToImportMap('/payload/adapters/richtext-lexical/cell/index#RichTextCell')
+      addToImportMap('/payload/adapters/richtext-lexical/field/field-component#RichTextField')
+    },
+    generateComponentMap: {
+      path: '',
+      serverProps: {},
+    },
+    // NOTE: Directly from https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/index.ts
+    outputSchema: ({
+      collectionIDFieldTypes,
+      config,
+      field,
+      interfaceNameDefinitions,
+      isRequired,
+    }) => {
+      let outputSchema: JSONSchema4 = {
         // This schema matches the SerializedEditorState type so far, that it's possible to cast SerializedEditorState to this schema without any errors.
         // In the future, we should
         // 1) allow recursive children
@@ -76,54 +99,54 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
             type: 'object',
             additionalProperties: false,
             properties: {
+              type: {
+                type: 'string',
+              },
               children: {
+                type: 'array',
                 items: {
+                  type: 'object',
                   additionalProperties: true,
                   properties: {
                     type: {
-                      type: 'string'
+                      type: 'string',
                     },
                     version: {
-                      type: 'integer'
-                    }
+                      type: 'integer',
+                    },
                   },
                   required: ['type', 'version'],
-                  type: 'object'
                 },
-                type: 'array'
               },
               direction: {
                 oneOf: [
                   {
-                    enum: ['ltr', 'rtl']
+                    enum: ['ltr', 'rtl'],
                   },
                   {
-                    type: 'null'
-                  }
-                ]
+                    type: 'null',
+                  },
+                ],
               },
               format: {
+                type: 'string',
                 enum: ['left', 'start', 'center', 'right', 'end', 'justify', ''], // ElementFormatType, since the root node is an element
-                type: 'string'
               },
               indent: {
-                type: 'integer'
-              },
-              type: {
-                type: 'string'
+                type: 'integer',
               },
               version: {
-                type: 'integer'
-              }
+                type: 'integer',
+              },
             },
-            required: ['children', 'direction', 'format', 'indent', 'type', 'version']
-          }
+            required: ['children', 'direction', 'format', 'indent', 'type', 'version'],
+          },
         },
-        required: ['root']
+        required: ['root'],
       }
 
       return outputSchema
     },
-    validate: richTextValidate
+    validate: richTextValidate,
   }
 }

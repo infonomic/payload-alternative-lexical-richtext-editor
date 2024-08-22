@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -8,9 +10,7 @@
 
 import type { EditorThemeClasses } from 'lexical'
 
-import './lexical-editor-theme.scss'
-
-const theme: EditorThemeClasses = {
+export const theme: EditorThemeClasses = {
   blockCursor: 'LexicalEditorTheme__blockCursor',
   characterLimit: 'LexicalEditorTheme__characterLimit',
   code: 'LexicalEditorTheme__code',
@@ -113,5 +113,3 @@ const theme: EditorThemeClasses = {
     underlineStrikethrough: 'LexicalEditorTheme__textUnderlineStrikethrough'
   }
 }
-
-export default theme

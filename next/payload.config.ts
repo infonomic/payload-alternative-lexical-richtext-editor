@@ -18,6 +18,16 @@ import { Debug } from '@/payload/collections/debug'
 import { Media } from '@/payload/collections/media'
 
 export default buildConfig({
+  admin: {
+    importMap: {
+      baseDir: path.resolve(dirname, 'src'),
+    },
+    autoLogin: {
+      email: 'dev@payloadcms.com',
+      password: 'test',
+      prefillOnly: true,
+    },
+  },
   // @ts-ignore: return type for editorConfig is different
   editor: lexicalEditor(),
   collections: [Full, Minimal, Compact, Debug, Media, Users],
@@ -42,13 +52,6 @@ export default buildConfig({
     supportedLanguages: { en },
   },
 
-  admin: {
-    autoLogin: {
-      email: 'dev@payloadcms.com',
-      password: 'test',
-      prefillOnly: true,
-    },
-  },
   async onInit(payload) {
     const existingUsers = await payload.find({
       collection: 'users',

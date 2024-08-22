@@ -31,9 +31,8 @@ export const Media: CollectionConfig = {
     enableRichTextRelationship: false,
     group: 'Uploads',
     components: {
-      edit: {
-        Description: MediaCollectionDescription,
-      },
+      Description:
+        '/payload/collections/components/media-collection-description#MediaCollectionDescription',
     },
   },
   access: {

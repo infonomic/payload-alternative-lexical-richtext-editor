@@ -9,7 +9,7 @@ import { RenderFields } from '@payloadcms/ui'
 import { FormSubmit } from '@payloadcms/ui'
 import { useTranslation } from '@payloadcms/ui'
 import { v4 as uuid } from 'uuid'
-import { getInitialState, getMappedFields, validateFields } from './fields'
+import { getInitialState, getFields, validateFields } from './fields'
 import { useModal } from '@payloadcms/ui'
 
 import type { AdmonitionDrawerProps } from './types'
@@ -82,7 +82,7 @@ export function AdmonitionDrawer({
         uuid={uuid()}
       >
         <RenderFields
-          fieldMap={getMappedFields(synchronizedFormState)}
+          fields={getFields(synchronizedFormState)}
           forceRender
           path=""
           readOnly={false}

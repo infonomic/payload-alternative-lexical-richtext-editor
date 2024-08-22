@@ -8,7 +8,7 @@ import { FormSubmit } from '@payloadcms/ui'
 import { useTranslation } from '@payloadcms/ui'
 import { useConfig } from '@payloadcms/ui'
 
-import { getMappedFields, getInitialState, validateFields } from './fields'
+import { getFields, getInitialState, validateFields } from './fields'
 
 import { v4 as uuid } from 'uuid'
 
@@ -27,7 +27,7 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
   data: dataFromProps
 }) => {
   const { t } = useTranslation()
-  const config = useConfig()
+  const { config } = useConfig()
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
     undefined
   )
@@ -113,7 +113,7 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
         uuid={uuid()}
       >
         <RenderFields
-          fieldMap={getMappedFields(synchronizedFormState, validRelationships)}
+          fields={getFields(synchronizedFormState, validRelationships)}
           forceRender
           path=""
           readOnly={false}

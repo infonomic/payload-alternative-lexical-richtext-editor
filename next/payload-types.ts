@@ -56,6 +56,7 @@ export interface Full {
   title: string;
   richText: {
     root: {
+      type: string;
       children: {
         type: string;
         version: number;
@@ -64,7 +65,6 @@ export interface Full {
       direction: ('ltr' | 'rtl') | null;
       format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
       indent: number;
-      type: string;
       version: number;
     };
     [k: string]: unknown;
@@ -83,6 +83,7 @@ export interface Minimal {
   title: string;
   richText: {
     root: {
+      type: string;
       children: {
         type: string;
         version: number;
@@ -91,7 +92,6 @@ export interface Minimal {
       direction: ('ltr' | 'rtl') | null;
       format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
       indent: number;
-      type: string;
       version: number;
     };
     [k: string]: unknown;
@@ -110,6 +110,7 @@ export interface Compact {
   title: string;
   richText: {
     root: {
+      type: string;
       children: {
         type: string;
         version: number;
@@ -118,7 +119,6 @@ export interface Compact {
       direction: ('ltr' | 'rtl') | null;
       format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
       indent: number;
-      type: string;
       version: number;
     };
     [k: string]: unknown;
@@ -137,6 +137,7 @@ export interface Debug {
   title: string;
   richText?: {
     root: {
+      type: string;
       children: {
         type: string;
         version: number;
@@ -145,7 +146,6 @@ export interface Debug {
       direction: ('ltr' | 'rtl') | null;
       format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
       indent: number;
-      type: string;
       version: number;
     };
     [k: string]: unknown;
@@ -271,7 +271,7 @@ export interface Media {
 export interface User {
   id: string;
   name?: string | null;
-  photo?: string | Media | null;
+  photo?: (string | null) | Media;
   roles: ('admin' | 'editor' | 'public')[];
   updatedAt: string;
   createdAt: string;

@@ -86,7 +86,7 @@ const RichText: React.FC<
     value
   } = fieldType
 
-  const disabled = readOnlyFromProps || readOnlyFromContext || formProcessing || formInitializing
+  const disabled = readOnlyFromProps || readOnlyFromContext || formProcessing // || formInitializing
 
   const classes = [
     baseClass,

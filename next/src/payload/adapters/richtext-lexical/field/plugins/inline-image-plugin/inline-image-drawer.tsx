@@ -39,8 +39,6 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
     }
   } = useConfig()
 
-  console.debug('Collection:', collections)
-
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
     undefined
   )
@@ -68,12 +66,12 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
     [config.inlineImageUploadCollection, collections]
   )
 
-  const handleOnImageChange = (value: { id: string }) => {
+  const handleOnImageChange = (value: string) => {
     if (value == null) {
       setImageValue(undefined)
       setRemoveImage(true)
     } else {
-      setImageValue(value.id)
+      setImageValue(value)
       setRemoveImage(false)
     }
   }
@@ -130,6 +128,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
         <div className="inline-image-plugin--modal-image">
           <UploadInput
             api={api}
+            path="inline-image-plugin-upload"
             allowNewUpload={true}
             collection={collection}
             relationTo={config.inlineImageUploadCollection as CollectionSlug}

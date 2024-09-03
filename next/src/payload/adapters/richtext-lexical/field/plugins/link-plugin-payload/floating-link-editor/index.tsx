@@ -20,7 +20,7 @@ import { useEditorConfig } from '../../../config'
 import {
   $isLinkNode,
   $isAutoLinkNode,
-  TOGGLE_LINK_COMMAND,
+  TOGGLE_LINK_COMMAND
 } from '../../../nodes/link-nodes-payload'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
@@ -34,7 +34,7 @@ import {
   COMMAND_PRIORITY_HIGH,
   COMMAND_PRIORITY_LOW,
   KEY_ESCAPE_COMMAND,
-  SELECTION_CHANGE_COMMAND,
+  SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
 import { getSelectedNode } from '../../../utils/getSelectedNode'
@@ -61,7 +61,7 @@ function FloatingLinkEditor({
   editor,
   isLink,
   setIsLink,
-  anchorElem,
+  anchorElem
 }: {
   editor: LexicalEditor
   isLink: boolean
@@ -82,7 +82,7 @@ function FloatingLinkEditor({
 
   const drawerSlug = formatDrawerSlug({
     slug: `rich-text-link-lexical-${uuid}`,
-    depth: editDepth,
+    depth: editDepth
   })
 
   const updateLinkEditor = useCallback(async () => {
@@ -98,14 +98,14 @@ function FloatingLinkEditor({
           url: '',
           linkType: undefined,
           newTab: undefined,
-          doc: undefined,
-        },
+          doc: undefined
+        }
       }
 
       if (linkParent) {
         data = {
           text: linkParent.getTextContent(),
-          fields: linkParent.getAttributes(),
+          fields: linkParent.getAttributes()
         }
 
         if (linkParent.getAttributes()?.linkType === 'custom') {
@@ -116,18 +116,18 @@ function FloatingLinkEditor({
           setLinkUrl(
             `${config.serverURL}${config.routes.admin}/collections/${
               linkParent.getAttributes()?.doc?.relationTo
-            }/${linkParent.getAttributes()?.doc?.value}`,
+            }/${linkParent.getAttributes()?.doc?.value}`
           )
           setLinkLabel(
             `relation to ${linkParent.getAttributes()?.doc?.relationTo}: ${
               linkParent.getAttributes()?.doc?.value
-            }`,
+            }`
           )
         }
       } else if ($isLinkNode(node)) {
         data = {
           text: node.getTextContent(),
-          fields: node.getAttributes(),
+          fields: node.getAttributes()
         }
 
         if (node.getAttributes()?.linkType === 'custom') {
@@ -140,14 +140,14 @@ function FloatingLinkEditor({
               // @ts-expect-error: TODO
               parent?.getAttributes()?.doc?.relationTo
               // @ts-expect-error: TODO
-            }/${parent?.getAttributes()?.doc?.value}`,
+            }/${parent?.getAttributes()?.doc?.value}`
           )
           setLinkLabel(
             // @ts-expect-error: TODO
             `relation to ${parent?.getAttributes()?.doc?.relationTo}: ${
               // @ts-expect-error: TODO
               parent?.getAttributes()?.doc?.value
-            }`,
+            }`
           )
         }
       } else {
@@ -232,7 +232,7 @@ function FloatingLinkEditor({
           void updateLinkEditor()
           return true
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         KEY_ESCAPE_COMMAND,
@@ -243,8 +243,8 @@ function FloatingLinkEditor({
           }
           return false
         },
-        COMMAND_PRIORITY_HIGH,
-      ),
+        COMMAND_PRIORITY_HIGH
+      )
     )
   }, [editor, updateLinkEditor, setIsLink, isLink])
 
@@ -261,7 +261,7 @@ function FloatingLinkEditor({
       url: data?.fields?.linkType === 'custom' ? data?.fields?.url : undefined,
       linkType: data?.fields?.linkType,
       doc: data?.fields?.linkType === 'internal' ? data?.fields?.doc : undefined,
-      text: data?.text,
+      text: data?.text
     }
 
     editor.dispatchCommand(TOGGLE_LINK_COMMAND, newNode)
@@ -317,7 +317,7 @@ function FloatingLinkEditor({
 
 function useFloatingLinkEditorToolbar(
   editor: LexicalEditor,
-  anchorElem: HTMLElement,
+  anchorElem: HTMLElement
 ): React.JSX.Element | null {
   const [activeEditor, setActiveEditor] = useState(editor)
   const [isLink, setIsLink] = useState(false)
@@ -362,13 +362,13 @@ function useFloatingLinkEditorToolbar(
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
-        (payload, newEditor) => {
+        (_payload, newEditor) => {
           updateToolbar()
           setActiveEditor(newEditor)
           return false
         },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
+        COMMAND_PRIORITY_CRITICAL
+      )
     )
   }, [editor])
 
@@ -379,12 +379,12 @@ function useFloatingLinkEditorToolbar(
       isLink={isLink}
       setIsLink={setIsLink}
     />,
-    anchorElem,
+    anchorElem
   )
 }
 
 export function FloatingLinkEditorPlugin({
-  anchorElem = document.body,
+  anchorElem = document.body
 }: {
   anchorElem?: HTMLElement
 }): React.JSX.Element | null {

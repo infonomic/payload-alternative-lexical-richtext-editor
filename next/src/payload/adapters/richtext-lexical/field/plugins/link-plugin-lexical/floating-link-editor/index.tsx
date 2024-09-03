@@ -24,7 +24,7 @@ import {
   COMMAND_PRIORITY_LOW,
   KEY_ESCAPE_COMMAND,
   LexicalEditor,
-  SELECTION_CHANGE_COMMAND,
+  SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
 import { getSelectedNode } from '../../../utils/getSelectedNode'
@@ -39,7 +39,7 @@ function FloatingLinkEditor({
   setIsLink,
   anchorElem,
   isLinkEditMode,
-  setIsLinkEditMode,
+  setIsLinkEditMode
 }: {
   editor: LexicalEditor
   isLink: boolean
@@ -145,7 +145,7 @@ function FloatingLinkEditor({
           updateLinkEditor()
           return true
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         KEY_ESCAPE_COMMAND,
@@ -156,8 +156,8 @@ function FloatingLinkEditor({
           }
           return false
         },
-        COMMAND_PRIORITY_HIGH,
-      ),
+        COMMAND_PRIORITY_HIGH
+      )
     )
   }, [editor, updateLinkEditor, setIsLink, isLink])
 
@@ -195,7 +195,7 @@ function FloatingLinkEditor({
               const linkNode = $createLinkNode(parent.getURL(), {
                 rel: parent.__rel,
                 target: parent.__target,
-                title: parent.__title,
+                title: parent.__title
               })
               parent.replace(linkNode, true)
             }
@@ -276,7 +276,7 @@ function useFloatingLinkEditorToolbar(
   editor: LexicalEditor,
   anchorElem: HTMLElement,
   isLinkEditMode: boolean,
-  setIsLinkEditMode: Dispatch<boolean>,
+  setIsLinkEditMode: Dispatch<boolean>
 ): React.JSX.Element | null {
   const [activeEditor, setActiveEditor] = useState(editor)
   const [isLink, setIsLink] = useState(false)
@@ -320,12 +320,12 @@ function useFloatingLinkEditorToolbar(
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
-        (payload, newEditor) => {
+        (_payload, newEditor) => {
           updateToolbar()
           setActiveEditor(newEditor)
           return false
         },
-        COMMAND_PRIORITY_CRITICAL,
+        COMMAND_PRIORITY_CRITICAL
       ),
       editor.registerCommand(
         CLICK_COMMAND,
@@ -341,8 +341,8 @@ function useFloatingLinkEditorToolbar(
           }
           return false
         },
-        COMMAND_PRIORITY_LOW,
-      ),
+        COMMAND_PRIORITY_LOW
+      )
     )
   }, [editor])
 
@@ -355,14 +355,14 @@ function useFloatingLinkEditorToolbar(
       isLinkEditMode={isLinkEditMode}
       setIsLinkEditMode={setIsLinkEditMode}
     />,
-    anchorElem,
+    anchorElem
   )
 }
 
 export default function FloatingLinkEditorPlugin({
   anchorElem = document.body,
   isLinkEditMode,
-  setIsLinkEditMode,
+  setIsLinkEditMode
 }: {
   anchorElem?: HTMLElement
   isLinkEditMode: boolean

@@ -45,16 +45,16 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
 
   const editorConfig: EditorConfig = {
     settings,
-    lexical
+    lexical,
   }
 
   return {
     CellComponent: {
       clientProps: {
         // admin: props?.admin,
-        editorConfig
+        editorConfig,
       },
-      path: '/payload/adapters/richtext-lexical/cell/index#RichTextCell'
+      path: '/payload/adapters/richtext-lexical/cell/index#RichTextCell',
     },
     // CellComponent: withMergedProps({
     //   Component: RichTextCell,
@@ -63,9 +63,9 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     FieldComponent: {
       clientProps: {
         // admin: props?.admin,
-        editorConfig
+        editorConfig,
       },
-      path: '/payload/adapters/richtext-lexical/field/field-component#RichTextField'
+      path: '/payload/adapters/richtext-lexical/field/field-component#RichTextField',
     },
     // FieldComponent: withMergedProps({
     //   Component: RichTextField,
@@ -78,7 +78,7 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     },
     generateComponentMap: {
       path: '',
-      serverProps: {}
+      serverProps: {},
     },
     // NOTE: Directly from https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/index.ts
     outputSchema: ({
@@ -86,7 +86,7 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
       config,
       field,
       interfaceNameDefinitions,
-      isRequired
+      isRequired,
     }) => {
       let outputSchema: JSONSchema4 = {
         // This schema matches the SerializedEditorState type so far, that it's possible to cast SerializedEditorState to this schema without any errors.
@@ -100,7 +100,7 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
             additionalProperties: false,
             properties: {
               type: {
-                type: 'string'
+                type: 'string',
               },
               children: {
                 type: 'array',
@@ -109,44 +109,44 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
                   additionalProperties: true,
                   properties: {
                     type: {
-                      type: 'string'
+                      type: 'string',
                     },
                     version: {
-                      type: 'integer'
-                    }
+                      type: 'integer',
+                    },
                   },
-                  required: ['type', 'version']
-                }
+                  required: ['type', 'version'],
+                },
               },
               direction: {
                 oneOf: [
                   {
-                    enum: ['ltr', 'rtl']
+                    enum: ['ltr', 'rtl'],
                   },
                   {
-                    type: 'null'
-                  }
-                ]
+                    type: 'null',
+                  },
+                ],
               },
               format: {
                 type: 'string',
-                enum: ['left', 'start', 'center', 'right', 'end', 'justify', ''] // ElementFormatType, since the root node is an element
+                enum: ['left', 'start', 'center', 'right', 'end', 'justify', ''], // ElementFormatType, since the root node is an element
               },
               indent: {
-                type: 'integer'
+                type: 'integer',
               },
               version: {
-                type: 'integer'
-              }
+                type: 'integer',
+              },
             },
-            required: ['children', 'direction', 'format', 'indent', 'type', 'version']
-          }
+            required: ['children', 'direction', 'format', 'indent', 'type', 'version'],
+          },
         },
-        required: ['root']
+        required: ['root'],
       }
 
       return outputSchema
     },
-    validate: richTextValidate
+    validate: richTextValidate,
   }
 }

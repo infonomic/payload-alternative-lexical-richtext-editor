@@ -20,7 +20,7 @@ import { richTextValidate } from '../validate/validate-server'
 import { EditorContext } from './editor-context'
 
 import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
-import type { RichTextFieldProps } from 'payload'
+import type { RichTextFieldClientProps } from 'payload'
 import type { AdapterProps } from '../types'
 import type { EditorConfig } from './config'
 
@@ -32,7 +32,7 @@ const baseClass = 'lexicalRichTextEditor'
 const RichText: React.FC<
   {
     readonly editorConfig: EditorConfig
-  } & RichTextFieldProps<SerializedEditorState, AdapterProps, object>
+  } & RichTextFieldClientProps<SerializedEditorState, AdapterProps, object>
 > = (props) => {
   const {
     editorConfig,

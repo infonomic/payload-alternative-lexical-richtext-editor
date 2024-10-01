@@ -17,6 +17,7 @@ export interface Config {
     debug: Debug;
     media: Media;
     users: User;
+    'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -283,6 +284,45 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-locked-documents".
+ */
+export interface PayloadLockedDocument {
+  id: string;
+  document?:
+    | ({
+        relationTo: 'full';
+        value: string | Full;
+      } | null)
+    | ({
+        relationTo: 'minimal';
+        value: string | Minimal;
+      } | null)
+    | ({
+        relationTo: 'compact';
+        value: string | Compact;
+      } | null)
+    | ({
+        relationTo: 'debug';
+        value: string | Debug;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null);
+  globalSlug?: string | null;
+  user: {
+    relationTo: 'users';
+    value: string | User;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

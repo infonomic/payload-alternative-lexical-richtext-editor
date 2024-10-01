@@ -12,7 +12,7 @@ import { Nodes } from './nodes'
 import type { EditorConfig } from './config'
 import type { InitialConfigType } from '@lexical/react/LexicalComposer'
 import type { LexicalEditor, EditorState, SerializedEditorState } from 'lexical'
-import { RichTextFieldProps } from 'payload'
+import { RichTextFieldClientProps } from 'payload'
 import { AdapterProps } from '../types'
 
 // Catch any errors that occur during Lexical updates and log them
@@ -25,7 +25,7 @@ function onError(error: Error, editor: LexicalEditor): void {
 
 export function EditorContext(props: {
   editorConfig: EditorConfig
-  fieldProps: RichTextFieldProps<SerializedEditorState, AdapterProps, any>
+  fieldProps: RichTextFieldClientProps<SerializedEditorState, AdapterProps, any>
   onChange: (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void
   path: string
   readOnly: boolean

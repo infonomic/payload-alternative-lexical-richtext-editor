@@ -6,7 +6,7 @@ This repo is based on the demo repo of the Payload 3.0 Beta running completely w
 > Unless you have very specific needs, or a lot of experience with Lexical and custom Payload fields, you should almost certainly be using the new and official [Payload Lexical Rich Text editor](https://payloadcms.com/docs/rich-text/lexical). 
 >
 
-It's also important to mention that creating a generalized and extensible editor with a 'pluggable' feature system - such as the one currently being developed by Alessio and the team at Payload, is an order of magnitude more difficult than creating an 'opinionated' system with zero extensibility. The Payload team are doing amazing work - and this repo and our editor is in no way a criticism of the work being done at Payload.
+It's also important to mention that creating a generalized and extensible editor with a 'pluggable' feature system - such as the one currently being developed by Alessio and the team at Payload, is an order of magnitude more difficult than creating an 'opinionated' adapter with zero extensibility. The Payload team are doing amazing work - and this repo and our editor is in no way a criticism of the work being done at Payload.
 
 ## Our Lexical Editor
 
@@ -14,7 +14,7 @@ It's also important to mention that creating a generalized and extensible editor
 
 ## Background
 
-We started working with [Lexical](https://lexical.dev/) in 2022 while searching for a replacement CMS for our agency. We then discovered [Payload CMS](https://payloadcms.com/) - which ticked nearly every box, with one notable exception - and that was the use of Slate as their rich text editor. We'd worked with Slate and other editors previously and really wanted to use Lexical.
+We started working with [Lexical](https://lexical.dev/) in 2022 while searching for a replacement CMS for our agency. We then discovered [Payload CMS](https://payloadcms.com/) - which ticked nearly every box, with one notable exception - the use of Slate as their rich text editor. We'd worked with Slate and other editors previously and really wanted to use Lexical.
 
 And so we started work on a Lexical-based rich text field for Payload. Early in 2023 we discovered [Alessio Gravili's Payload Lexical Plugin](https://github.com/AlessioGr/payload-plugin-lexical) which helped enormously in getting started with Payload and custom fields. We also attempted to 'give back' to the work Alessio was doing with contributions to his public repo.
 
@@ -65,6 +65,8 @@ We've added a `data` attribute and populated the title and slug for the related 
 5. In Payload 3.0 - we wanted to experiment with client-only forms using the new field api and `RenderFields`. You can see an example here in our [Admonition plugin](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/plugins/admonition-plugin/admonition-drawer.tsx). This is totally experimental. It works (as far as we can tell) and we're using this for all of our custom components that require modals or drawers with Payload fields.
 
 6. We wanted to share our plugins - in particular our Inline Image plugin which was accepted into the Lexcical playground and our Admonition plugin. In fact, our Inline Image plugin was one of the main reasons we chose Lexical as our preferred editor. Try creating a floated inline element that appears correctly in both the admin editor and the front end application - inside any of the 'other editors', and you'll see why ;-).  Most of the other plugins in this repo track Lexical Playground plugins and are updated from there.
+
+7. And lastly, we wanted to keep our editor lightweight and fast, in particular for longer documents.
 
 ## Getting Started
 

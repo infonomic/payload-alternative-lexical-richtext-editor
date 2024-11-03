@@ -129,7 +129,6 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
           <UploadInput
             api={api}
             path="inline-image-plugin-upload"
-            allowNewUpload={true}
             collection={collection}
             relationTo={config.inlineImageUploadCollection as CollectionSlug}
             serverURL={serverURL}

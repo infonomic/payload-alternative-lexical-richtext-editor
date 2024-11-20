@@ -84,9 +84,11 @@ export function AdmonitionDrawer({
         <RenderFields
           fields={getFields(synchronizedFormState)}
           forceRender
-          path=""
           readOnly={false}
-          schemaPath="admonition-drawer-schema-map"
+          parentSchemaPath=""
+          parentPath=""
+          parentIndexPath=""
+          permissions={true}
         />
         <div className="link-plugin--modal-actions" data-test-id="link-plugin-model-actions">
           <FormSubmit>{t('general:save')}</FormSubmit>

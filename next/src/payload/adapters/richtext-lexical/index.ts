@@ -48,37 +48,26 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     lexical,
   }
 
+  // TODO: Watch for type updates in RichTextAdapter
   return {
     CellComponent: {
-      clientProps: {
-        // admin: props?.admin,
-        editorConfig,
-      },
       path: '/payload/adapters/richtext-lexical/cell/index#RichTextCell',
-    },
-    // CellComponent: withMergedProps({
-    //   Component: RichTextCell,
-    //   toMergeIntoProps: { editorConfig }
-    // }),
-    FieldComponent: {
       clientProps: {
         // admin: props?.admin,
         editorConfig,
       },
-      path: '/payload/adapters/richtext-lexical/field/field-component#RichTextField',
     },
-    // FieldComponent: withMergedProps({
-    //   Component: RichTextField,
-    //   toMergeIntoProps: { editorConfig }
-    // }),
+    FieldComponent: {
+      path: '/payload/adapters/richtext-lexical/field/index#RichTextField',
+      clientProps: {
+        // admin: props?.admin,
+        editorConfig,
+      },
+    },
     editorConfig,
     generateImportMap: ({ addToImportMap }: any) => {
       addToImportMap('/payload/adapters/richtext-lexical/cell/index#RichTextCell')
-      addToImportMap('/payload/adapters/richtext-lexical/field/field-component#RichTextField')
-    },
-    generateComponentMap: {
-      path: '',
-      serverProps: {},
+      addToImportMap('/payload/adapters/richtext-lexical/field/index#RichTextField')
     },
     // NOTE: Directly from https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/index.ts
     outputSchema: ({

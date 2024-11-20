@@ -128,6 +128,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
         <div className="inline-image-plugin--modal-image">
           <UploadInput
             api={api}
+            allowCreate={true}
             path="inline-image-plugin-upload"
             collection={collection}
             relationTo={config.inlineImageUploadCollection as CollectionSlug}
@@ -141,9 +142,11 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
         <RenderFields
           fields={getFields(config.inlineImageUploadCollection, synchronizedFormState)}
           forceRender
-          path=""
+          parentSchemaPath=""
+          parentPath=""
+          parentIndexPath=""
+          permissions={true}
           readOnly={false}
-          schemaPath="inline-image-drawer-schema-map"
         />
         <div
           className="inline-image-plugin--modal-actions"

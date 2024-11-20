@@ -34,7 +34,7 @@ export const validateFilename: CollectionBeforeValidateHook = ({ data }) => {
     throw new ValidationError({
       errors: [
         {
-          field: 'file',
+          path: 'file',
           message,
         },
       ],

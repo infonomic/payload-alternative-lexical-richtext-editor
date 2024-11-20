@@ -139,7 +139,6 @@ export function InsertTableDialog({ drawerSlug }: { drawerSlug: string }): React
     <Drawer slug={drawerSlug} key={drawerSlug} className={baseClass} title="Add table">
       <React.Fragment>
         <TextInput
-          field={{ name: 'rows' }}
           path="rows"
           placeholder={'# of rows (1-500)'}
           label="Rows"
@@ -148,7 +147,6 @@ export function InsertTableDialog({ drawerSlug }: { drawerSlug: string }): React
           data-test-id="table-modal-rows"
         />
         <TextInput
-          field={{ name: 'columns' }}
           path="columns"
           placeholder={'# of columns (1-50)'}
           label="Columns"
@@ -212,7 +210,6 @@ export function InsertNewTableDialog({ drawerSlug }: { drawerSlug: string }): Re
     >
       <React.Fragment>
         <TextInput
-          field={{ name: 'rows' }}
           path="rows"
           placeholder={'# of rows (1-500)'}
           label="Rows"
@@ -221,7 +218,6 @@ export function InsertNewTableDialog({ drawerSlug }: { drawerSlug: string }): Re
           data-test-id="table-modal-rows"
         />
         <TextInput
-          field={{ name: 'columns' }}
           path="columns"
           placeholder={'# of columns (1-50)'}
           label="Columns"

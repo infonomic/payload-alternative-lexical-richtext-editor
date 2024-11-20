@@ -18,20 +18,22 @@ import React, { useEffect } from 'react'
 
 import { createHeadlessEditor } from '@lexical/headless'
 import { $getRoot } from 'lexical'
-import { useTableCell } from '@payloadcms/ui'
-
-// @ts-expect-error: ignore
-import type { EditorConfig as LexicalEditorConfig } from 'lexical/LexicalEditor'
 
 import { Nodes } from '../field/nodes'
 
-export const RichTextCell: React.FC<{
-  editorConfig: LexicalEditorConfig
-}> = (props) => {
+// @ts-expect-error: ignore
+import type { EditorConfig as LexicalEditorConfig } from 'lexical/LexicalEditor'
+import type { LexicalRichTextCellProps } from '../types'
+
+export const RichTextCell: React.FC<
+  {
+    editorConfig: LexicalEditorConfig
+  } & LexicalRichTextCellProps
+> = (props) => {
   const { editorConfig } = props
 
   const [preview, setPreview] = React.useState('Loading...')
-  const { cellData } = useTableCell()
+  const { cellData } = props
 
   useEffect(() => {
     let dataToUse = cellData

@@ -115,9 +115,11 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
         <RenderFields
           fields={getFields(synchronizedFormState, validRelationships)}
           forceRender
-          path=""
+          parentSchemaPath=""
+          parentPath=""
+          parentIndexPath=""
+          permissions={true}
           readOnly={false}
-          schemaPath="link-drawer-schema-map"
         />
         <div className="link-plugin--modal-actions" data-test-id="link-plugin-model-actions">
           <FormSubmit>{t('general:save')}</FormSubmit>

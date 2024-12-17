@@ -79,7 +79,8 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     validate: memoizedValidate,
   })
 
-  const disabled = readOnlyFromProps || false // || formProcessing || formInitializing
+  const disabled = readOnlyFromProps || formProcessing || formInitializing
+  // const disabled = readOnlyFromProps || false // || formProcessing || formInitializing
 
   const classes = [
     baseClass,

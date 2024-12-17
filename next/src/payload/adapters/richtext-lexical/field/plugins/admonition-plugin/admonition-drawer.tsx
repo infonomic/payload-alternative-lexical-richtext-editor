@@ -1,8 +1,7 @@
 'use client'
 import React, { useEffect, useState, useRef } from 'react'
 
-import { Drawer } from '@payloadcms/ui'
-import { baseClass } from '@payloadcms/ui/elements/DocumentDrawer'
+import { Drawer, documentDrawerBaseClass } from '@payloadcms/ui'
 import { Button } from '@payloadcms/ui'
 import { Form } from '@payloadcms/ui'
 import { RenderFields } from '@payloadcms/ui'
@@ -22,12 +21,12 @@ export function AdmonitionDrawer({
   isOpen,
   drawerSlug,
   onSubmit,
-  data: dataFromProps
+  data: dataFromProps,
 }: AdmonitionDrawerProps): React.ReactNode {
   const { t } = useTranslation()
   const { closeModal } = useModal()
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
-    undefined
+    undefined,
   )
   const version = useRef<string>(uuid())
 
@@ -57,7 +56,7 @@ export function AdmonitionDrawer({
       if (onSubmit != null) {
         onSubmit({
           admonitionType: data.admonitionType as AdmonitionType,
-          title: data.title as string
+          title: data.title as string,
         })
         setSynchronizedFormState(undefined)
       }
@@ -74,7 +73,12 @@ export function AdmonitionDrawer({
   })
 
   return (
-    <Drawer slug={drawerSlug} key={drawerSlug} className={baseClass} title="Admonition">
+    <Drawer
+      slug={drawerSlug}
+      key={drawerSlug}
+      className={documentDrawerBaseClass}
+      title="Admonition"
+    >
       <Form
         initialState={synchronizedFormState}
         onChange={[handleFormOnChange]}

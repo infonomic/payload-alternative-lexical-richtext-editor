@@ -3,18 +3,11 @@
  * Adapted from on https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/field/Field.tsx
  */
 
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { ErrorBoundary } from 'react-error-boundary'
 
-import {
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-  useEditDepth,
-  useField,
-  withCondition,
-} from '@payloadcms/ui'
+import { FieldLabel, useEditDepth, useField, withCondition } from '@payloadcms/ui'
 
 import { mergeFieldStyles } from '@payloadcms/ui/shared'
 
@@ -49,6 +42,8 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
   const readOnlyFromProps = readOnlyFromTopLevelProps || readOnlyFromAdmin
   const path = pathFromProps ?? name
 
+  const [statefulReadonly, setStatefulReadonly] = useState<boolean>(false)
+
   const editDepth = useEditDepth()
 
   const memoizedValidate = useCallback(
@@ -79,7 +74,14 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     validate: memoizedValidate,
   })
 
-  const disabled = readOnlyFromProps || formProcessing || formInitializing
+  // console.log('readOnlyFromProps:', readOnlyFromProps)
+  // console.log('formInitializing:', formInitializing)
+  // console.log('formProcessing:', formProcessing)
+
+  useEffect(() => {
+    setStatefulReadonly(readOnlyFromProps || formProcessing || formInitializing)
+  }, [readOnlyFromProps, formProcessing, formInitializing])
+  // const disabled = readOnlyFromProps || formProcessing || formInitializing
   // const disabled = readOnlyFromProps || false // || formProcessing || formInitializing
 
   const classes = [
@@ -87,7 +89,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     'field-type',
     className,
     showError && 'error',
-    disabled && `${baseClass}--read-only`,
+    statefulReadonly && `${baseClass}--read-only`,
     admin?.hideGutter !== true ? `${baseClass}--show-gutter` : null,
   ]
     .filter(Boolean)
@@ -108,14 +110,14 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
             editorConfig={editorConfig}
             fieldProps={props}
             path={name}
-            readOnly={disabled}
+            readOnly={statefulReadonly}
             value={value}
             key={JSON.stringify({ initialValue, name })} // makes sure lexical is completely re-rendered when initialValue changes, bypassing the lexical-internal value memoization. That way, external changes to the form will update the editor. More infos in PR description (https://github.com/payloadcms/payload/pull/5010)
             // NOTE: 2023-05-15 disabled the deepEqual since we've set ignoreSelectionChange={true}
             // in our OnChangePlugin instances - and so a call here means that something
             // must have changed - so no need to do the comparison.
             onChange={(editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => {
-              if (!disabled) {
+              if (!statefulReadonly) {
                 const serializedEditorState = editorState.toJSON()
                 // TODO: 2024-01-30 - re-test this.
                 // NOTE: 2023-06-28 fix for setValue below. For some reason when

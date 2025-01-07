@@ -1,6 +1,4 @@
 import { lexicalEditor } from '../adapters/richtext-lexical'
-import { populateLexicalLinks } from '../adapters/richtext-lexical/field/lexical-after-read-populate-links'
-import { populateLexicalMedia } from '../adapters/richtext-lexical/field/lexical-after-read-populate-media'
 import { type CollectionConfig } from 'payload'
 import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
 import { slugField } from '@/payload/fields/slug'
@@ -50,9 +48,6 @@ export const Debug: CollectionConfig = {
           return config
         },
       }),
-      hooks: {
-        afterRead: [populateLexicalLinks, populateLexicalMedia],
-      },
     },
     slugField(),
   ],

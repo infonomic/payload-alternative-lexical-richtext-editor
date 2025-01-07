@@ -1,4 +1,3 @@
-import { lexicalRichTextField } from '../fields/richtext-full'
 import { type CollectionConfig } from 'payload'
 import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
 import { slugField } from '@/payload/fields/slug'
@@ -38,11 +37,12 @@ export const Full: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    lexicalRichTextField({
+    {
       name: 'richText',
       label: 'RichText',
+      type: 'richText',
       required: true,
-    }),
+    },
     slugField(),
   ],
 }

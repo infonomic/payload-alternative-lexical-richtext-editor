@@ -41,11 +41,6 @@ export const lexicalRichTextCompact: RichTextField = (options = {}) =>
           return config
         },
       }),
-      // No links or inserted inline images - so no need for hooks
-      // hooks: {
-      //   // beforeChange: [updateLexicalRelationships],
-      //   afterRead: [populateLexicalMedia, populateLexicalLinks]
-      // }
     },
     options,
   )

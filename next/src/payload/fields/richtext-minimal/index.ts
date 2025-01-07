@@ -37,9 +37,6 @@ export const lexicalRichTextMinimal: RichTextField = (options = {}) =>
           return config
         },
       }),
-      hooks: {
-        afterRead: [populateLexicalMedia, populateLexicalLinks],
-      },
     },
     options,
   )

@@ -2,7 +2,6 @@ import { type CollectionConfig } from 'payload'
 import { lexicalRichTextMinimal } from '@/payload/fields/richtext-minimal'
 import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
 import { slugField } from '@/payload/fields/slug'
-import { richTextValidate } from '../adapters/richtext-lexical/validate/validate-client'
 
 export const Minimal: CollectionConfig = {
   slug: 'minimal',

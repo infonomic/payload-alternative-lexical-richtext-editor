@@ -10,6 +10,9 @@
 import { withNullableJSONSchemaType } from 'payload'
 
 import { defaultEditorConfig, EditorSettings } from './field/config'
+import { populateLexicalLinks } from './field/lexical-after-read-populate-links'
+import { populateLexicalMedia } from './field/lexical-after-read-populate-media'
+
 import { cloneDeep } from './field/utils/cloneDeep'
 import { richTextValidate } from './validate/validate-server'
 
@@ -68,6 +71,9 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     generateImportMap: ({ addToImportMap }: any) => {
       addToImportMap('/payload/adapters/richtext-lexical/cell/index#RichTextCell')
       addToImportMap('/payload/adapters/richtext-lexical/field/index#RichTextField')
+    },
+    hooks: {
+      afterRead: [populateLexicalLinks, populateLexicalMedia],
     },
     // NOTE: Directly from https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/index.ts
     outputSchema: ({

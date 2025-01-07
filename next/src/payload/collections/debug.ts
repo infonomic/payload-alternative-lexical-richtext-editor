@@ -1,6 +1,6 @@
 import { lexicalEditor } from '../adapters/richtext-lexical'
-import { populateLexicalRelationships } from '../adapters/richtext-lexical/field/lexical-after-read-hook'
-import { updateLexicalRelationships } from '../adapters/richtext-lexical/field/lexical-before-change-hook'
+import { populateLexicalLinks } from '../adapters/richtext-lexical/field/lexical-after-read-populate-links'
+import { populateLexicalMedia } from '../adapters/richtext-lexical/field/lexical-after-read-populate-media'
 import { type CollectionConfig } from 'payload'
 import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
 import { slugField } from '@/payload/fields/slug'
@@ -51,8 +51,7 @@ export const Debug: CollectionConfig = {
         },
       }),
       hooks: {
-        beforeChange: [updateLexicalRelationships],
-        afterRead: [populateLexicalRelationships],
+        afterRead: [populateLexicalLinks, populateLexicalMedia],
       },
     },
     slugField(),

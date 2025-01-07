@@ -1,8 +1,8 @@
 import type { Field } from 'payload'
 
 import { lexicalEditor } from '../../adapters/richtext-lexical'
-import { populateLexicalRelationships } from '../../adapters/richtext-lexical/field/lexical-after-read-hook'
-import { updateLexicalRelationships } from '../../adapters/richtext-lexical/field/lexical-before-change-hook'
+import { populateLexicalMedia } from '../../adapters/richtext-lexical/field/lexical-after-read-populate-media'
+import { populateLexicalLinks } from '../../adapters/richtext-lexical/field/lexical-after-read-populate-links'
 import deepMerge from '../../utilities/deepMerge'
 
 import type { LexicalRichTextAdapter } from '../../adapters/richtext-lexical/types'
@@ -38,8 +38,7 @@ export const lexicalRichTextMinimal: RichTextField = (options = {}) =>
         },
       }),
       hooks: {
-        beforeChange: [updateLexicalRelationships],
-        afterRead: [populateLexicalRelationships],
+        afterRead: [populateLexicalMedia, populateLexicalLinks],
       },
     },
     options,

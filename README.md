@@ -56,11 +56,8 @@ Here are the main drivers for us wanting to maintain our own editor:
   "text": "Click Me!"
 }
 ```
-We've added a `data` attribute and populated the title and slug for the related document. We do this via a [`beforeChange`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-hook.ts) field hook - which means this additional relationship data is stored in the document and in the database. For most cases, this is all the front end application needs to build a link to another document (router link or other). We don't need the entire related document for each internal link.
+We've added a `data` attribute and populated the title and slug for the related document. We do this via an [`afterRead`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-hook.ts) field hook - which means this additional relationship data is retrieved during document read and returned to the client for serialization. For most cases, this is all the front end application needs to build a link to another document (router link or other). We don't need the entire related document for each internal link.
 
-> [!IMPORTANT]
-> Storing additional data in the document (slug and title) is one strategy for internal links, but - if the source document is removed or its slug changes, the links in the front end will break. Alternatively if links are populated via an `afterRead` hook and the document is missing, or the slug has changed - both the hook and the serializer can decide what to do - for example, the front end could simply ignore the link and the link will disappear. Both are valid strategies, although we will likely move to an `afterRead` strategy soon.
->
 
 5. In Payload 3.0 - we wanted to experiment with client-only forms using the new field api and `RenderFields`. You can see an example here in our [Admonition plugin](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/plugins/admonition-plugin/admonition-drawer.tsx). This is totally experimental. It works (as far as we can tell) and we're using this for all of our custom components that require modals or drawers with Payload fields.
 

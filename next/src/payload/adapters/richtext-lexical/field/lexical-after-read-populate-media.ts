@@ -1,7 +1,4 @@
 /**
- * Note: see the comments in lexical-before-change-hook.tsx
- * Internal links are processed there.
- *
  * In this afterRead hook we process complete document
  * relationships only for specific node types - in this case the
  * full media / upload / image document for the inline-image plugin
@@ -19,11 +16,11 @@ import type { SerializedInlineImageNode } from './nodes/inline-image-node'
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
 
-type LexicalRichTextFieldAfterReadFieldHook = FieldHook<any, SerializedEditorState | null, any>
+type LexicalAfterReadPopulateMediaFieldHook = FieldHook<any, SerializedEditorState | null, any>
 
-export const populateLexicalRelationships: LexicalRichTextFieldAfterReadFieldHook = async ({
+export const populateLexicalMedia: LexicalAfterReadPopulateMediaFieldHook = async ({
   value,
-  req
+  req,
 }): Promise<SerializedEditorState | null> => {
   const { payload, locale } = req
 
@@ -42,7 +39,7 @@ export const populateLexicalRelationships: LexicalRichTextFieldAfterReadFieldHoo
 export async function traverseLexicalField(
   payload: Payload,
   node: SerializedLexicalNode & { children?: SerializedLexicalNode[] },
-  locale: string
+  locale: string,
 ): Promise<void> {
   if (node.type === 'inline-image') {
     const { doc } = node as SerializedInlineImageNode
@@ -52,7 +49,7 @@ export async function traverseLexicalField(
         doc.value,
         doc.relationTo as keyof GeneratedTypes['collections'],
         1,
-        locale
+        locale,
       )
       if (relation != null) {
         ;(node as SerializedInlineImageNode).doc.data = relation as any

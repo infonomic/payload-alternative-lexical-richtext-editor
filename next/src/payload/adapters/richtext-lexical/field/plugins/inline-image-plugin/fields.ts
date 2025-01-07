@@ -91,8 +91,8 @@ export function getInitialState(data: InlineImageData | undefined): FormState {
       valid: true
     },
     position: {
-      value: data?.position ?? 'left',
-      initialValue: data?.position ?? 'left',
+      value: data?.position ?? 'full',
+      initialValue: data?.position ?? 'full',
       valid: true
     },
     showCaption: {

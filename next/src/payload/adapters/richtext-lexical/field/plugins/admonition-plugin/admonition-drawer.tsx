@@ -21,12 +21,12 @@ export function AdmonitionDrawer({
   isOpen,
   drawerSlug,
   onSubmit,
-  data: dataFromProps,
+  data: dataFromProps
 }: AdmonitionDrawerProps): React.ReactNode {
   const { t } = useTranslation()
   const { closeModal } = useModal()
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
-    undefined,
+    undefined
   )
   const version = useRef<string>(uuid())
 
@@ -56,7 +56,7 @@ export function AdmonitionDrawer({
       if (onSubmit != null) {
         onSubmit({
           admonitionType: data.admonitionType as AdmonitionType,
-          title: data.title as string,
+          title: data.title as string
         })
         setSynchronizedFormState(undefined)
       }

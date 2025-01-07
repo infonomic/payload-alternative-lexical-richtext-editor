@@ -32,7 +32,7 @@ import {
   TableCellHeaderStates,
   TableCellNode,
   TableRowNode,
-  TableSelection,
+  TableSelection
 } from '@lexical/table'
 import {
   $createParagraphNode,
@@ -41,7 +41,7 @@ import {
   $isElementNode,
   $isParagraphNode,
   $isRangeSelection,
-  $isTextNode,
+  $isTextNode
 } from 'lexical'
 
 import useModal from '../../hooks/useModal'
@@ -57,7 +57,7 @@ function computeSelectionCount(selection: TableSelection): {
   const selectionShape = selection.getShape()
   return {
     columns: selectionShape.toX - selectionShape.fromX + 1,
-    rows: selectionShape.toY - selectionShape.fromY + 1,
+    rows: selectionShape.toY - selectionShape.fromY + 1
   }
 }
 
@@ -154,7 +154,7 @@ type TableCellActionMenuProps = Readonly<{
   setIsMenuOpen: (isOpen: boolean) => void
   showColorPickerModal: (
     title: string,
-    showModal: (onClose: () => void) => React.JSX.Element,
+    showModal: (onClose: () => void) => React.JSX.Element
   ) => void
   tableCellNode: TableCellNode
   cellMerge: boolean
@@ -166,19 +166,19 @@ function TableActionMenu({
   setIsMenuOpen,
   contextRef,
   cellMerge,
-  showColorPickerModal,
+  showColorPickerModal
 }: TableCellActionMenuProps): React.ReactPortal {
   const [editor] = useLexicalComposerContext()
   const dropDownRef = useRef<HTMLDivElement | null>(null)
   const [tableCellNode, updateTableCellNode] = useState(_tableCellNode)
   const [selectionCounts, updateSelectionCounts] = useState({
     columns: 1,
-    rows: 1,
+    rows: 1
   })
   const [canMergeCells, setCanMergeCells] = useState(false)
   const [canUnmergeCell, setCanUnmergeCell] = useState(false)
   const [backgroundColor, setBackgroundColor] = useState(
-    () => currentCellBackgroundColor(editor) ?? '',
+    () => currentCellBackgroundColor(editor) ?? ''
   )
 
   useEffect(() => {
@@ -203,7 +203,7 @@ function TableActionMenu({
         updateSelectionCounts(computeSelectionCount(selection))
         setCanMergeCells(
           isTableSelectionRectangular(selection) &&
-            (currentSelectionCounts.columns > 1 || currentSelectionCounts.rows > 1),
+            (currentSelectionCounts.columns > 1 || currentSelectionCounts.rows > 1)
         )
       }
       // Unmerge cell
@@ -271,7 +271,7 @@ function TableActionMenu({
       if (tableCellNode.isAttached()) {
         const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode)
         const tableElement = editor.getElementByKey(
-          tableNode.getKey(),
+          tableNode.getKey()
         ) as HTMLTableElementWithWithTableSelectionState
 
         if (tableElement == null) {
@@ -343,7 +343,7 @@ function TableActionMenu({
         onClose()
       })
     },
-    [editor, onClose],
+    [editor, onClose]
   )
 
   const insertTableColumnAtSelection = useCallback(
@@ -355,7 +355,7 @@ function TableActionMenu({
         onClose()
       })
     },
-    [editor, onClose, selectionCounts.columns],
+    [editor, onClose, selectionCounts.columns]
   )
 
   const deleteTableRowAtSelection = useCallback(() => {
@@ -476,7 +476,7 @@ function TableActionMenu({
         }
       })
     },
-    [editor],
+    [editor]
   )
 
   let mergeCellButton: null | React.JSX.Element = null
@@ -646,13 +646,13 @@ function TableActionMenu({
         </span>
       </button>
     </div>,
-    document.body,
+    document.body
   )
 }
 
 function TableCellActionMenuContainer({
   anchorElem,
-  cellMerge,
+  cellMerge
 }: {
   anchorElem: HTMLElement
   cellMerge: boolean
@@ -687,7 +687,7 @@ function TableCellActionMenuContainer({
       rootElement.contains(nativeSelection.anchorNode)
     ) {
       const tableCellNodeFromSelection = $getTableCellNodeFromLexicalNode(
-        selection.anchor.getNode(),
+        selection.anchor.getNode()
       )
 
       if (tableCellNodeFromSelection == null) {
@@ -785,7 +785,7 @@ function TableCellActionMenuContainer({
 
 export function TableActionMenuPlugin({
   anchorElem = document.body,
-  cellMerge = false,
+  cellMerge = false
 }: {
   anchorElem?: HTMLElement
   cellMerge?: boolean
@@ -795,6 +795,6 @@ export function TableActionMenuPlugin({
     isEditable ? (
       <TableCellActionMenuContainer anchorElem={anchorElem} cellMerge={cellMerge} />
     ) : null,
-    anchorElem,
+    anchorElem
   )
 }

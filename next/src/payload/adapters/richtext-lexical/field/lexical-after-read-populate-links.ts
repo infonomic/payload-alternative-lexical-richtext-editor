@@ -9,28 +9,18 @@
  * after all, and not requests for full document relationships.
  *
  * And so this hook will 'augment' the internal link - adding the
- * title and slug to the link attributes stored in the parent document.
- *
- * Note that this has implications for 'broken links' - which will
- * appear in the frontend as genuinely broken links, as opposed to
- * links that just disappear if we were to use an afterRead strategy
- * (which is the current strategy in 'populate' for the official
- * lexical adapter).
- *
- *
- * See the lexical-after-read-hook.ts which is still used to retrieve
- * a complete relationship for special cases (and of course NOT stored
- * along with the parent document).
+ * title and slug to the link attributes retrieved during the
+ * afterRead hook.
  *
  * TODO: We've hardcoded any node / plugins that have nested editors
  * like the Admonition plugin and the captions in the InlineImage
  * plugin. We should move these to configuration.
  */
 
-import type { GeneratedTypes } from 'payload'
+import type { GeneratedTypes, PayloadRequest, RequestContext } from 'payload'
 import type { FieldHook } from 'payload'
 
-import { loadRelated } from './utils/load-related'
+import { loadRelatedWithContext } from './utils/load-related'
 import { collectionAliases } from 'payload-collection-aliases'
 
 import type { SerializedAdmonitionNode } from './nodes/admonition-node'
@@ -39,31 +29,40 @@ import type { SerializedLinkNode } from './nodes/link-nodes-payload'
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
 
-type LexicalRichTextFieldBeforeChangeFieldHook = FieldHook<any, SerializedEditorState | null, any>
+type LexicalAfterReadPopulateLinksFieldHook = FieldHook<any, SerializedEditorState | null, any>
 
-export const updateLexicalRelationships: LexicalRichTextFieldBeforeChangeFieldHook = async ({
-  collection,
+export const populateLexicalLinks: LexicalAfterReadPopulateLinksFieldHook = async ({
+  context,
   value,
-  req
+  req,
 }): Promise<SerializedEditorState | null> => {
-  const { payload, locale } = req
-
   if (value == null) {
     return null
   }
 
+  // console.log(data)
+
+  const { payload, locale } = req
+
+  // console.log('------------------ context start hook', context)
+
   if (value?.root?.children != null) {
     for (const childNode of value.root.children) {
-      await traverseLexicalField(payload, childNode, locale ?? '')
+      await traverseLexicalField(req, context, payload, childNode, locale ?? '')
     }
   }
+
+  // console.log('------------------ context after hook', context)
+
   return value
 }
 
 export async function traverseLexicalField(
+  req: PayloadRequest,
+  context: RequestContext,
   payload: Payload,
   node: SerializedLexicalNode & { children?: SerializedLexicalNode[] },
-  locale: string
+  locale: string,
 ): Promise<SerializedLexicalNode> {
   // We include inline-images here because they might contain captions
   // that have links in them - and as with admonition below
@@ -73,14 +72,14 @@ export async function traverseLexicalField(
     const { caption } = node as SerializedInlineImageNode
     if (caption?.editorState?.root?.children != null) {
       for (const childNode of caption.editorState.root.children) {
-        await traverseLexicalField(payload, childNode, locale)
+        await traverseLexicalField(req, context, payload, childNode, locale)
       }
     }
   } else if (node.type === 'admonition') {
     const { content } = node as SerializedAdmonitionNode
     if (content?.editorState?.root?.children != null) {
       for (const childNode of content.editorState.root.children) {
-        await traverseLexicalField(payload, childNode, locale)
+        await traverseLexicalField(req, context, payload, childNode, locale)
       }
     }
   } else if (
@@ -96,13 +95,20 @@ export async function traverseLexicalField(
   ) {
     const { attributes } = node as SerializedLinkNode
     if (attributes?.doc?.value != null && attributes?.doc?.relationTo != null) {
-      const relation = await loadRelated(
+      // console.log('----------- context before loadRelatedWithContext:', context)
+
+      const relation = await loadRelatedWithContext(
         payload,
+        context,
+        'populate-links',
         attributes.doc.value,
         attributes.doc.relationTo as keyof GeneratedTypes['collections'],
         1,
-        locale
+        locale,
       )
+
+      // console.log('----------- context after loadRelatedWithContext:', context)
+
       if (relation != null) {
         // I think these are the only properties we need to build a
         // link on the client - id, title, and slug. The collection slug is
@@ -124,7 +130,7 @@ export async function traverseLexicalField(
         // of the collection slug 'publications'. And so we check here if there is a
         // custom collection alias and if so, add it to our data object.
         const collectionAlias = collectionAliases.find(
-          (item) => item.slug === attributes?.doc?.relationTo
+          (item) => item.slug === attributes?.doc?.relationTo,
         )
         console.log(collectionAlias)
         if (collectionAliases != null) {
@@ -132,7 +138,7 @@ export async function traverseLexicalField(
             id,
             title: titleUnformatted ?? title,
             slug,
-            collectionAlias: collectionAlias?.alias
+            collectionAlias: collectionAlias?.alias,
           }
         } else {
           attributes.doc.data = { id, title: titleUnformatted ?? title, slug }
@@ -144,7 +150,7 @@ export async function traverseLexicalField(
   // Run for its children
   if (node.children != null && node.children.length > 0) {
     for (const childNode of node.children) {
-      await traverseLexicalField(payload, childNode, locale)
+      await traverseLexicalField(req, context, payload, childNode, locale)
     }
   }
 

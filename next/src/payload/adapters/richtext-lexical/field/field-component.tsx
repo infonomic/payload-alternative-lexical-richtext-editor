@@ -32,11 +32,11 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
       admin: { className, readOnly: readOnlyFromAdmin } = {},
       label,
       localized,
-      required,
+      required
     },
     path: pathFromProps,
     readOnly: readOnlyFromTopLevelProps,
-    validate = richTextValidate,
+    validate = richTextValidate
   } = props
 
   const readOnlyFromProps = readOnlyFromTopLevelProps || readOnlyFromAdmin
@@ -58,7 +58,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     // This would cause an infinite loop and endless re-rendering.
     // Removing props from the dependencies array fixed this issue: https://github.com/payloadcms/payload/issues/3709
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [validate, required],
+    [validate, required]
   )
 
   const {
@@ -68,10 +68,10 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     initialValue,
     setValue,
     showError,
-    value,
+    value
   } = useField<SerializedEditorState>({
     path: pathFromProps ?? name,
-    validate: memoizedValidate,
+    validate: memoizedValidate
   })
 
   // console.log('readOnlyFromProps:', readOnlyFromProps)
@@ -90,7 +90,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     className,
     showError && 'error',
     statefulReadonly && `${baseClass}--read-only`,
-    admin?.hideGutter !== true ? `${baseClass}--show-gutter` : null,
+    admin?.hideGutter !== true ? `${baseClass}--show-gutter` : null
   ]
     .filter(Boolean)
     .join(' ')

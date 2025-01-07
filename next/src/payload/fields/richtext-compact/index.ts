@@ -2,8 +2,6 @@ import type { Field } from 'payload'
 
 import { lexicalEditor } from '../../adapters/richtext-lexical'
 import type { LexicalRichTextAdapter } from '../../adapters/richtext-lexical/types'
-// import { populateLexicalRelationships } from '../../adapters/richtext-lexical/field/lexical-after-read-hook'
-// import { updateLexicalRelationships } from '../../adapters/richtext-lexical/field/lexical-before-change-hook'
 import deepMerge from '../../utilities/deepMerge'
 
 type Options = Partial<Field> & { editor?: LexicalRichTextAdapter }
@@ -43,10 +41,10 @@ export const lexicalRichTextCompact: RichTextField = (options = {}) =>
           return config
         },
       }),
-      // NO links or inserted inline images - so no need for hooks
+      // No links or inserted inline images - so no need for hooks
       // hooks: {
-      //   beforeChange: [updateLexicalRelationships],
-      //   afterRead: [populateLexicalRelationships]
+      //   // beforeChange: [updateLexicalRelationships],
+      //   afterRead: [populateLexicalMedia, populateLexicalLinks]
       // }
     },
     options,

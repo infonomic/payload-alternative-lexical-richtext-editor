@@ -10,7 +10,8 @@
 import { withNullableJSONSchemaType } from 'payload'
 
 import { defaultEditorConfig, EditorSettings } from './field/config'
-import { populateLexicalLinks } from './field/lexical-after-read-populate-links'
+// import { populateLexicalLinks } from './field/lexical-after-read-populate-links'
+import { populateLexicalLinks } from './field/lexical-before-change-populate-links'
 import { populateLexicalMedia } from './field/lexical-after-read-populate-media'
 
 import { cloneDeep } from './field/utils/cloneDeep'
@@ -73,7 +74,8 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
       addToImportMap('/payload/adapters/richtext-lexical/field/index#RichTextField')
     },
     hooks: {
-      afterRead: [populateLexicalLinks, populateLexicalMedia],
+      afterRead: [populateLexicalMedia],
+      beforeChange: [populateLexicalLinks],
     },
     // NOTE: Directly from https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/index.ts
     outputSchema: ({

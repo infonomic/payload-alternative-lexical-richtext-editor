@@ -1,7 +1,25 @@
 /**
- * Note: NO LONGER USED!!!!
+ * NOTE: The Payload Link Modal via /plugins/link-plugin-payload
+ * will only add the collection name (relationTo) and document id (value)
+ * to any 'internal' links placed in the editor. If we can add and
+ * save the title and slug, then there's no need populate the entire
+ * document relationship at any point in advance (like afterRead)
+ * since the frontend serializer will have everything it
+ * needs to create a link (router link or other). These are 'links'
+ * after all, and not requests for full document relationships.
+ *
+ * And so this hook will 'augment' the internal link - adding the
+ * title and slug to the link attributes retrieved during the
+ * beforeChange hook AND store this information in the document.
+ *
+ * NOTE: The above means that the slug and title for an internally
+ * related link will not update automatically if the source document's
+ * slug or title changes.
+ *
+ * TODO: We've hardcoded any node / plugins that have nested editors
+ * like the Admonition plugin and the captions in the InlineImage
+ * plugin. We should move these to configuration.
  */
-
 import type { GeneratedTypes } from 'payload'
 import type { FieldHook } from 'payload'
 
@@ -19,13 +37,15 @@ type LexicalBeforeChangePopulateLinksFieldHook = FieldHook<any, SerializedEditor
 export const populateLexicalLinks: LexicalBeforeChangePopulateLinksFieldHook = async ({
   collection,
   value,
-  req
+  req,
 }): Promise<SerializedEditorState | null> => {
   const { payload, locale } = req
 
   if (value == null) {
     return null
   }
+
+  // console.log('populateLexicalLinks beforeChange collection', collection?.slug)
 
   if (value?.root?.children != null) {
     for (const childNode of value.root.children) {
@@ -38,7 +58,7 @@ export const populateLexicalLinks: LexicalBeforeChangePopulateLinksFieldHook = a
 export async function traverseLexicalField(
   payload: Payload,
   node: SerializedLexicalNode & { children?: SerializedLexicalNode[] },
-  locale: string
+  locale: string,
 ): Promise<SerializedLexicalNode> {
   // We include inline-images here because they might contain captions
   // that have links in them - and as with admonition below
@@ -76,7 +96,7 @@ export async function traverseLexicalField(
         attributes.doc.value,
         attributes.doc.relationTo as keyof GeneratedTypes['collections'],
         1,
-        locale
+        locale,
       )
       if (relation != null) {
         // I think these are the only properties we need to build a
@@ -99,15 +119,15 @@ export async function traverseLexicalField(
         // of the collection slug 'publications'. And so we check here if there is a
         // custom collection alias and if so, add it to our data object.
         const collectionAlias = collectionAliases.find(
-          (item) => item.slug === attributes?.doc?.relationTo
+          (item) => item.slug === attributes?.doc?.relationTo,
         )
-        console.log(collectionAlias)
+        // console.log(collectionAlias)
         if (collectionAliases != null) {
           attributes.doc.data = {
             id,
             title: titleUnformatted ?? title,
             slug,
-            collectionAlias: collectionAlias?.alias
+            collectionAlias: collectionAlias?.alias,
           }
         } else {
           attributes.doc.data = { id, title: titleUnformatted ?? title, slug }

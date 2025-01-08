@@ -32,7 +32,17 @@ Here are the main drivers for us wanting to maintain our own editor:
 
 3. We needed a way to call `setValue` for the RichText field from `LexicalNestedComposer` within our image plugin captions and admonition plugin text, and so created `SharedOnChangeContext`. When versions are enabled, this means that the 'Save Draft, and 'Publish Changes' buttons become 'enabled' when `LexicalNestedComposer` text is changed. Overall, our structure for [context providers](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/editor-context.tsx) for the editor is a little different as well.
 
-4. We wanted control over the serialization of internal links. Instead of retrieving and populating a document for each internal link in the editor via an `afterRead` field hook, we wanted to augment the relationship with just the slug and title. For example, here's our version of the Lexical link node:
+4. We wanted control over the serialization of internal links. See the special section below on Richtext Internal Links Strategy.
+
+5. In Payload 3.0 - we wanted to experiment with client-only forms using the new field api and `RenderFields`. You can see an example here in our [Admonition plugin](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/plugins/admonition-plugin/admonition-drawer.tsx). This is totally experimental. It works (as far as we can tell) and we're using this for all of our custom components that require modals or drawers with Payload fields.
+
+6. We wanted to share our plugins - in particular our Inline Image plugin which was accepted into the Lexcical playground and our Admonition plugin. In fact, our Inline Image plugin was one of the main reasons we chose Lexical as our preferred editor. Try creating a floated inline element that appears correctly in both the admin editor and the front end application - inside any of the 'other editors', and you'll see why ;-).  Most of the other plugins in this repo track Lexical Playground plugins and are updated from there.
+
+7. And lastly, we wanted to keep our editor lightweight and fast, in particular for longer documents.
+
+## Richtext Internal Links Strategy
+
+As mentioned in the rationale section above, we wanted control over the serialization of internal links. Instead of retrieving and populating an entire document for each internal link in the editor via an `afterRead` field hook, we wanted to augment the relationship with just the slug and title. For example, here's our version of the Lexical link node:
 
 ```json
 {
@@ -56,14 +66,20 @@ Here are the main drivers for us wanting to maintain our own editor:
   "text": "Click Me!"
 }
 ```
-We've added a `data` attribute and populated the title and slug for the related document. We do this via an [`afterRead`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-after-read-populate-links.ts) field hook - which means this additional relationship data is retrieved during document read and returned to the client for serialization. For most cases, this is all the front end application needs to build a link to another document (router link or other). We don't need the entire related document for each internal link.
+
+We've added an additional property called `data`, to which we've added the id, title and slug for the target document. When combined with the relationTo property - this is everything the front end application needs to create a complete link or router link to the target document.
+
+> [!IMPORTANT]
+> We have two strategies for populating the data property above. The first, via an `afterRead` hook, and the second via a `beforeChange` hook. You can choose which to implement based on your requirements.
+>
+
+When using an `afterRead` hook -  we add the `data` property and populated the title and slug for the related document dynamically during document read. Here's our [`afterRead`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-after-read-populate-links.ts) field hook. Note however, that for documents that contain more than one or two links, this can add a significant number of document requests for a single source document since the related document for each internal link will need to be retrieved in order to populate our data property (O(n) linear time complexity). In our experience, this can have a major impact on overall performance and user experience.
+
+When using a `beforeChange` hook - we add the `data` property to the document itself when the document is being saved. Here's our [`beforeChange`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-populate-links.ts) hook. Obviously this has implications for stale links (source documents who's title or slug may have changed). However, there is no impact on overall performance and user experience, since the source document already contains the data it needs for internal links (O(1) constant time complexity).
+
+The configuration in this repo is using the `beforeChange` strategy.
 
 
-5. In Payload 3.0 - we wanted to experiment with client-only forms using the new field api and `RenderFields`. You can see an example here in our [Admonition plugin](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/plugins/admonition-plugin/admonition-drawer.tsx). This is totally experimental. It works (as far as we can tell) and we're using this for all of our custom components that require modals or drawers with Payload fields.
-
-6. We wanted to share our plugins - in particular our Inline Image plugin which was accepted into the Lexcical playground and our Admonition plugin. In fact, our Inline Image plugin was one of the main reasons we chose Lexical as our preferred editor. Try creating a floated inline element that appears correctly in both the admin editor and the front end application - inside any of the 'other editors', and you'll see why ;-).  Most of the other plugins in this repo track Lexical Playground plugins and are updated from there.
-
-7. And lastly, we wanted to keep our editor lightweight and fast, in particular for longer documents.
 
 ## Getting Started
 

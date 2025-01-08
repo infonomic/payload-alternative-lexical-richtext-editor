@@ -42,7 +42,9 @@ Here are the main drivers for us wanting to maintain our own editor:
 
 ## Richtext Internal Links Strategy
 
-As mentioned in the rationale section above, we wanted control over the serialization of internal links. Instead of retrieving and populating an entire document for each internal link in the editor via an `afterRead` field hook, we wanted to augment the relationship with just the slug and title. For example, here's our version of the Lexical link node:
+As mentioned in the rationale section above, we wanted control over the serialization of internal links. Instead of retrieving and populating an entire document for each internal link in the editor via an `afterRead` field hook, we wanted to augment the relationship with just the slug and title. 
+
+Here's our version of the Lexical link node:
 
 ```json
 {
@@ -77,7 +79,7 @@ When using an `afterRead` hook -  we add the `data` property and populated the t
 
 When using a `beforeChange` hook - we add the `data` property to the document itself when the document is being saved. Here's our [`beforeChange`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-populate-links.ts) hook. Obviously this has implications for stale links (source documents who's title or slug may have changed). However, there is no impact on overall performance and user experience, since the source document already contains the data it needs for internal links (O(1) constant time complexity).
 
-The configuration in this repo is using the `beforeChange` strategy.
+The configuration in this repo is using the `beforeChange` strategy, although this can be changed here in the hooks property for the [richtext adapter](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/index.ts).
 
 
 

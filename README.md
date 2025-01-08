@@ -75,7 +75,11 @@ We've added an additional property called `data`, to which we've added the id, t
 > We have two strategies for populating the data property above. The first, via an `afterRead` hook, and the second via a `beforeChange` hook. You can choose which to implement based on your requirements.
 >
 
+### afterRead
+
 When using an `afterRead` hook -  we add the `data` property and populated the title and slug for the related document dynamically during document read. Here's our [`afterRead`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-after-read-populate-links.ts) field hook. Note however, that for documents that contain more than one or two links, this can add a significant number of document requests for a single source document since the related document for each internal link will need to be retrieved in order to populate our data property (O(n) linear time complexity). In our experience, this can have a major impact on overall performance and user experience.
+
+### beforeChange
 
 When using a `beforeChange` hook - we add the `data` property to the document itself when the document is being saved. Here's our [`beforeChange`](https://github.com/infonomic/payload-alternative-lexical-richtext-editor/blob/main/next/src/payload/adapters/richtext-lexical/field/lexical-before-change-populate-links.ts) hook. Obviously this has implications for stale links (source documents who's title or slug may have changed). However, there is no impact on overall performance and user experience, since the source document already contains the data it needs for internal links (O(1) constant time complexity).
 

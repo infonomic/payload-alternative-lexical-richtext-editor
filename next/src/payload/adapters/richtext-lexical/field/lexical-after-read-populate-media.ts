@@ -7,7 +7,7 @@
  * our media upload collection.
  */
 
-import type { GeneratedTypes } from 'payload'
+import type { FieldHookArgs, GeneratedTypes } from 'payload'
 import type { FieldHook } from 'payload'
 
 import { loadRelated } from './utils/load-related'
@@ -16,12 +16,14 @@ import type { SerializedInlineImageNode } from './nodes/inline-image-node'
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
 
-type LexicalAfterReadPopulateMediaFieldHook = FieldHook<any, SerializedEditorState | null, any>
+type LexicalAfterReadPopulateMediaFieldHook = (
+  args: Omit<FieldHookArgs<any, SerializedEditorState | null, any>, 'blockData'>,
+) => Promise<SerializedEditorState | null> | SerializedEditorState | null
 
 export const populateLexicalMedia: LexicalAfterReadPopulateMediaFieldHook = async ({
   value,
   req,
-}): Promise<SerializedEditorState | null> => {
+}) => {
   const { payload, locale } = req
 
   if (value == null) {

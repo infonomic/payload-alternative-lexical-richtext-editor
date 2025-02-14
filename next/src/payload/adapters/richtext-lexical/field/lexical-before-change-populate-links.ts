@@ -20,7 +20,7 @@
  * like the Admonition plugin and the captions in the InlineImage
  * plugin. We should move these to configuration.
  */
-import type { GeneratedTypes } from 'payload'
+import type { FieldHookArgs, GeneratedTypes } from 'payload'
 import type { FieldHook } from 'payload'
 
 import { loadRelated } from './utils/load-related'
@@ -32,7 +32,9 @@ import type { SerializedLinkNode } from './nodes/link-nodes-payload'
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
 
-type LexicalBeforeChangePopulateLinksFieldHook = FieldHook<any, SerializedEditorState | null, any>
+type LexicalBeforeChangePopulateLinksFieldHook = (
+  args: Omit<FieldHookArgs<any, SerializedEditorState | null, any>, 'blockData'>,
+) => Promise<SerializedEditorState | null> | SerializedEditorState | null
 
 export const populateLexicalLinks: LexicalBeforeChangePopulateLinksFieldHook = async ({
   collection,

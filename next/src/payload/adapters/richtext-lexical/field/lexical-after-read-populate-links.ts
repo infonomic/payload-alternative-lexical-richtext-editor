@@ -17,7 +17,7 @@
  * plugin. We should move these to configuration.
  */
 
-import type { GeneratedTypes, PayloadRequest, RequestContext } from 'payload'
+import type { FieldHookArgs, GeneratedTypes, PayloadRequest, RequestContext } from 'payload'
 import type { FieldHook } from 'payload'
 
 import { loadRelatedWithContext } from './utils/load-related'
@@ -29,13 +29,15 @@ import type { SerializedLinkNode } from './nodes/link-nodes-payload'
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
 
-type LexicalAfterReadPopulateLinksFieldHook = FieldHook<any, SerializedEditorState | null, any>
+type LexicalAfterReadPopulateLinksFieldHook = (
+  args: Omit<FieldHookArgs<any, SerializedEditorState | null, any>, 'blockData'>,
+) => Promise<SerializedEditorState | null> | SerializedEditorState | null
 
 export const populateLexicalLinks: LexicalAfterReadPopulateLinksFieldHook = async ({
   context,
   value,
   req,
-}): Promise<SerializedEditorState | null> => {
+}) => {
   if (value == null) {
     return null
   }

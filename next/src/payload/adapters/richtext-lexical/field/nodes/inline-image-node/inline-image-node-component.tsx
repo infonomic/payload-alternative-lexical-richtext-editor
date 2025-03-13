@@ -10,7 +10,7 @@ import { requests } from '@payloadcms/ui/utilities/api'
 import { useModal } from '@payloadcms/ui'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
+import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { LexicalNestedComposer } from '@lexical/react/LexicalNestedComposer'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'

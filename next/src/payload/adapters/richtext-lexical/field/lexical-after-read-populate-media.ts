@@ -7,23 +7,51 @@
  * our media upload collection.
  */
 
-import type { FieldHookArgs, GeneratedTypes } from 'payload'
-import type { FieldHook } from 'payload'
+import type { FieldHookArgs, GeneratedTypes, PayloadRequest, RequestContext } from 'payload'
 
 import { loadRelated } from './utils/load-related'
 
-import type { SerializedInlineImageNode } from './nodes/inline-image-node'
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
+import type { SerializedInlineImageNode } from './nodes/inline-image-node'
 
-type LexicalAfterReadPopulateMediaFieldHook = (
-  args: Omit<FieldHookArgs<any, SerializedEditorState | null, any>, 'blockData'>,
-) => Promise<SerializedEditorState | null> | SerializedEditorState | null
+// See https://github.com/payloadcms/payload/pull/11316
 
-export const populateLexicalMedia: LexicalAfterReadPopulateMediaFieldHook = async ({
+// type LexicalAfterReadPopulateMediaFieldHook = (
+//   args: Omit<FieldHookArgs<any, SerializedEditorState | null, any>, 'blockData' | 'siblingFields'>
+// ) => Promise<SerializedEditorState | null> | SerializedEditorState | null
+
+type TypeWithID = { id: string };
+
+type AfterReadRichTextHookArgs<TData extends TypeWithID = any, TValue = any, TSiblingData = any> = {
+  data?: TData;
+  value?: TValue;
+  siblingData: TSiblingData;
+  context: RequestContext;
+  req: PayloadRequest;
+};
+
+type BaseRichTextHookArgs<TData extends TypeWithID = any, TValue = any, TSiblingData = any> = {
+  data?: TData;
+  value?: TValue;
+  siblingData: TSiblingData;
+  context: RequestContext;
+  req: PayloadRequest;
+};
+
+type AfterReadRichTextHook<
+  TData extends TypeWithID = any,
+  TValue = any,
+  TSiblingData = any,
+> = (
+  args: AfterReadRichTextHookArgs<TData, TValue, TSiblingData> &
+    BaseRichTextHookArgs<TData, TValue, TSiblingData>,
+) => Promise<TValue> | TValue;
+
+export const populateLexicalMedia: AfterReadRichTextHook<any, SerializedEditorState | null, any> = async ({
   value,
   req,
-}) => {
+}): Promise<SerializedEditorState | null> => {
   const { payload, locale } = req
 
   if (value == null) {
@@ -41,7 +69,7 @@ export const populateLexicalMedia: LexicalAfterReadPopulateMediaFieldHook = asyn
 export async function traverseLexicalField(
   payload: Payload,
   node: SerializedLexicalNode & { children?: SerializedLexicalNode[] },
-  locale: string,
+  locale: string
 ): Promise<void> {
   if (node.type === 'inline-image') {
     const { doc } = node as SerializedInlineImageNode
@@ -51,7 +79,7 @@ export async function traverseLexicalField(
         doc.value,
         doc.relationTo as keyof GeneratedTypes['collections'],
         1,
-        locale,
+        locale
       )
       if (relation != null) {
         ;(node as SerializedInlineImageNode).doc.data = relation as any

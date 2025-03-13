@@ -18,26 +18,56 @@
  */
 
 import type { FieldHookArgs, GeneratedTypes, PayloadRequest, RequestContext } from 'payload'
-import type { FieldHook } from 'payload'
 
+import { collectionAliases } from '../../../../../infonomic.config'
 import { loadRelatedWithContext } from './utils/load-related'
-import { collectionAliases } from 'payload-collection-aliases'
 
+import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
+import type { Payload } from 'payload'
 import type { SerializedAdmonitionNode } from './nodes/admonition-node'
 import type { SerializedInlineImageNode } from './nodes/inline-image-node'
 import type { SerializedLinkNode } from './nodes/link-nodes-payload'
-import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
-import type { Payload } from 'payload'
 
-type LexicalAfterReadPopulateLinksFieldHook = (
-  args: Omit<FieldHookArgs<any, SerializedEditorState | null, any>, 'blockData'>,
-) => Promise<SerializedEditorState | null> | SerializedEditorState | null
+import type { RichTextHooks } from 'payload'
 
-export const populateLexicalLinks: LexicalAfterReadPopulateLinksFieldHook = async ({
+// See https://github.com/payloadcms/payload/pull/11316
+
+// type LexicalAfterReadPopulateLinksFieldHook = (
+//   args: Omit<FieldHookArgs<any, SerializedEditorState | null, any>, 'blockData' | 'blockData' | 'siblingFields' >
+// ) => Promise<SerializedEditorState | null> | SerializedEditorState | null
+
+type TypeWithID = { id: string };
+
+type AfterReadRichTextHookArgs<TData extends TypeWithID = any, TValue = any, TSiblingData = any> = {
+  data: TData;
+  value: TValue;
+  siblingData: TSiblingData;
+  context: RequestContext;
+  req: PayloadRequest;
+};
+
+type BaseRichTextHookArgs<TData extends TypeWithID = any, TValue = any, TSiblingData = any> = {
+  data: TData;
+  value: TValue;
+  siblingData: TSiblingData;
+  context: RequestContext;
+  req: PayloadRequest;
+};
+
+type AfterReadRichTextHook<
+  TData extends TypeWithID = any,
+  TValue = any,
+  TSiblingData = any,
+> = (
+  args: AfterReadRichTextHookArgs<TData, TValue, TSiblingData> &
+    BaseRichTextHookArgs<TData, TValue, TSiblingData>,
+) => Promise<TValue> | TValue;
+
+export const populateLexicalLinks: AfterReadRichTextHook<any, SerializedEditorState | null, any> = async ({
   context,
   value,
   req,
-}) => {
+}): Promise<SerializedEditorState | null> => {
   if (value == null) {
     return null
   }
@@ -64,7 +94,7 @@ export async function traverseLexicalField(
   context: RequestContext,
   payload: Payload,
   node: SerializedLexicalNode & { children?: SerializedLexicalNode[] },
-  locale: string,
+  locale: string
 ): Promise<SerializedLexicalNode> {
   // We include inline-images here because they might contain captions
   // that have links in them - and as with admonition below
@@ -106,7 +136,7 @@ export async function traverseLexicalField(
         attributes.doc.value,
         attributes.doc.relationTo as keyof GeneratedTypes['collections'],
         1,
-        locale,
+        locale
       )
 
       // console.log('----------- context after loadRelatedWithContext:', context)
@@ -132,9 +162,9 @@ export async function traverseLexicalField(
         // of the collection slug 'publications'. And so we check here if there is a
         // custom collection alias and if so, add it to our data object.
         const collectionAlias = collectionAliases.find(
-          (item) => item.slug === attributes?.doc?.relationTo,
+          (item) => item.slug === attributes?.doc?.relationTo
         )
-        console.log(collectionAlias)
+        // console.log(collectionAlias)
         if (collectionAliases != null) {
           attributes.doc.data = {
             id,

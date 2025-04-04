@@ -1,10 +1,10 @@
+import { lexicalRichTextCompact } from '../fields/richtext-compact'
 import { type CollectionConfig } from 'payload'
-import { lexicalRichTextMinimal } from '@/payload/fields/richtext-minimal'
-import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
-import { slugField } from '@/payload/fields/slug'
+import { isAdmin, isAdminOrEditor, publishedOnly } from '@/_payload/access'
+import { slugField } from '@/_payload/fields/slug'
 
-export const Minimal: CollectionConfig = {
-  slug: 'minimal',
+export const Compact: CollectionConfig = {
+  slug: 'compact',
   admin: {
     enableRichTextLink: true,
     defaultColumns: ['title', 'author', '_status'],
@@ -22,8 +22,8 @@ export const Minimal: CollectionConfig = {
     maxPerDoc: 5,
   },
   labels: {
-    singular: 'Minimal',
-    plural: 'Minimal',
+    singular: 'Compact',
+    plural: 'Compact',
   },
   access: {
     create: isAdminOrEditor,
@@ -38,7 +38,7 @@ export const Minimal: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    lexicalRichTextMinimal({
+    lexicalRichTextCompact({
       name: 'richText',
       label: 'RichText',
       required: true,

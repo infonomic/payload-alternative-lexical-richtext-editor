@@ -1,11 +1,11 @@
 import { type CollectionConfig } from 'payload'
 
-import { isAdmin, isAdminOrEditor, publishedOnly } from '@/payload/access'
-import { editor } from '@/payload/fields/editor'
-import { publishedOn } from '@/payload/fields/published-on'
-import { PhotoBlock } from '@/payload/blocks/photo'
-import { RichTextBlock } from '@/payload/blocks/richtext'
-import { slugField } from '@/payload/fields/slug'
+import { isAdmin, isAdminOrEditor, publishedOnly } from '@/_payload/access'
+import { editor } from '@/_payload/fields/editor'
+import { publishedOn } from '@/_payload/fields/published-on'
+import { PhotoBlock } from '@/_payload/blocks/photo'
+import { RichTextBlock } from '@/_payload/blocks/richtext'
+import { slugField } from '@/_payload/fields/slug'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',

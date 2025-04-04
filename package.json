@@ -1,0 +1,12 @@
+{
+  "name": "@infonomic/lexical",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.5",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  },
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0"
+  }
+}

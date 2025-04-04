@@ -1,21 +1,22 @@
-import path from 'path'
+import path from 'node:path'
+import { lexicalEditor } from '@/_payload/adapters/richtext-lexical'
 import { en } from 'payload/i18n/en'
-import { lexicalEditor } from '@/payload/adapters/richtext-lexical'
 
+import { fileURLToPath } from 'node:url'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
-import { fileURLToPath } from 'url'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-import { Users } from '@/payload/collections/users'
-import { Minimal } from '@/payload/collections/minimal'
-import { Compact } from '@/payload/collections/compact'
-import { Full } from '@/payload/collections/full'
-import { Debug } from '@/payload/collections/debug'
-import { Media } from '@/payload/collections/media'
+import { Compact } from '@/_payload/collections/compact'
+import { Debug } from '@/_payload/collections/debug'
+import { Full } from '@/_payload/collections/full'
+import { Media } from '@/_payload/collections/media'
+import { Minimal } from '@/_payload/collections/minimal'
+import { Pages } from '@/_payload/collections/pages'
+import { Users } from '@/_payload/collections/users'
 
 export default buildConfig({
   admin: {
@@ -30,7 +31,7 @@ export default buildConfig({
   },
   // @ts-ignore: return type for editorConfig is different
   editor: lexicalEditor(),
-  collections: [Full, Minimal, Compact, Debug, Media, Users],
+  collections: [Pages, Full, Minimal, Compact, Debug, Media, Users],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

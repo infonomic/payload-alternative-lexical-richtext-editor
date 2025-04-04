@@ -55,14 +55,14 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
   // TODO: Watch for type updates in RichTextAdapter
   return {
     CellComponent: {
-      path: '/payload/adapters/richtext-lexical/cell/index#RichTextCell',
+      path: '/_payload/adapters/richtext-lexical/cell/index#RichTextCell',
       clientProps: {
         // admin: props?.admin,
         editorConfig,
       },
     },
     FieldComponent: {
-      path: '/payload/adapters/richtext-lexical/field/index#RichTextField',
+      path: '/_payload/adapters/richtext-lexical/field/index#RichTextField',
       clientProps: {
         // admin: props?.admin,
         editorConfig,
@@ -70,8 +70,8 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     },
     editorConfig,
     generateImportMap: ({ addToImportMap }: any) => {
-      addToImportMap('/payload/adapters/richtext-lexical/cell/index#RichTextCell')
-      addToImportMap('/payload/adapters/richtext-lexical/field/index#RichTextField')
+      addToImportMap('/_payload/adapters/richtext-lexical/cell/index#RichTextCell')
+      addToImportMap('/_payload/adapters/richtext-lexical/field/index#RichTextField')
     },
     hooks: {
       afterRead: [populateLexicalMedia],

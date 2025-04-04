@@ -32,7 +32,7 @@ export const Media: CollectionConfig = {
     group: 'Uploads',
     components: {
       Description:
-        '/payload/collections/components/media-collection-description#MediaCollectionDescription',
+        '/_payload/collections/components/media-collection-description#MediaCollectionDescription',
     },
   },
   access: {

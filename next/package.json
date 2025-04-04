@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "clean": "rimraf .next node_modules",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "lint": "biome check . --diagnostic-level=warn",
     "ci": "payload migrate && pnpm build",
     "generate:types": "payload generate:types",
     "generate:schema": "payload-graphql generate:schema",
@@ -40,6 +41,8 @@
     "@payloadcms/ui": "^3.32.0",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
+    "eslint": "^9.23.0",
+    "eslint-config-next": "15.2.4",
     "graphql": "^16.10.0",
     "json-schema": "^0.4.0",
     "lexical": "^0.29.0",
@@ -52,20 +55,21 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/json-schema": "^7.0.15",
     "@types/node": "^22.14.0",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.7",
-    "eslint": "^9.23.0",
-    "eslint-config-next": "15.2.4",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "@biomejs/biome",
+      "esbuild",
+      "sharp"
     ]
   }
 }

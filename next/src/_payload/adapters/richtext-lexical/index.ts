@@ -17,8 +17,6 @@ import { populateLexicalMedia } from './field/lexical-after-read-populate-media'
 import { cloneDeep } from './field/utils/cloneDeep'
 import { richTextValidate } from './validate/validate-server'
 
-// @ts-expect-error: ignore
-import type { EditorConfig as LexicalEditorConfig } from 'lexical/LexicalEditor'
 import type { EditorConfig } from './field/config/types'
 import type { JSONSchema4 } from 'json-schema'
 import type { LexicalRichTextAdapter } from './types'
@@ -41,19 +39,13 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     settings = cloneDeep(defaultEditorConfig.settings)
   }
 
-  let lexical: () => Promise<LexicalEditorConfig>
-  if (props?.lexical != null) {
-    lexical = async () => await Promise.resolve(props.lexical as LexicalEditorConfig)
-  } else {
-    lexical = defaultEditorConfig.lexical
-  }
+  const lexical = props?.lexical != null ? props.lexical : defaultEditorConfig.lexical
 
   const editorConfig: EditorConfig = {
     settings,
     lexical,
   }
 
-  // TODO: Watch for type updates in RichTextAdapter
   return {
     CellComponent: {
       path: '/_payload/adapters/richtext-lexical/cell/rsc-entry#RscEntryLexicalCell',

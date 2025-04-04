@@ -1,5 +1,4 @@
-// @ts-ignore
-import type { EditorConfig as LexicalEditorConfig } from 'lexical/LexicalEditor'
+import type { EditorConfig as LexicalEditorConfig } from 'lexical'
 
 import { theme } from '../themes/lexical-editor-theme'
 

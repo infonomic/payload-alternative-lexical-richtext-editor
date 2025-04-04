@@ -1,5 +1,6 @@
 import type {
   DefaultCellComponentProps,
+  DefaultServerCellComponentProps,
   RichTextAdapter,
   RichTextFieldClient,
   RichTextFieldClientProps
@@ -18,13 +19,17 @@ export interface AdapterProps {
   editorConfig: EditorConfig
 }
 
-export type LexicalRichTextAdapter = RichTextAdapter<
-  SerializedEditorState,
-  AdapterProps,
-  object
-> & {
+// export type LexicalRichTextAdapter = RichTextAdapter<
+//   SerializedEditorState,
+//   AdapterProps,
+//   object
+// > & {
+//   editorConfig: EditorConfig
+// }
+
+export type LexicalRichTextAdapter = {
   editorConfig: EditorConfig
-}
+} & RichTextAdapter<SerializedEditorState, AdapterProps>
 
 export type LexicalFieldAdminProps = {
   /**
@@ -39,7 +44,12 @@ export type LexicalRichTextFieldProps = {
   readonly editorConfig: EditorConfig
 } & RichTextFieldClientProps<SerializedEditorState, AdapterProps, object>
 
-export type LexicalRichTextCellProps = DefaultCellComponentProps<
+// export type LexicalRichTextCellProps = DefaultCellComponentProps<
+//   RichTextFieldClient<SerializedEditorState, AdapterProps, object>,
+//   SerializedEditorState
+// >
+
+export type LexicalRichTextCellProps = DefaultServerCellComponentProps<
   RichTextFieldClient<SerializedEditorState, AdapterProps, object>,
   SerializedEditorState
 >

@@ -26,6 +26,7 @@ import type { LexicalEditorProps } from './types'
 
 // TODO: sanitize / validate all inputs (okay for now as we control all inputs)
 export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapter {
+
   let settings: EditorSettings | null
   if (props?.settings != null) {
     settings =
@@ -55,16 +56,14 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
   // TODO: Watch for type updates in RichTextAdapter
   return {
     CellComponent: {
-      path: '/_payload/adapters/richtext-lexical/cell/index#RichTextCell',
-      clientProps: {
-        // admin: props?.admin,
+      path: '/_payload/adapters/richtext-lexical/cell/rsc-entry#RscEntryLexicalCell',
+      serverProps: {
         editorConfig,
       },
     },
     FieldComponent: {
-      path: '/_payload/adapters/richtext-lexical/field/index#RichTextField',
-      clientProps: {
-        // admin: props?.admin,
+      path: '/_payload/adapters/richtext-lexical/field/rsc-entry#RscEntryLexicalField',
+      serverProps: {
         editorConfig,
       },
     },
@@ -146,4 +145,5 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     },
     validate: richTextValidate,
   }
+
 }

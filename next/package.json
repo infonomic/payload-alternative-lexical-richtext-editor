@@ -1,6 +1,6 @@
 {
-  "name": "next-latest-starter",
-  "version": "0.1.0",
+  "name": "@infonomic/richtext-lexical",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -38,6 +38,7 @@
     "@payloadcms/db-mongodb": "^3.32.0",
     "@payloadcms/db-postgres": "^3.32.0",
     "@payloadcms/next": "^3.32.0",
+    "@payloadcms/translations": "^3.32.0",
     "@payloadcms/ui": "^3.32.0",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",

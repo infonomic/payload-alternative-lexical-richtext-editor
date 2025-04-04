@@ -69,8 +69,8 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     },
     editorConfig,
     generateImportMap: ({ addToImportMap }: any) => {
-      addToImportMap('/_payload/adapters/richtext-lexical/cell/index#RichTextCell')
-      addToImportMap('/_payload/adapters/richtext-lexical/field/index#RichTextField')
+      addToImportMap('/_payload/adapters/richtext-lexical/cell/rsc-entry#RscEntryLexicalCell')
+      addToImportMap('/_payload/adapters/richtext-lexical/field/rsc-entry#RscEntryLexicalField')
     },
     hooks: {
       afterRead: [populateLexicalMedia],

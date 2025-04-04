@@ -37,7 +37,7 @@ export const Pages: CollectionConfig = {
     update: isAdminOrEditor,
     delete: isAdmin
   },
-  
+
   fields: [
     {
       type: 'tabs',
@@ -59,65 +59,7 @@ export const Pages: CollectionConfig = {
                 description: "Optionally enter a sub-title, sub-tag, or 'lead' for this page."
               }
             },
-            {
-              name: 'options',
-              label: 'Options',
-              type: 'group',
-              fields: [
-                {
-                  name: 'display', // required
-                  type: 'select', // required
-                  hasMany: false,
-                  defaultValue: 'full_hero',
-                  admin: {
-                    isClearable: false,
-                    description:
-                      'Choose how this page will be displayed. In "Full Hero" mode, either the feature image, or a default image will be displayed at "full hero" height. Section Header mode will also display the feature image, or a default image, but at a reduced "section header" height.'
-                  },
-                  options: [
-                    {
-                      label: 'Full Hero',
-                      value: 'full_hero'
-                    },
-                    {
-                      label: 'Reduced Hero',
-                      value: 'reduced_hero'
-                    },
-                    {
-                      label: 'Normal Page',
-                      value: 'normal_page'
-                    }
-                  ]
-                },
-                {
-                  name: 'showBreadcrumbs',
-                  label: 'Show Breadcrumbs',
-                  type: 'checkbox',
-                  defaultValue: true,
-                  admin: {
-                    description: 'Check to show the breadcrumb navigation at the top of this page.'
-                  }
-                },
-                {
-                  name: 'showAvailableLanguages',
-                  label: 'Show the Available Languages widget',
-                  type: 'checkbox',
-                  defaultValue: true,
-                  admin: {
-                    description: 'Check to show the available languages widget.'
-                  }
-                },
-                {
-                  name: 'showSocialShare',
-                  label: 'Show SocialShare',
-                  type: 'checkbox',
-                  defaultValue: true,
-                  admin: {
-                    description: 'Check to show the social media share widget.'
-                  }
-                }
-              ]
-            }
+
           ]
         },
         {

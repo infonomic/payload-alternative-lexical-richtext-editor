@@ -7,7 +7,6 @@ import type {
   ServerComponentProps,
 } from 'payload'
 
-import { getTranslation } from '@payloadcms/translations'
 import { renderField } from '@payloadcms/ui/forms/renderField'
 import React from 'react'
 
@@ -18,10 +17,9 @@ import type {
   LexicalRichTextFieldProps,
 } from '../types.js'
 
-// eslint-disable-next-line payload/no-imports-from-exports-dir
-import { RichTextField } from './index.js'
-import { buildInitialState } from './build-initial-state.js'
 
+import { RichTextField } from './index'
+import { buildInitialState } from './build-initial-state'
 
 export const RscEntryLexicalField: React.FC<
   {

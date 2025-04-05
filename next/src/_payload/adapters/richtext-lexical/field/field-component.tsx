@@ -1,13 +1,27 @@
 'use client'
 /**
- * Adapted from on https://github.com/payloadcms/payload/blob/main/packages/richtext-lexical/src/field/Field.tsx
+ * Portions copyright (c) 2018-2022 Payload CMS, LLC info@payloadcms.com
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * Adapted from https://github.com/payloadcms/payload/tree/main/packages/richtext-lexical
  */
 
 import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import type { EditorState, LexicalEditor, SerializedEditorState } from 'lexical'
 
-import { FieldLabel, useEditDepth, useField, useEffectEvent, RenderCustomComponent, FieldError, FieldDescription } from '@payloadcms/ui'
+import type { EditorState, SerializedEditorState } from 'lexical'
+
+import { 
+  FieldLabel, 
+  useEditDepth, 
+  useField,
+  useEffectEvent,
+  RenderCustomComponent, 
+  FieldError, 
+  FieldDescription 
+} from '@payloadcms/ui'
 import { mergeFieldStyles } from '@payloadcms/ui/shared'
 
 import { richTextValidate } from '../validate/validate-server'
@@ -34,7 +48,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     },
     path: pathFromProps,
     readOnly: readOnlyFromTopLevelProps,
-    validate = richTextValidate
+    validate, // = richTextValidate
   } = props
 
   const readOnlyFromProps = readOnlyFromTopLevelProps || readOnlyFromAdmin

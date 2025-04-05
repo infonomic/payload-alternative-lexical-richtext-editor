@@ -69,6 +69,7 @@ export const RscEntryLexicalField: React.FC<
     admin: args.admin,
     field: args.clientField as RichTextFieldClient,
     forceRender: args.forceRender,
+    initialLexicalFormState,
     editorConfig: args.editorConfig,
     path,
     permissions: args.permissions,

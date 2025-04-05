@@ -1,7 +1,9 @@
 'use client'
 import * as React from 'react'
+import { useMemo } from 'react'
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
+import { useEditDepth } from '@payloadcms/ui'
 
 import { EditorConfigContext } from './config'
 import { SharedHistoryContext } from './context/shared-history-context'
@@ -9,7 +11,7 @@ import { SharedOnChangeContext } from './context/shared-on-change-context'
 import { Editor } from './editor'
 import { Nodes } from './nodes'
 
-import type { EditorConfig } from './config'
+import type { ClientEditorConfig } from './config'
 import type { InitialConfigType } from '@lexical/react/LexicalComposer'
 import type { LexicalEditor, EditorState, SerializedEditorState } from 'lexical'
 import { RichTextFieldClientProps } from 'payload'
@@ -24,36 +26,38 @@ function onError(error: Error, editor: LexicalEditor): void {
 }
 
 export function EditorContext(props: {
-  editorConfig: EditorConfig
+  composerKey: string
+  editorConfig: ClientEditorConfig
   fieldProps: RichTextFieldClientProps<SerializedEditorState, AdapterProps, any>
   onChange: (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => void
-  path: string
   readOnly: boolean
   value: SerializedEditorState
 }): React.JSX.Element {
-  const { editorConfig, onChange, path, readOnly } = props
-  const { value } = props
+  const { composerKey, editorConfig, onChange, fieldProps, readOnly, value } = props
 
-  const [initialConfig, setInitialConfig] = React.useState<InitialConfigType | null>(null)
-
-  React.useEffect(() => {
-    const newInitialConfig: InitialConfigType = {
-      namespace: editorConfig.lexical.namespace,
-      editable: !readOnly,
+  // useMemo for the initialConfig that depends on readOnly and value
+  const initialConfig = useMemo<InitialConfigType>(() => {
+    return {
+      editable: readOnly !== true,
       editorState: value != null ? JSON.stringify(value) : undefined,
-      theme: editorConfig.lexical.theme,
+      namespace: editorConfig.lexical.namespace,
       nodes: [...Nodes],
-      onError
+      onError: (error: Error) => {
+        throw error
+      },
+      theme: editorConfig.lexical.theme,
     }
-    setInitialConfig(newInitialConfig)
-  }, [editorConfig, readOnly, value])
-
+    // Important: do not add readOnly and value to the dependencies array. This will cause the entire lexical editor to re-render if the document is saved, which will
+    // cause the editor to lose focus.
+  }, [editorConfig])
+  
+  
   if (initialConfig == null) {
     return <p>Loading...</p>
   }
 
   return (
-    <LexicalComposer initialConfig={initialConfig} key={path}>
+    <LexicalComposer initialConfig={initialConfig} key={composerKey + initialConfig.editable} >
       <EditorConfigContext config={editorConfig.settings}>
         <SharedOnChangeContext onChange={onChange}>
           <SharedHistoryContext>

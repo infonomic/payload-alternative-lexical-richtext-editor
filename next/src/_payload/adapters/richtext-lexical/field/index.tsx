@@ -11,9 +11,7 @@
 import * as React from 'react'
 import { Suspense, lazy } from 'react'
 
-import { ShimmerEffect, useConfig } from '@payloadcms/ui'
-
-import { defaultEditorConfig } from './config'
+import { ShimmerEffect } from '@payloadcms/ui'
 import type { LexicalRichTextFieldProps } from '../types'
 
 const RichTextEditor = lazy(() =>

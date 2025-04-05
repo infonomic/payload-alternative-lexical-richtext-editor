@@ -12,15 +12,16 @@ import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import type { EditorState, SerializedEditorState } from 'lexical'
+import type { Validate } from 'payload'
 
 import { 
-  FieldLabel, 
-  useEditDepth, 
-  useField,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  RenderCustomComponent,
+  useEditDepth,
   useEffectEvent,
-  RenderCustomComponent, 
-  FieldError, 
-  FieldDescription 
+  useField
 } from '@payloadcms/ui'
 import { mergeFieldStyles } from '@payloadcms/ui/shared'
 
@@ -36,7 +37,6 @@ const baseClass = 'lexicalRichTextEditor'
 
 const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
   const {
-    admin,
     editorConfig,
     field,
     field: {
@@ -56,19 +56,18 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
 
   const editDepth = useEditDepth()
 
-  const memoizedValidate = useCallback(
-    (value: any, validationOptions: any) => {
+  const memoizedValidate = useCallback<Validate>(
+    (value, validationOptions) => {
       if (typeof validate === 'function') {
-        return validate(value, { ...validationOptions, props, required })
-      } else {
-        return true
+        // @ts-expect-error - vestiges of when tsconfig was not strict. Feel free to improve
+        return validate(value, { ...validationOptions, required })
       }
+      return true
     },
     // Important: do not add props to the dependencies array.
     // This would cause an infinite loop and endless re-rendering.
     // Removing props from the dependencies array fixed this issue: https://github.com/payloadcms/payload/issues/3709
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [validate, required]
+    [validate, required],
   )
 
   const {
@@ -85,7 +84,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
 
   // TODO: work out why disabledFromField is true on first load of 
   // main (non-block) editor, but not on the block editor.
-  const disabled = readOnlyFromProps || false  // || disabledFromField
+  const disabled = readOnlyFromProps || disabledFromField  // || false
 
   const [rerenderProviderKey, setRerenderProviderKey] = useState<Date>()
 
@@ -98,7 +97,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     className,
     showError && 'error',
     disabled && `${baseClass}--read-only`,
-    admin?.hideGutter !== true ? `${baseClass}--show-gutter` : null
+    editorConfig.admin?.hideGutter !== true ? `${baseClass}--show-gutter` : null
   ]
     .filter(Boolean)
     .join(' ')
@@ -152,9 +151,9 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
         <ErrorBoundary fallbackRender={fallbackRender} onReset={() => {}}>
           {BeforeInput}
           <EditorContext
+            composerKey={pathWithEditDepth}
             editorConfig={editorConfig}
             fieldProps={props}
-            path={name}
             key={JSON.stringify({ path, rerenderProviderKey })} // makes sure lexical is completely re-rendered when initialValue changes, bypassing the lexical-internal value memoization. That way, external changes to the form will update the editor. More infos in PR description (https://github.com/payloadcms/payload/pull/5010)
             onChange={handleChange}
             readOnly={disabled}

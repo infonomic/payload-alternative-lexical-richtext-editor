@@ -10,7 +10,7 @@ import type {
 import { renderField } from '@payloadcms/ui/forms/renderField'
 import React from 'react'
 
-import type { EditorConfig } from './config/types.js'
+import type { ServerEditorConfig } from './config/types.js'
 
 import type {
   LexicalFieldAdminProps,
@@ -24,7 +24,7 @@ import { buildInitialState } from './build-initial-state'
 export const RscEntryLexicalField: React.FC<
   {
     admin: LexicalFieldAdminProps
-    editorConfig: EditorConfig
+    editorConfig: ServerEditorConfig
   } & ClientComponentProps &
     Pick<FieldPaths, 'path'> &
     ServerComponentProps
@@ -66,7 +66,6 @@ export const RscEntryLexicalField: React.FC<
   }
 
   const props: LexicalRichTextFieldProps = {
-    admin: args.admin,
     field: args.clientField as RichTextFieldClient,
     forceRender: args.forceRender,
     initialLexicalFormState,

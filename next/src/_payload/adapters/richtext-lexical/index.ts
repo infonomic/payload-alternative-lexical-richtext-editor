@@ -17,19 +17,19 @@ import { populateLexicalMedia } from './field/lexical-after-read-populate-media'
 import { cloneDeep } from './field/utils/cloneDeep'
 import { richTextValidate } from './validate/validate-server'
 
-import type { EditorConfig, EditorSettings } from './field/config/types'
+import type { ServerEditorConfig, EditorSettings } from './field/config/types'
 import type { JSONSchema4 } from 'json-schema'
 import type { LexicalRichTextAdapter } from './types'
 import type { LexicalEditorProps } from './types'
 
 // TODO: sanitize / validate all inputs (okay for now as we control all inputs)
-export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapter {
+export function lexicalEditor(args?: LexicalEditorProps): LexicalRichTextAdapter {
 
   let settings: EditorSettings | null
-  if (props?.settings != null) {
+  if (args?.settings != null) {
     settings =
-      props.settings != null && typeof props.settings === 'function'
-        ? props?.settings(cloneDeep(defaultEditorConfig.settings))
+      args.settings != null && typeof args.settings === 'function'
+        ? args?.settings(cloneDeep(defaultEditorConfig.settings))
         : null
 
     if (settings == null) {
@@ -39,9 +39,9 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     settings = cloneDeep(defaultEditorConfig.settings)
   }
 
-  const lexical = props?.lexical != null ? props.lexical : defaultEditorConfig.lexical
+  const lexical = args?.lexical != null ? args.lexical : defaultEditorConfig.lexical
 
-  const editorConfig: EditorConfig = {
+  const editorConfig: ServerEditorConfig = {
     settings,
     lexical,
   }
@@ -50,12 +50,14 @@ export function lexicalEditor(props?: LexicalEditorProps): LexicalRichTextAdapte
     CellComponent: {
       path: '/_payload/adapters/richtext-lexical/cell/rsc-entry#RscEntryLexicalCell',
       serverProps: {
+        admin: args?.admin,
         editorConfig,
       },
     },
     FieldComponent: {
       path: '/_payload/adapters/richtext-lexical/field/rsc-entry#RscEntryLexicalField',
       serverProps: {
+        admin: args?.admin,
         editorConfig,
       },
     },

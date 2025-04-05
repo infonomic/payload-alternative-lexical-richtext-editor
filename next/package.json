@@ -35,24 +35,24 @@
     "@lexical/selection": "^0.29.0",
     "@lexical/table": "^0.29.0",
     "@lexical/utils": "^0.29.0",
-    "@payloadcms/db-mongodb": "^3.32.0",
-    "@payloadcms/db-postgres": "^3.32.0",
-    "@payloadcms/next": "^3.32.0",
-    "@payloadcms/translations": "^3.32.0",
-    "@payloadcms/ui": "^3.32.0",
+    "@payloadcms/db-mongodb": "^3.33.0",
+    "@payloadcms/db-postgres": "^3.33.0",
+    "@payloadcms/next": "^3.33.0",
+    "@payloadcms/translations": "^3.33.0",
+    "@payloadcms/ui": "^3.33.0",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
-    "eslint": "^9.23.0",
+    "eslint": "^9.24.0",
     "eslint-config-next": "15.2.4",
     "graphql": "^16.10.0",
     "json-schema": "^0.4.0",
     "lexical": "^0.29.0",
     "next": "^15.2.4",
-    "payload": "3.32.0",
+    "payload": "3.33.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-error-boundary": "^5.0.0",
-    "sharp": "0.33.5",
+    "sharp": "0.34.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
@@ -64,7 +64,7 @@
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.7",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

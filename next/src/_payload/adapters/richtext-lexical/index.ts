@@ -9,7 +9,7 @@
 
 import { withNullableJSONSchemaType } from 'payload'
 
-import { defaultEditorConfig, EditorSettings } from './field/config'
+import { defaultEditorConfig } from './field/config'
 // import { populateLexicalLinks } from './field/lexical-after-read-populate-links'
 import { populateLexicalLinks } from './field/lexical-before-change-populate-links'
 import { populateLexicalMedia } from './field/lexical-after-read-populate-media'
@@ -17,7 +17,7 @@ import { populateLexicalMedia } from './field/lexical-after-read-populate-media'
 import { cloneDeep } from './field/utils/cloneDeep'
 import { richTextValidate } from './validate/validate-server'
 
-import type { EditorConfig } from './field/config/types'
+import type { EditorConfig, EditorSettings } from './field/config/types'
 import type { JSONSchema4 } from 'json-schema'
 import type { LexicalRichTextAdapter } from './types'
 import type { LexicalEditorProps } from './types'

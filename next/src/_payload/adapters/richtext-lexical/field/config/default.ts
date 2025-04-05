@@ -1,6 +1,13 @@
+import type { EditorConfig as LexicalEditorConfig } from 'lexical'
+
 import type { EditorSettings, EditorConfig } from './types'
 
-import { defaultEditorLexicalConfig } from './default-client'
+import { theme } from '../themes/lexical-editor-theme'
+
+export const defaultEditorLexicalConfig: LexicalEditorConfig = {
+  namespace: 'LexicalRichText',
+  theme
+}
 
 export const DEFAULT_EDITOR_SETTINGS: EditorSettings = {
   options: {

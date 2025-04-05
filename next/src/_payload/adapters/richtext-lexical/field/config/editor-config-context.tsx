@@ -1,10 +1,12 @@
 'use client'
+
 import * as React from 'react'
 import { useMemo, useState, useContext, createContext, useCallback } from 'react'
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { useEditDepth } from '@payloadcms/ui'
 
-import { DEFAULT_EDITOR_SETTINGS } from './editor-default-config'
+import { DEFAULT_EDITOR_SETTINGS } from './default'
 
 import type { EditorSettings, OptionName } from './types'
 
@@ -32,12 +34,10 @@ export const EditorConfigContext = ({
   config?: EditorSettings
 }): React.JSX.Element => {
   const [config, setConfig] = useState(configFromProps ?? DEFAULT_EDITOR_SETTINGS)
-
-  // I'm assuming we've included the editor as a dependency on the useMemo
-  // function below so that if the editor context changes (to another,
-  // or sub-editor - the UUID will change, and so then will all the Payload
-  // modal slugs - although not exactly sure why this is necessary yet)
+  // State to store the UUID
+  const [uuid] = useState(() => generateQuickGuid())
   const [editor] = useLexicalComposerContext()
+  const editDepth = useEditDepth()
 
   const setOption = useCallback((option: OptionName, value: boolean) => {
     setConfig((config) => {
@@ -47,8 +47,8 @@ export const EditorConfigContext = ({
   }, [])
 
   const editorContext = useMemo(
-    () => ({ setOption, config, uuid: generateQuickGuid() }),
-    [config, setOption]
+    () => ({ setOption, config, uuid, editDepth, editor }),
+    [setOption, config, uuid, editDepth, editor]
   )
 
   return <Context.Provider value={editorContext}>{children}</Context.Provider>

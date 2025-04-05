@@ -125,7 +125,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     if (!Object.is(initialValue, prevInitialValueRef.current)) {
       handleInitialValueChange(initialValue)
     }
-  }, [initialValue])
+  }, [initialValue, handleInitialValueChange])
 
   return (
     <div className={classes} key={pathWithEditDepth} style={styles}>

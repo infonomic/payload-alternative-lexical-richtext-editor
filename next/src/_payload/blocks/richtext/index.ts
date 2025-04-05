@@ -18,7 +18,7 @@ export const RichTextBlock: Block = {
           type: 'richText',
           label: 'Rich Text',
           localized: true,
-          required: true
+          required: false
         },
         {
           name: 'constrainedWidth',

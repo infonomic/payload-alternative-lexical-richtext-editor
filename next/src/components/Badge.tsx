@@ -2,8 +2,9 @@ export const Badge = () => {
   return (
     <span className="badge">
       <svg
-        width="20"
-        height="20"
+        role="presentation"
+        width="30"
+        height="30"
         viewBox="0 0 20 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +15,7 @@ export const Badge = () => {
         />
         <path d="M8.77667 17.9211V11.0447L3.04407 14.4153L8.77667 17.9211Z" fill="#ffffff" />
       </svg>
-      Beta
+      Production
     </span>
   )
 }

@@ -18,7 +18,7 @@ import type { FormState } from 'payload'
 import './admonition-drawer.css'
 
 export function AdmonitionDrawer({
-  isOpen,
+  isOpen = false,
   drawerSlug,
   onSubmit,
   data: dataFromProps
@@ -71,6 +71,10 @@ export function AdmonitionDrawer({
       setSynchronizedFormState(formState)
     }
   })
+
+  if(isOpen === false) {
+    return null
+  }
 
   return (
     <Drawer

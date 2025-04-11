@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useState, useRef, useMemo, useEffect } from 'react'
 import { Button } from '@payloadcms/ui'
 import { useConfig } from '@payloadcms/ui'
@@ -23,7 +24,7 @@ import './inline-image-drawer.css'
 const baseClass = 'inline-image-plugin--modal'
 
 export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
-  isOpen,
+  isOpen = false,
   drawerSlug,
   onSubmit,
   onClose,
@@ -87,6 +88,10 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
       }
       resolve(formState)
     })
+  }
+
+  if(isOpen === false) {
+    return null
   }
 
   const handleFormOnSubmit = (fields: FormState, data: Record<string, unknown>): void => {

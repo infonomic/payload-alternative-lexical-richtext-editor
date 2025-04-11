@@ -20,7 +20,7 @@ import './link-drawer.css'
 const baseClass = 'rich-text-link-edit-modal'
 
 export const LinkDrawer: React.FC<LinkDrawerProps> = ({
-  isOpen,
+  isOpen = false,
   drawerSlug,
   onSubmit,
   onClose,
@@ -103,6 +103,10 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
       setSynchronizedFormState(formState)
     }
   })
+
+  if(isOpen === false) {
+    return null
+  }
 
   return (
     <Drawer slug={drawerSlug} className={baseClass} title={t('fields:editLink') ?? ''}>

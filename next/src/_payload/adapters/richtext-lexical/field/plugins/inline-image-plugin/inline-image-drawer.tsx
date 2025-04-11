@@ -90,10 +90,6 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
     })
   }
 
-  if(isOpen === false) {
-    return null
-  }
-
   const handleFormOnSubmit = (fields: FormState, data: Record<string, unknown>): void => {
     const { valid, fields: formState } = validateFields(fields)
     if (valid === false) {
@@ -122,6 +118,11 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
       setSynchronizedFormState(formState)
     }
   })
+
+  if(isOpen === false) {
+    return null
+  }
+
 
   return (
     <Drawer slug={drawerSlug} className={baseClass} title="Inline Image">

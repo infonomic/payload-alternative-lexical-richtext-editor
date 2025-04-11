@@ -104,11 +104,23 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
 
   const pathWithEditDepth = `${path}.${editDepth}`
 
+  // Debounce editor as per this Payload PR and commit:
+  // https://github.com/payloadcms/payload/pull/12046
+  // https://github.com/payloadcms/payload/commit/101f765
+  const updateFieldValue = (editorState: EditorState) => {
+    const newState = editorState.toJSON()
+    prevValueRef.current = newState
+    setValue(newState)
+  }
+
   const handleChange = useCallback(
     (editorState: EditorState) => {
-      const newState = editorState.toJSON()
-      prevValueRef.current = newState
-      setValue(newState)
+      if (typeof window.requestIdleCallback === 'function') {
+        requestIdleCallback(() => updateFieldValue(editorState), {
+          timeout: 500,})
+      } else {
+        updateFieldValue(editorState)
+      }
     },
     [setValue],
   )

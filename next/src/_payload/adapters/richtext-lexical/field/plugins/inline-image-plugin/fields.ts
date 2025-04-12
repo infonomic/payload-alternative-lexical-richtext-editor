@@ -21,7 +21,7 @@ export const positionOptions: OptionObject[] = [
   }
 ]
 
-export const getFields = (collection: string, formState: FormState | undefined): ClientField[] => [
+export const getFields = (): ClientField[] => [
   // TODO: Investigate - would love to have used formState and RenderFields / MappedFields
   // for the Image upload field, but for some reason I could not get a return value
   // for the selected image via handleFormOnChange or handleFormOnSubmit :-(
@@ -39,7 +39,14 @@ export const getFields = (collection: string, formState: FormState | undefined):
   //   localized: false,
   //   type: 'upload',
   // },
-
+  {
+    name: 'image',
+    localized: false,
+    type: 'upload',
+    required: true,
+    label: 'Image',
+    relationTo: 'media',
+  },
   {
     name: 'version',
     localized: false,
@@ -78,9 +85,9 @@ export function getInitialState(data: InlineImageData | undefined): FormState {
     //   initialValue: null,
     //   valid: true,
     // },
-    version: {
-      value: '',
-      initialValue: '',
+    image: {
+      value: data?.id,
+      initialValue: data?.id,
       valid: true
     },
     altText: {
@@ -107,12 +114,14 @@ export function isAltTextValid(value: string | undefined): boolean {
 
 export function validateFields(fields: FormState): { valid: boolean; fields: FormState } {
   let valid = true
-  // Field validators
-  if (isAltTextValid(fields.altText.value as string | undefined) === false) {
-    fields.altText.valid = false
-    valid = false
-  } else {
-    fields.altText.valid = true
+
+  if (fields.altText != null) {
+    if (isAltTextValid(fields.altText.value as string | undefined) === false) {
+      fields.altText.valid = false
+      valid = false
+    } else {
+      fields.altText.valid = true
+    }
   }
   // Return
   return {

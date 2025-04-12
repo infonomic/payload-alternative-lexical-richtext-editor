@@ -47,7 +47,7 @@ import type { LinkData } from '../types'
 import type { LexicalEditor, NodeSelection, RangeSelection, BaseSelection } from 'lexical'
 import type { LinkAttributes } from '../../../nodes/link-nodes-payload'
 
-import './index.scss'
+import './index.css'
 
 function createPreviewLink(config: ClientConfig, url: string | undefined): string | undefined {
   if (url?.startsWith('/') ?? false) {

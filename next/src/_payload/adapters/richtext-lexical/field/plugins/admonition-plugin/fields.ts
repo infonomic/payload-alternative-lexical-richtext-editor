@@ -21,14 +21,8 @@ export const admonitionTypeOptions: OptionObject[] = [
   }
 ]
 
-export const getFields = (formState: FormState | undefined): ClientField[] => {
+export const getFields = (): ClientField[] => {
   return [
-    {
-      name: 'version',
-      localized: false,
-      type: 'text',
-      hidden: true,
-    },
     {
       name: 'title',
       localized: false,
@@ -84,14 +78,17 @@ export function isTitleValid(value: string | undefined): boolean {
 
 export function validateFields(fields: FormState): { valid: boolean; fields: FormState } {
   let valid = true
-  // Field validators
-  if (isTitleValid(fields.title.value as string | undefined) === false) {
-    fields.title.valid = false
-    valid = false
-  } else {
-    fields.title.valid = true
+
+  if (fields.title != null) {
+    if (isTitleValid(fields.title.value as string | undefined) === false) {
+      fields.title.valid = false
+      valid = false
+    } else {
+      fields.title.valid = true
+    }
+
   }
-  // Return
+
   return {
     valid,
     fields

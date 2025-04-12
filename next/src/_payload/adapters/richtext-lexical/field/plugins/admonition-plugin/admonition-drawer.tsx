@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Drawer, documentDrawerBaseClass } from '@payloadcms/ui'
 import { Button } from '@payloadcms/ui'
@@ -25,53 +25,41 @@ export function AdmonitionDrawer({
 }: AdmonitionDrawerProps): React.ReactNode {
   const { t } = useTranslation()
   const { closeModal } = useModal()
+  
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
-    undefined
-  )
-  const version = useRef<string>(uuid())
-
+      undefined
+    )
+  
   const handleOnCancel = (): void => {
-    setSynchronizedFormState(undefined)
     closeModal(drawerSlug)
   }
 
   async function handleFormOnChange({ formState }: { formState: FormState }): Promise<FormState> {
-    console.log('handleFormOnChange', formState)
     return new Promise((resolve, reject) => {
-      if (version.current !== formState.version.value) {
-        const { fields } = validateFields(formState)
-        formState.version.value = version.current = uuid()
-        setSynchronizedFormState(fields)
-      } else {
-        version.current = uuid()
-      }
+      validateFields(formState)
       resolve(formState)
     })
   }
 
   const handleFormOnSubmit = (fields: FormState, data: Record<string, unknown>): void => {
-    const { valid, fields: formState } = validateFields(fields)
-    if (valid === false) {
-      setSynchronizedFormState(formState)
-    } else {
-      if (onSubmit != null) {
-        onSubmit({
-          admonitionType: data.admonitionType as AdmonitionType,
-          title: data.title as string
-        })
-        setSynchronizedFormState(undefined)
-      }
+    const { valid } = validateFields(fields)
+    if (valid === true) 
+      if( onSubmit != null) {
+      onSubmit({
+        admonitionType: data.admonitionType as AdmonitionType,
+        title: data.title as string
+      })
+      setSynchronizedFormState(undefined)
       closeModal(drawerSlug)
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (synchronizedFormState == null && isOpen === true) {
-      const formState = getInitialState(dataFromProps)
-      setSynchronizedFormState(formState)
-    }
-  })
+      if (synchronizedFormState == null && isOpen === true) {
+        const formState = getInitialState(dataFromProps)
+        setSynchronizedFormState(formState)
+      }
+    })
 
   if(isOpen === false) {
     return null
@@ -92,7 +80,7 @@ export function AdmonitionDrawer({
         isDocumentForm={false}
       >
         <RenderFields
-          fields={getFields(synchronizedFormState)}
+          fields={getFields()}
           forceRender
           readOnly={false}
           parentSchemaPath=""

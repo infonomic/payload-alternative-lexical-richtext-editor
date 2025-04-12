@@ -16,30 +16,10 @@ export const linkOptions: OptionObject[] = [
 ]
 
 export const getFields = (
-  formState: FormState | undefined,
   validRelationships: string[]
 ): ClientField[] => [
     {
-      name: 'version',
-      localized: false,
-      type: 'text',
-      hidden: true,
-    },
-    {
       name: 'text',
-      // cellComponentProps: { name: 'text', schemaPath: 'text' },
-      // fieldComponentProps: {
-      //   name: 'text',
-      //   type: 'text',
-      //   label: 'Text',
-      //   errorProps: {
-      //     showError: formState?.text?.valid === false,
-      //     message: 'Please enter text for this link.'
-      //   },
-      //   required: true
-      // },
-      // fieldIsPresentational: false,
-      // isFieldAffectingData: true,
       required: true,
       localized: false,
       label: 'Text',
@@ -55,17 +35,6 @@ export const getFields = (
     },
     {
       name: 'url',
-      // cellComponentProps: { name: 'url', schemaPath: 'url' },
-      // fieldComponentProps: {
-      //   name: 'url',
-      //   type: 'text',
-      //   errorProps: {
-      //     showError: formState?.url?.valid === false,
-      //     message: 'Please enter a url for this link.'
-      //   }
-      // },
-      // fieldIsPresentational: false,
-      // isFieldAffectingData: true,
       localized: false,
       required: true,
       label: 'URL',
@@ -73,14 +42,6 @@ export const getFields = (
     },
     {
       name: 'doc',
-      // cellComponentProps: { name: 'doc', schemaPath: 'doc' },
-      // fieldComponentProps: {
-      //   name: 'doc',
-      //   type: 'relationship',
-      //   relationTo: validRelationships as CollectionSlug[]
-      // },
-      // fieldIsPresentational: false,
-      // isFieldAffectingData: true,
       localized: false,
       required: true,
       type: 'relationship',
@@ -147,20 +108,22 @@ export function isTextValid(value: string | undefined): boolean {
 
 export function validateFields(fields: FormState): { valid: boolean; fields: FormState } {
   let valid = true
-  // Field validators
-  if (isTextValid(fields.text.value as string | undefined) === false) {
-    fields.text.valid = false
-    valid = false
-  } else {
-    fields.text.valid = true
+
+  if (fields.text != null) {
+    if (isTextValid(fields.text?.value as string | undefined) === false) {
+      fields.text.valid = false
+      valid = false
+    } else {
+      fields.text.valid = true
+    }
   }
 
-  if (fields.linkType.value === 'custom') {
+  if (fields.linkType != null && fields.linkType?.value === 'custom') {
     fields.url.passesCondition = true
     fields.doc.passesCondition = false
   }
 
-  if (fields.linkType.value === 'internal') {
+  if (fields.linkType != null && fields.linkType?.value === 'internal') {
     fields.url.passesCondition = false
     fields.doc.passesCondition = true
   }

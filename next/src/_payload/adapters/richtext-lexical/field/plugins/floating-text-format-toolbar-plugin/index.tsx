@@ -7,7 +7,7 @@
  *
  */
 
-import './index.scss'
+import './index.css'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as React from 'react'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 
 import { Drawer } from '@payloadcms/ui'
 import { Button } from '@payloadcms/ui'
@@ -31,7 +31,6 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
     undefined
   )
-  const version = useRef<string>(uuid())
 
   // NOTE: enableRichTextLink is currently true by default for all collections
   // and so we need to check for both enableRichTextLink and hidden. For example
@@ -58,22 +57,14 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
 
   async function handleFormOnChange({ formState }: { formState: FormState }): Promise<FormState> {
     return new Promise((resolve, reject) => {
-      if (version.current !== formState.version.value) {
-        const { fields } = validateFields(formState)
-        formState.version.value = version.current = uuid()
-        setSynchronizedFormState(fields)
-      } else {
-        version.current = uuid()
-      }
+      validateFields(formState)
       resolve(formState)
     })
   }
 
   const handleFormOnSubmit = (fields: FormState, data: Record<string, unknown>): void => {
-    const { valid, fields: formState } = validateFields(fields)
-    if (valid === false) {
-      setSynchronizedFormState(formState)
-    } else {
+    const { valid } = validateFields(fields)
+    if (valid === true) {
       if (onSubmit != null) {
         const doc = data.doc as { value: string; relationTo: string }
         const submitData: LinkData = {
@@ -82,8 +73,8 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
             url: data.url as string,
             newTab: data.newTab as boolean,
             doc: {
-              value: doc.value,
-              relationTo: doc.relationTo,
+              value: doc?.value,
+              relationTo: doc?.relationTo,
               data: {}
             },
             linkType: data.linkType === 'custom' ? 'custom' : 'internal'
@@ -96,7 +87,6 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
     }
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (synchronizedFormState == null && isOpen === true) {
       const formState = getInitialState(dataFromProps)
@@ -117,7 +107,7 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
         uuid={uuid()}
       >
         <RenderFields
-          fields={getFields(synchronizedFormState, validRelationships)}
+          fields={getFields(validRelationships)}
           forceRender
           parentSchemaPath=""
           parentPath=""

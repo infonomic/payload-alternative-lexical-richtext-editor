@@ -31,8 +31,6 @@ import {
 import { $createTableNodeWithDimensions, TableNode } from '../../nodes/table-nodes'
 import invariant from '../../shared/invariant'
 
-import './modal.scss'
-
 export type InsertTableCommandPayload = Readonly<{
   columns: string
   rows: string

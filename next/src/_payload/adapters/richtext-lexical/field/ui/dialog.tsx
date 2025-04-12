@@ -8,7 +8,7 @@
  */
 import * as React from 'react'
 
-import './dialog.scss'
+import './dialog.css'
 
 type Props = Readonly<{
   'data-test-id'?: string

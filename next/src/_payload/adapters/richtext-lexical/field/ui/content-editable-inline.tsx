@@ -10,7 +10,7 @@ import * as React from 'react'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
 import cx from 'classnames'
 
-import './content-editable.scss'
+import './content-editable.css'
 
 // TODO: implement an inline version of content editable for
 // image captions that will not allow inserted paragraphs.

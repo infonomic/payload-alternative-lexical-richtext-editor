@@ -13,7 +13,7 @@ import cx from 'classnames'
 
 import { useEditorConfig } from '../config'
 
-import './content-editable.scss'
+import './content-editable.css'
 
 export function ContentEditable({ className }: { className?: string }): React.JSX.Element {
   const { config } = useEditorConfig()

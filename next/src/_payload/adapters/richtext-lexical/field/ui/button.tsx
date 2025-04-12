@@ -8,7 +8,7 @@
  */
 import * as React from 'react'
 
-import './button.scss'
+import './button.css'
 
 import joinClasses from '../utils/joinClasses'
 

@@ -10,7 +10,7 @@ import * as React from 'react'
 
 import cx from 'classnames'
 
-import './placeholder.scss'
+import './placeholder.css'
 
 import { useEditorConfig } from '../config'
 

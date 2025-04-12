@@ -42,7 +42,7 @@ import { Placeholder } from './ui/placeholder'
 
 import type { EditorState, LexicalEditor } from 'lexical'
 
-import './editor.scss'
+import './editor.css'
 
 export function Editor(): React.JSX.Element {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null)

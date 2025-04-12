@@ -8,7 +8,7 @@
  */
 import * as React from 'react'
 
-import './select.scss'
+import './select.css'
 
 type SelectIntrinsicProps = React.SelectHTMLAttributes<HTMLSelectElement>
 interface SelectProps extends SelectIntrinsicProps {

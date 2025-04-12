@@ -23,14 +23,11 @@ export const admonitionTypeOptions: OptionObject[] = [
 
 export const getFields = (formState: FormState | undefined): ClientField[] => {
   return [
-    // @ts-expect-error: type error
     {
       name: 'version',
       localized: false,
       type: 'text',
-      admin: {
-        hidden: true
-      }
+      hidden: true,
     },
     {
       name: 'title',
@@ -57,17 +54,26 @@ export function getInitialState(data: {
     version: {
       value: '',
       initialValue: '',
-      valid: true
+      valid: true,
+      disableFormData: false,
+      addedByServer: false,
+      passesCondition: true,
     },
     title: {
       value: data?.title,
       initialValue: data?.title,
-      valid: true
+      valid: true,
+      disableFormData: false,
+      addedByServer: false,
+      passesCondition: true,
     },
     admonitionType: {
       value: data?.admonitionType ?? 'note',
       initialValue: data?.admonitionType ?? 'note',
-      valid: true
+      valid: true,
+      disableFormData: false,
+      addedByServer: false,
+      passesCondition: true,
     }
   }
 }

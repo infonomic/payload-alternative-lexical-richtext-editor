@@ -39,14 +39,12 @@ export const getFields = (collection: string, formState: FormState | undefined):
   //   localized: false,
   //   type: 'upload',
   // },
-  // @ts-expect-error: type error
+
   {
     name: 'version',
     localized: false,
     type: 'text',
-    admin: {
-      hidden: true
-    }
+    hidden: true,
   },
   {
     name: 'altText',

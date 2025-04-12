@@ -36,6 +36,7 @@ export function AdmonitionDrawer({
   }
 
   async function handleFormOnChange({ formState }: { formState: FormState }): Promise<FormState> {
+    console.log('handleFormOnChange', formState)
     return new Promise((resolve, reject) => {
       if (version.current !== formState.version.value) {
         const { fields } = validateFields(formState)
@@ -88,6 +89,7 @@ export function AdmonitionDrawer({
         onChange={[handleFormOnChange]}
         onSubmit={handleFormOnSubmit}
         uuid={uuid()}
+        isDocumentForm={false}
       >
         <RenderFields
           fields={getFields(synchronizedFormState)}

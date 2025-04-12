@@ -19,87 +19,84 @@ export const getFields = (
   formState: FormState | undefined,
   validRelationships: string[]
 ): ClientField[] => [
-  // @ts-expect-error: type error
-  {
-    name: 'version',
-    localized: false,
-    type: 'text',
-    admin: {
-      hidden: true
+    {
+      name: 'version',
+      localized: false,
+      type: 'text',
+      hidden: true,
+    },
+    {
+      name: 'text',
+      // cellComponentProps: { name: 'text', schemaPath: 'text' },
+      // fieldComponentProps: {
+      //   name: 'text',
+      //   type: 'text',
+      //   label: 'Text',
+      //   errorProps: {
+      //     showError: formState?.text?.valid === false,
+      //     message: 'Please enter text for this link.'
+      //   },
+      //   required: true
+      // },
+      // fieldIsPresentational: false,
+      // isFieldAffectingData: true,
+      required: true,
+      localized: false,
+      label: 'Text',
+      type: 'text'
+    },
+    {
+      name: 'linkType',
+      localized: false,
+      options: linkOptions,
+      required: true,
+      label: 'Type',
+      type: 'radio'
+    },
+    {
+      name: 'url',
+      // cellComponentProps: { name: 'url', schemaPath: 'url' },
+      // fieldComponentProps: {
+      //   name: 'url',
+      //   type: 'text',
+      //   errorProps: {
+      //     showError: formState?.url?.valid === false,
+      //     message: 'Please enter a url for this link.'
+      //   }
+      // },
+      // fieldIsPresentational: false,
+      // isFieldAffectingData: true,
+      localized: false,
+      required: true,
+      label: 'URL',
+      type: 'text'
+    },
+    {
+      name: 'doc',
+      // cellComponentProps: { name: 'doc', schemaPath: 'doc' },
+      // fieldComponentProps: {
+      //   name: 'doc',
+      //   type: 'relationship',
+      //   relationTo: validRelationships as CollectionSlug[]
+      // },
+      // fieldIsPresentational: false,
+      // isFieldAffectingData: true,
+      localized: false,
+      required: true,
+      type: 'relationship',
+      label: 'Related',
+      relationTo: validRelationships as CollectionSlug[],
+      admin: {
+        allowCreate: false
+      }
+    },
+    {
+      name: 'newTab',
+      localized: false,
+      label: 'Open in new tab',
+      type: 'checkbox'
     }
-  },
-  {
-    name: 'text',
-    // cellComponentProps: { name: 'text', schemaPath: 'text' },
-    // fieldComponentProps: {
-    //   name: 'text',
-    //   type: 'text',
-    //   label: 'Text',
-    //   errorProps: {
-    //     showError: formState?.text?.valid === false,
-    //     message: 'Please enter text for this link.'
-    //   },
-    //   required: true
-    // },
-    // fieldIsPresentational: false,
-    // isFieldAffectingData: true,
-    required: true,
-    localized: false,
-    label: 'Text',
-    type: 'text'
-  },
-  {
-    name: 'linkType',
-    localized: false,
-    options: linkOptions,
-    required: true,
-    label: 'Type',
-    type: 'radio'
-  },
-  {
-    name: 'url',
-    // cellComponentProps: { name: 'url', schemaPath: 'url' },
-    // fieldComponentProps: {
-    //   name: 'url',
-    //   type: 'text',
-    //   errorProps: {
-    //     showError: formState?.url?.valid === false,
-    //     message: 'Please enter a url for this link.'
-    //   }
-    // },
-    // fieldIsPresentational: false,
-    // isFieldAffectingData: true,
-    localized: false,
-    required: true,
-    label: 'URL',
-    type: 'text'
-  },
-  {
-    name: 'doc',
-    // cellComponentProps: { name: 'doc', schemaPath: 'doc' },
-    // fieldComponentProps: {
-    //   name: 'doc',
-    //   type: 'relationship',
-    //   relationTo: validRelationships as CollectionSlug[]
-    // },
-    // fieldIsPresentational: false,
-    // isFieldAffectingData: true,
-    localized: false,
-    required: true,
-    type: 'relationship',
-    label: 'Related',
-    relationTo: validRelationships as CollectionSlug[],
-    admin: {
-      allowCreate: false
-    }
-  },
-  {
-    name: 'newTab',
-    localized: false,
-    label: 'Open in new tab',
-    type: 'checkbox'
-  }
-]
+  ]
 
 export function getInitialState(data: LinkData | undefined): FormState {
   return {

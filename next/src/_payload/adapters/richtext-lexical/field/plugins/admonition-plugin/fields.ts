@@ -45,28 +45,16 @@ export function getInitialState(data: {
   title?: string
 }): FormState {
   return {
-    version: {
-      value: '',
-      initialValue: '',
-      valid: true,
-      disableFormData: false,
-      addedByServer: false,
-      passesCondition: true,
-    },
     title: {
       value: data?.title,
       initialValue: data?.title,
       valid: true,
-      disableFormData: false,
-      addedByServer: false,
       passesCondition: true,
     },
     admonitionType: {
       value: data?.admonitionType ?? 'note',
       initialValue: data?.admonitionType ?? 'note',
       valid: true,
-      disableFormData: false,
-      addedByServer: false,
       passesCondition: true,
     }
   }

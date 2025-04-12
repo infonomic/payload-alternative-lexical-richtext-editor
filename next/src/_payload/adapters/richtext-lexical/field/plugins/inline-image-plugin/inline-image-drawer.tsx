@@ -7,10 +7,11 @@ import { Form } from '@payloadcms/ui'
 import { RenderFields } from '@payloadcms/ui'
 import { FormSubmit } from '@payloadcms/ui'
 import { useTranslation } from '@payloadcms/ui'
+import { useEditorConfig } from '../../config'
 
 import { getFields, getInitialState, validateFields } from './fields'
 
-import type { FormState } from 'payload'
+import type { CollectionSlug, FormState } from 'payload'
 import type { InlineImageData, InlineImageDrawerProps } from './types'
 import type { Position } from '../../nodes/inline-image-node'
 
@@ -25,7 +26,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
   onClose,
   data: dataFromProps
 }) => {
-
+  const { config } = useEditorConfig()
   const { t } = useTranslation()
 
   const [synchronizedFormState, setSynchronizedFormState] = useState<FormState | undefined>(
@@ -82,7 +83,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
         onChange={[handleFormOnChange]}
       >
         <RenderFields
-          fields={getFields()}
+          fields={getFields(config.inlineImageUploadCollection as CollectionSlug)}
           forceRender
           parentSchemaPath=""
           parentPath=""

@@ -1,5 +1,5 @@
 import { ClientField } from 'payload'
-import type { FormState, OptionObject } from 'payload'
+import type { CollectionSlug, FormState, OptionObject } from 'payload'
 import { InlineImageData } from './types'
 
 export const positionOptions: OptionObject[] = [
@@ -21,31 +21,14 @@ export const positionOptions: OptionObject[] = [
   }
 ]
 
-export const getFields = (): ClientField[] => [
-  // TODO: Investigate - would love to have used formState and RenderFields / MappedFields
-  // for the Image upload field, but for some reason I could not get a return value
-  // for the selected image via handleFormOnChange or handleFormOnSubmit :-(
-  // {
-  //   name: 'image',
-  //   cellComponentProps: { name: 'image' },
-  //   fieldComponentProps: {
-  //     name: 'image',
-  //     relationTo: collection,
-  //     path: 'inline-image',
-  //     required: true,
-  //   },
-  //   fieldIsPresentational: false,
-  //   isFieldAffectingData: false,
-  //   localized: false,
-  //   type: 'upload',
-  // },
+export const getFields = (imageCollection: CollectionSlug): ClientField[] => [
   {
     name: 'image',
     localized: false,
     type: 'upload',
     required: true,
     label: 'Image',
-    relationTo: 'media',
+    relationTo: imageCollection,
   },
   {
     name: 'version',

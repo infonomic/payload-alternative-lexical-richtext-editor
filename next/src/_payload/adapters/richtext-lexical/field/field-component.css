@@ -1,0 +1,64 @@
+.lexicalRichTextEditor {
+  display: flex;
+  isolation: isolate;
+}
+
+.lexicalRichTextEditor--gutter {
+  .rich-text__editor {
+    padding-left: 1.5rem;
+    border-left: 1px solid rgb(235, 235, 235);
+  }
+}
+
+.lexicalRichTextEditor--read-only {
+  .editor-shell::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgb(235, 235, 235);
+    opacity: 0.5 !important;
+    z-index: 9 !important;
+  }
+}
+
+.lexicalRichTextEditor__wrap {
+  width: 100%;
+  position: relative;
+}
+
+.lexicalRichTextEditor.error {
+  .editor-shell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(254, 193, 188);
+    opacity: 1;
+    z-index: -1;
+  }
+}
+
+html[data-theme='dark'] {
+  .lexicalRichTextEditor--gutter {
+    .rich-text__editor {
+      border-left: 1px solid rgb(47, 47, 47);
+    }
+  }
+
+  .lexicalRichTextEditor--read-only {
+    .editor-shell::after {
+      background: rgb(47, 47, 47);
+    }
+  }
+
+  .lexicalRichTextEditor.error {
+    .editor-shell::after {
+      background: rgb(255, 0, 0);
+    }
+  }
+}

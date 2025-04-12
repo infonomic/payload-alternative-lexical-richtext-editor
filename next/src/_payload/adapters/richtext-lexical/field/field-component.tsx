@@ -30,7 +30,7 @@ import { EditorContext } from './editor-context'
 
 import type { LexicalRichTextFieldProps } from '../types'
 
-import './field-component.scss'
+import './field-component.css'
 import './themes/lexical-editor-theme.css'
 
 const baseClass = 'lexicalRichTextEditor'

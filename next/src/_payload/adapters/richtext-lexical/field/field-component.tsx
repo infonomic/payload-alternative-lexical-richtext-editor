@@ -59,15 +59,14 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
   const memoizedValidate = useCallback<Validate>(
     (value, validationOptions) => {
       if (typeof validate === 'function') {
-        // @ts-expect-error - vestiges of when tsconfig was not strict. Feel free to improve
-        return validate(value, { ...validationOptions, required })
+        return validate(value, { ...validationOptions, required, type: field.type ?? 'richText', name })
       }
       return true
     },
     // Important: do not add props to the dependencies array.
     // This would cause an infinite loop and endless re-rendering.
     // Removing props from the dependencies array fixed this issue: https://github.com/payloadcms/payload/issues/3709
-    [validate, required],
+    [validate, required, field.type, name],
   )
 
   const {
@@ -107,11 +106,14 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
   // Debounce editor as per this Payload PR and commit:
   // https://github.com/payloadcms/payload/pull/12046
   // https://github.com/payloadcms/payload/commit/101f765
-  const updateFieldValue = (editorState: EditorState) => {
-    const newState = editorState.toJSON()
-    prevValueRef.current = newState
-    setValue(newState)
-  }
+  const updateFieldValue = useCallback(
+    (editorState: EditorState) => {
+      const newState = editorState.toJSON()
+      prevValueRef.current = newState
+      setValue(newState)
+    },
+    [setValue],
+  )
 
   const handleChange = useCallback(
     (editorState: EditorState) => {
@@ -122,7 +124,7 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
         updateFieldValue(editorState)
       }
     },
-    [setValue],
+    [updateFieldValue],
   )
 
   const styles = useMemo(() => mergeFieldStyles(field), [field])

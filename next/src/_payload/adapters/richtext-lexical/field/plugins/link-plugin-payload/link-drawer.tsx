@@ -92,7 +92,7 @@ export const LinkDrawer: React.FC<LinkDrawerProps> = ({
       const formState = getInitialState(dataFromProps)
       setSynchronizedFormState(formState)
     }
-  })
+  }, [synchronizedFormState, isOpen, dataFromProps])
 
   if(isOpen === false) {
     return null

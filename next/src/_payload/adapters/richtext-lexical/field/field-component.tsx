@@ -81,8 +81,6 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
     validate: memoizedValidate
   })
 
-  // TODO: work out why disabledFromField is true on first load of 
-  // main (non-block) editor, but not on the block editor.
   const disabled = readOnlyFromProps || disabledFromField  // || false
 
   const [rerenderProviderKey, setRerenderProviderKey] = useState<Date>()

@@ -50,7 +50,12 @@ export function EditorContext(props: {
     // Important: do not add readOnly and value to the dependencies array. 
     // This will cause the entire lexical editor to re-render if the document 
     // is saved, which will cause the editor to lose focus.
-  }, [editorConfig])
+    
+    // NOTE: 2025-04-26: This is NOT the case for our version of the editor.
+    // Without readOnly as a dependency, the editor will never transition
+    // from readOnly to editable during form loading, when disabledFromField
+    // in field-component will be briefly false.
+  }, [editorConfig, readOnly])
   
   
   if (initialConfig == null) {

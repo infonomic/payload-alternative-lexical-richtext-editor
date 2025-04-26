@@ -29,7 +29,7 @@ import type { SerializedInlineImageNode } from './nodes/inline-image-node'
 import type { SerializedLinkNode } from './nodes/link-nodes-payload'
 
 import type { RichTextHooks } from 'payload'
-
+import { Page } from 'payload-types'
 // See https://github.com/payloadcms/payload/pull/11316
 
 // type LexicalAfterReadPopulateLinksFieldHook = (
@@ -62,6 +62,7 @@ type AfterReadRichTextHook<
   args: AfterReadRichTextHookArgs<TData, TValue, TSiblingData> &
     BaseRichTextHookArgs<TData, TValue, TSiblingData>,
 ) => Promise<TValue> | TValue;
+
 
 export const populateLexicalLinks: AfterReadRichTextHook<any, SerializedEditorState | null, any> = async ({
   context,
@@ -154,7 +155,10 @@ export async function traverseLexicalField(
         // title - which in most cases there will not be - but still....
 
         // TODO: collection-based strategy for any special extra data required
-        const { id, title, slug, titleUnformatted } = relation as any
+
+        // Area when it's available. Better to use a type guard here and a generic
+        // for the relation type, but for now this is good enough.
+        const { id, title, slug, area, titleUnformatted } = relation as any
 
         // NOTE: We sometimes create collections that have a 'real name' and slug,
         // like 'publications', but want to expose the links we create to collection
@@ -170,10 +174,11 @@ export async function traverseLexicalField(
             id,
             title: titleUnformatted ?? title,
             slug,
+            area,
             collectionAlias: collectionAlias?.alias,
           }
         } else {
-          attributes.doc.data = { id, title: titleUnformatted ?? title, slug }
+          attributes.doc.data = { id, title: titleUnformatted ?? title, slug, area }
         }
       }
     }

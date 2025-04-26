@@ -143,7 +143,7 @@ export async function traverseLexicalField(
         // title - which in most cases there will not be - but still....
 
         // TODO: collection-based strategy for any special extra data required
-        const { id, title, slug, titleUnformatted } = relation as any
+        const { id, title, slug, area, titleUnformatted } = relation as any
 
         // NOTE: We sometimes create collections that have a 'real name' and slug,
         // like 'publications', but want to expose the links we create to collection
@@ -159,10 +159,11 @@ export async function traverseLexicalField(
             id,
             title: titleUnformatted ?? title,
             slug,
+            area,
             collectionAlias: collectionAlias?.alias,
           }
         } else {
-          attributes.doc.data = { id, title: titleUnformatted ?? title, slug }
+          attributes.doc.data = { id, title: titleUnformatted ?? title, slug, area }
         }
       }
     }

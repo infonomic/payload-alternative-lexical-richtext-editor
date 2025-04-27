@@ -1,6 +1,6 @@
 'use client'
 /**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * Portions Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,11 +10,25 @@ import * as React from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { LinkDrawer } from '../link-drawer'
 import { formatDrawerSlug } from '@payloadcms/ui'
 import { useConfig } from '@payloadcms/ui'
 import { useEditDepth } from '@payloadcms/ui'
 import { useModal } from '@payloadcms/ui'
+
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
+import { $findMatchingParent, mergeRegister } from '@lexical/utils'
+import {
+  $getSelection,
+  $isLineBreakNode,
+  $isRangeSelection,
+  COMMAND_PRIORITY_CRITICAL,
+  COMMAND_PRIORITY_HIGH,
+  COMMAND_PRIORITY_LOW,
+  KEY_ESCAPE_COMMAND,
+  SELECTION_CHANGE_COMMAND
+} from 'lexical'
+
+import { LinkDrawer } from '../link-drawer'
 import { useEditorConfig } from '../../../config'
 
 import {
@@ -23,20 +37,6 @@ import {
   TOGGLE_LINK_COMMAND
 } from '../../../nodes/link-nodes-payload'
 
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { $findMatchingParent, mergeRegister } from '@lexical/utils'
-import {
-  $getSelection,
-  $isLineBreakNode,
-  $isRangeSelection,
-  CLICK_COMMAND,
-  COMMAND_PRIORITY_CRITICAL,
-  COMMAND_PRIORITY_HIGH,
-  COMMAND_PRIORITY_LOW,
-  KEY_ESCAPE_COMMAND,
-  SELECTION_CHANGE_COMMAND
-} from 'lexical'
-
 import { getSelectedNode } from '../../../utils/getSelectedNode'
 import { setFloatingElemPositionForLinkEditor } from '../../../utils/setFloatingElemPositionForLinkEditor'
 import { sanitizeUrl } from '../../../utils/url'
@@ -44,7 +44,7 @@ import { sanitizeUrl } from '../../../utils/url'
 import type { Dispatch } from 'react'
 import type { ClientConfig } from 'payload'
 import type { LinkData } from '../types'
-import type { LexicalEditor, NodeSelection, RangeSelection, BaseSelection } from 'lexical'
+import type { LexicalEditor } from 'lexical'
 import type { LinkAttributes } from '../../../nodes/link-nodes-payload'
 
 import './index.css'
@@ -57,35 +57,42 @@ function createPreviewLink(config: ClientConfig, url: string | undefined): strin
   }
 }
 
+interface LinkEditorState {
+  label: string | null
+  url: string
+}
+
+interface FloatingLinkEditorProps {
+  editor: LexicalEditor
+  isLink: boolean
+  setIsLink: Dispatch<boolean>
+  anchorElem: HTMLElement
+}
+
 function FloatingLinkEditor({
   editor,
   isLink,
   setIsLink,
   anchorElem
-}: {
-  editor: LexicalEditor
-  isLink: boolean
-  setIsLink: Dispatch<boolean>
-  anchorElem: HTMLElement
-}): React.JSX.Element {
+}: FloatingLinkEditorProps): React.JSX.Element {
   const editorRef = useRef<HTMLDivElement | null>(null)
-  const [linkUrl, setLinkUrl] = useState('')
-  const [linkLabel, setLinkLabel] = useState('')
-  const [lastSelection, setLastSelection] = useState<
-    RangeSelection | NodeSelection | BaseSelection | null
-  >(null)
+
+  const [linkEditorState, setLinkEditorState] = useState<LinkEditorState>({ label: null, url: '' })
+  const [linkDrawerData, setLinkDrawerData] = useState<LinkData | undefined>(undefined)
+
   const { uuid } = useEditorConfig()
   const { config } = useConfig()
-  const [initialData, setInitialData] = useState<LinkData | undefined>(undefined)
   const { toggleModal, isModalOpen, closeModal } = useModal()
   const editDepth = useEditDepth()
-
   const drawerSlug = formatDrawerSlug({
     slug: `rich-text-link-lexical-${uuid}`,
     depth: editDepth
   })
 
-  const updateLinkEditor = useCallback(async () => {
+  /**
+   * updateLinkEditor
+   */
+  const updateLinkEditor = useCallback(() => {
     const selection = $getSelection()
     if ($isRangeSelection(selection)) {
       const node = getSelectedNode(selection)
@@ -102,60 +109,47 @@ function FloatingLinkEditor({
         }
       }
 
-      if (linkParent) {
-        data = {
-          text: linkParent.getTextContent(),
-          fields: linkParent.getAttributes()
-        }
-
-        if (linkParent.getAttributes()?.linkType === 'custom') {
-          setLinkUrl(createPreviewLink(config, linkParent.getAttributes()?.url) ?? '')
-          setLinkLabel('')
-        } else {
-          // internal
-          setLinkUrl(
-            `${config.serverURL}${config.routes.admin}/collections/${
-              linkParent.getAttributes()?.doc?.relationTo
-            }/${linkParent.getAttributes()?.doc?.value}`
-          )
-          setLinkLabel(
-            `relation to ${linkParent.getAttributes()?.doc?.relationTo}: ${
-              linkParent.getAttributes()?.doc?.value
-            }`
-          )
-        }
+      let linkNode
+      if(linkParent != null) {
+        linkNode = linkParent
       } else if ($isLinkNode(node)) {
-        data = {
-          text: node.getTextContent(),
-          fields: node.getAttributes()
-        }
-
-        if (node.getAttributes()?.linkType === 'custom') {
-          setLinkUrl(createPreviewLink(config, node.getAttributes()?.url) ?? '')
-          setLinkLabel('')
-        } else {
-          // internal
-          setLinkUrl(
-            `${config.serverURL}${config.routes.admin}/collections/${
-              // @ts-expect-error: TODO
-              parent?.getAttributes()?.doc?.relationTo
-              // @ts-expect-error: TODO
-            }/${parent?.getAttributes()?.doc?.value}`
-          )
-          setLinkLabel(
-            // @ts-expect-error: TODO
-            `relation to ${parent?.getAttributes()?.doc?.relationTo}: ${
-              // @ts-expect-error: TODO
-              parent?.getAttributes()?.doc?.value
-            }`
-          )
-        }
+        linkNode = node
       } else {
-        setLinkUrl('')
-        setLinkLabel('')
+        linkNode = null
       }
 
-      setInitialData(data)
+      if (linkNode != null) {
+        // Prepare LinkDrawer data
+        data = {
+          text: linkNode.getTextContent(),
+          fields: linkNode.getAttributes()
+        }
+
+        if (data.fields?.linkType === 'custom') {
+          // custom
+          setLinkEditorState({
+            label: null,
+            url: createPreviewLink(config, data.fields?.url) ?? ''
+          })
+        } else {
+          // internal
+          setLinkEditorState({
+            label: `relation to ${ data.fields?.doc?.relationTo}: ${
+              data.fields?.doc?.value
+            }`,
+            url: `${config.serverURL}${config.routes.admin}/collections/${
+              data.fields?.doc?.relationTo
+            }/${ data.fields?.doc?.value}`
+          })
+        }
+      } else {
+        setLinkEditorState({  
+          label: null,
+          url: ''
+        })
+      }
+
+      setLinkDrawerData(data)
     }
 
     const editorElem = editorRef.current
@@ -181,14 +175,13 @@ function FloatingLinkEditor({
         domRect.y += 40
         setFloatingElemPositionForLinkEditor(domRect, editorElem, anchorElem)
       }
-      setLastSelection(selection)
+      // setLastSelection(selection)
     } else if (activeElement == null || activeElement.className !== 'link-input') {
       if (rootElement !== null) {
         setFloatingElemPositionForLinkEditor(null, editorElem, anchorElem)
       }
-      setLastSelection(null)
-      setLinkUrl('')
-      setLinkLabel('')
+      // setLastSelection(null)
+      setLinkEditorState({ label: null, url: '' })
     }
 
     return true
@@ -199,7 +192,7 @@ function FloatingLinkEditor({
 
     const update = (): void => {
       editor.getEditorState().read(() => {
-        void updateLinkEditor()
+        updateLinkEditor()
       })
     }
 
@@ -222,7 +215,7 @@ function FloatingLinkEditor({
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
-          void updateLinkEditor()
+          updateLinkEditor()
         })
       }),
 
@@ -250,10 +243,14 @@ function FloatingLinkEditor({
 
   useEffect(() => {
     editor.getEditorState().read(() => {
-      void updateLinkEditor()
+      updateLinkEditor()
     })
   }, [editor, updateLinkEditor])
 
+  /**
+   * handleModalSubmit
+   * @param data 
+   */
   const handleModalSubmit = (data: LinkData): void => {
     closeModal(drawerSlug)
     const newNode: LinkAttributes & { text: string | null } = {
@@ -272,14 +269,15 @@ function FloatingLinkEditor({
       {isLink && (
         <>
           <div className="link-input">
-            <a href={sanitizeUrl(linkUrl)} target="_blank" rel="noopener noreferrer">
-              {linkLabel != null && linkLabel.length > 0 ? linkLabel : linkUrl}
+            <a href={sanitizeUrl(linkEditorState.url)} target="_blank" rel="noopener noreferrer">
+              {linkEditorState.label != null && linkEditorState.label.length > 0 ? linkEditorState.label : linkEditorState.url}
             </a>
             <div
               aria-label="Edit link"
               className="link-edit"
               role="button"
               tabIndex={0}
+              // We don't want to navigate away from the editor when clicking the link
               onMouseDown={(event) => {
                 event.preventDefault()
               }}
@@ -303,7 +301,7 @@ function FloatingLinkEditor({
           <LinkDrawer
             isOpen={isModalOpen(drawerSlug)}
             drawerSlug={drawerSlug}
-            data={initialData}
+            data={linkDrawerData}
             onSubmit={handleModalSubmit}
             onClose={() => {
               closeModal(drawerSlug)
@@ -329,11 +327,12 @@ function useFloatingLinkEditor(
         const focusNode = getSelectedNode(selection)
         const focusLinkNode = $findMatchingParent(focusNode, $isLinkNode)
         const focusAutoLinkNode = $findMatchingParent(focusNode, $isAutoLinkNode)
-        if (!(focusLinkNode || focusAutoLinkNode)) {
+        if (focusLinkNode == null && focusAutoLinkNode == null) {
           setIsLink(false)
           return
         }
-        const badNode = selection
+        // Test that we have a valid link node
+        const invalidLinkNode = selection
           .getNodes()
           .filter((node) => !$isLineBreakNode(node))
           .find((node) => {
@@ -346,7 +345,7 @@ function useFloatingLinkEditor(
               (autoLinkNode && !autoLinkNode.is(focusAutoLinkNode))
             )
           })
-        if (!badNode) {
+        if (invalidLinkNode == null) {
           setIsLink(true)
         } else {
           setIsLink(false)
@@ -357,7 +356,7 @@ function useFloatingLinkEditor(
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
-          console.log('updateLinkEditor called from registerUpdateListener')
+          // console.log('updateLinkEditor called from registerUpdateListener')
           updateLinkEditor()
         })
       }),
@@ -365,7 +364,7 @@ function useFloatingLinkEditor(
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         (_payload, newEditor) => {
-          console.log('updateLinkEditor called from  SELECTION_CHANGE_COMMAND')
+          // console.log('updateLinkEditor called from  SELECTION_CHANGE_COMMAND')
           updateLinkEditor()
           setActiveEditor(newEditor)
           return false

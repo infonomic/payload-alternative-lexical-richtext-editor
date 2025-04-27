@@ -315,7 +315,7 @@ function FloatingLinkEditor({
   )
 }
 
-function useFloatingLinkEditorToolbar(
+function useFloatingLinkEditor(
   editor: LexicalEditor,
   anchorElem: HTMLElement
 ): React.JSX.Element | null {
@@ -323,7 +323,7 @@ function useFloatingLinkEditorToolbar(
   const [isLink, setIsLink] = useState(false)
 
   useEffect(() => {
-    const updateToolbar = () => {
+    const updateLinkEditor = () => {
       const selection = $getSelection()
       if ($isRangeSelection(selection)) {
         const focusNode = getSelectedNode(selection)
@@ -357,13 +357,16 @@ function useFloatingLinkEditorToolbar(
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
-          updateToolbar()
+          console.log('updateLinkEditor called from registerUpdateListener')
+          updateLinkEditor()
         })
       }),
+
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         (_payload, newEditor) => {
-          updateToolbar()
+          console.log('updateLinkEditor called from  SELECTION_CHANGE_COMMAND')
+          updateLinkEditor()
           setActiveEditor(newEditor)
           return false
         },
@@ -389,5 +392,5 @@ export function FloatingLinkEditorPlugin({
   anchorElem?: HTMLElement
 }): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext()
-  return useFloatingLinkEditorToolbar(editor, anchorElem)
+  return useFloatingLinkEditor(editor, anchorElem)
 }

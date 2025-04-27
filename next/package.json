@@ -35,20 +35,20 @@
     "@lexical/selection": "^0.30.0",
     "@lexical/table": "^0.30.0",
     "@lexical/utils": "^0.30.0",
-    "@payloadcms/db-mongodb": "^3.34.0",
-    "@payloadcms/db-postgres": "^3.34.0",
-    "@payloadcms/next": "^3.34.0",
-    "@payloadcms/translations": "^3.34.0",
-    "@payloadcms/ui": "^3.34.0",
+    "@payloadcms/db-mongodb": "^3.35.1",
+    "@payloadcms/db-postgres": "^3.35.1",
+    "@payloadcms/next": "^3.35.1",
+    "@payloadcms/translations": "^3.35.1",
+    "@payloadcms/ui": "^3.35.1",
     "classnames": "^2.5.1",
     "cross-env": "^7.0.3",
-    "eslint": "^9.24.0",
-    "eslint-config-next": "15.3.0",
-    "graphql": "^16.10.0",
+    "eslint": "^9.25.1",
+    "eslint-config-next": "15.3.1",
+    "graphql": "^16.11.0",
     "json-schema": "^0.4.0",
     "lexical": "^0.30.0",
-    "next": "^15.3.0",
-    "payload": "3.34.0",
+    "next": "^15.3.1",
+    "payload": "3.35.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-error-boundary": "^5.0.0",
@@ -58,8 +58,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/json-schema": "^7.0.15",
-    "@types/node": "^22.14.0",
-    "@types/react": "19.1.1",
+    "@types/node": "^22.15.2",
+    "@types/react": "19.1.2",
     "@types/react-dom": "19.1.2",
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.5.0",
@@ -70,7 +70,8 @@
     "onlyBuiltDependencies": [
       "@biomejs/biome",
       "esbuild",
-      "sharp"
+      "sharp",
+      "unrs-resolver"
     ]
   }
 }

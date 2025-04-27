@@ -22,7 +22,7 @@ import {
 import {
   type LinkAttributes,
   LinkNode,
-  toggleLink,
+  $toggleLink,
   TOGGLE_LINK_COMMAND
 } from '../../nodes/link-nodes-payload'
 import { validateUrl, encodeRelativeUrl } from '../../utils/url'
@@ -51,7 +51,7 @@ export function LinkPlugin(): null {
             }
           }
 
-          toggleLink(linkAttributes)
+          $toggleLink(linkAttributes)
           return true
         },
         COMMAND_PRIORITY_LOW

@@ -76,7 +76,7 @@ function TextFormatFloatingToolbar({
     depth: editDepth
   })
 
-  const insertLink = useCallback(() => {
+  const handleOnInsertLink = useCallback(() => {
     if (!isLink) {
       // Only call TOGGLE_LINK_COMMAND and openModal if there is
       // text selected (at least one character).
@@ -291,7 +291,7 @@ function TextFormatFloatingToolbar({
           </button>
           <button
             type="button"
-            onClick={insertLink}
+            onClick={handleOnInsertLink}
             className={'popup-item spaced ' + (isLink ? 'active' : '')}
             aria-label="Insert link"
           >

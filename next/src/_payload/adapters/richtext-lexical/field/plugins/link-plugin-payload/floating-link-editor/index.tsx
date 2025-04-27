@@ -356,7 +356,6 @@ function useFloatingLinkEditor(
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
-          // console.log('updateLinkEditor called from registerUpdateListener')
           updateLinkEditor()
         })
       }),
@@ -364,7 +363,6 @@ function useFloatingLinkEditor(
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         (_payload, newEditor) => {
-          // console.log('updateLinkEditor called from  SELECTION_CHANGE_COMMAND')
           updateLinkEditor()
           setActiveEditor(newEditor)
           return false

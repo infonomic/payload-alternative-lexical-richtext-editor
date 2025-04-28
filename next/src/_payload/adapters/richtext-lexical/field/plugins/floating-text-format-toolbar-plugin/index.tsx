@@ -90,6 +90,11 @@ function TextFormatFloatingToolbar({
               url: 'https://'
             }
             editor.dispatchCommand(TOGGLE_LINK_COMMAND, linkAttributes)
+            // TODO: WARNING: See: link-plugin-payload/floating-link-editor. 
+            // The Drawer modal is currently wrapped in the floating editor and
+            // will only open if $toggleLink in the link node successfully
+            // modifies a link now - which will trigger an update in the
+            // floating link editor. Not a good way to couple the two.
             openModal(linkDrawerSlug)
           }
         }

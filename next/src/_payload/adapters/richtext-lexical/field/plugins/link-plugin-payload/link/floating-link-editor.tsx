@@ -28,7 +28,7 @@ import {
   SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
-import { LinkDrawer } from '../link-drawer'
+import { LinkDrawer } from './link-drawer'
 import { useEditorConfig } from '../../../config'
 
 import {
@@ -43,11 +43,11 @@ import { sanitizeUrl } from '../../../utils/url'
 
 import type { Dispatch } from 'react'
 import type { ClientConfig } from 'payload'
-import type { LinkData } from '../types'
+import type { LinkData } from './types'
 import type { LexicalEditor } from 'lexical'
 import type { LinkAttributes } from '../../../nodes/link-nodes-payload'
 
-import './index.css'
+import './floating-link-editor.css'
 
 function createPreviewLink(config: ClientConfig, url: string | undefined): string | undefined {
   if (url?.startsWith('/') ?? false) {

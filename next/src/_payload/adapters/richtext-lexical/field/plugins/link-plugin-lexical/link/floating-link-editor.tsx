@@ -31,7 +31,7 @@ import { getSelectedNode } from '../../../utils/getSelectedNode'
 import { setFloatingElemPositionForLinkEditor } from '../../../utils/setFloatingElemPositionForLinkEditor'
 import { sanitizeUrl } from '../../../utils/url'
 
-import './index.css'
+import './floating-link-editor.css'
 
 function FloatingLinkEditor({
   editor,

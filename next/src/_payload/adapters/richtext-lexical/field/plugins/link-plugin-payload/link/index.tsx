@@ -24,8 +24,8 @@ import {
   LinkNode,
   $toggleLink,
   TOGGLE_LINK_COMMAND
-} from '../../nodes/link-nodes-payload'
-import { validateUrl, encodeRelativeUrl } from '../../utils/url'
+} from '../../../nodes/link-nodes-payload'
+import { validateUrl, encodeRelativeUrl } from '../../../utils/url'
 
 export function LinkPlugin(): null {
   const [editor] = useLexicalComposerContext()

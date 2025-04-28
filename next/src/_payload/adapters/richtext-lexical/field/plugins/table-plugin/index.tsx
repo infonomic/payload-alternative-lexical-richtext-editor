@@ -5,26 +5,23 @@ import { formatDrawerSlug } from '@payloadcms/ui'
 import { useEditDepth } from '@payloadcms/ui'
 import { useModal } from '@payloadcms/ui'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { COMMAND_PRIORITY_NORMAL, createCommand, type LexicalCommand } from 'lexical'
+import { COMMAND_PRIORITY_NORMAL, createCommand } from 'lexical'
 
-import { InsertTableDialog, InsertNewTableDialog } from './modals'
+import { TableDrawer } from './table-drawer'
 import { useEditorConfig } from '../../config'
 
-type OpenModalType = 'table' | 'newTable' | string
-
-export const OPEN_TABLE_MODAL_COMMAND: LexicalCommand<OpenModalType> = createCommand(
+export const OPEN_TABLE_MODAL_COMMAND = createCommand(
   'OPEN_TABLE_MODAL_COMMAND'
 )
 
-export function TablePluginModals(): React.JSX.Element {
+export function TablePlugin(): React.JSX.Element {
   const [editor] = useLexicalComposerContext()
   const { uuid } = useEditorConfig()
   const editDepth = useEditDepth()
   const {
     toggleModal = () => {
       console.log('Error: useModal() from Payload did not work correctly')
-    },
-    closeModal
+    }
   } = useModal()
 
   const addTableDrawerSlug = formatDrawerSlug({
@@ -32,20 +29,10 @@ export function TablePluginModals(): React.JSX.Element {
     depth: editDepth
   })
 
-  const addNewTableDrawerSlug = formatDrawerSlug({
-    slug: `lexicalRichText-add-newtable-${uuid}`,
-    depth: editDepth
-  })
-
-  const modalDictionary: Record<OpenModalType, string> = {
-    table: addTableDrawerSlug,
-    newTable: addNewTableDrawerSlug
-  }
-
-  editor.registerCommand<OpenModalType>(
+  editor.registerCommand<null>(
     OPEN_TABLE_MODAL_COMMAND,
-    (toOpen: OpenModalType) => {
-      const modalSlug = modalDictionary[toOpen]
+    () => {
+      const modalSlug = addTableDrawerSlug
       if (modalSlug != null) {
         toggleModal(modalSlug)
         return true
@@ -56,9 +43,6 @@ export function TablePluginModals(): React.JSX.Element {
   )
 
   return (
-    <>
-      <InsertTableDialog drawerSlug={addTableDrawerSlug} />
-      <InsertNewTableDialog drawerSlug={addNewTableDrawerSlug} />
-    </>
+    <TableDrawer drawerSlug={addTableDrawerSlug} />
   )
 }

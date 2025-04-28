@@ -31,7 +31,7 @@ import { AutoLinkPlugin } from './plugins/link-plugin/auto-link'
 import { LinkPlugin } from './plugins/link-plugin/link'
 import { FloatingLinkEditorPlugin } from './plugins/link-plugin/link/floating-link-editor'
 import { TableActionMenuPlugin } from './plugins/table-action-menu-plugin'
-import { TablePluginModals } from './plugins/table-plugin-modals'
+import { TablePlugin as PayloadTablePlugin } from './plugins/table-plugin'
 import { ToolbarPlugin } from './plugins/toolbar-plugin'
 import { TreeViewPlugin } from './plugins/treeview-plugin'
 import { YouTubePlugin } from './plugins/youtube-plugin'
@@ -102,7 +102,7 @@ export function Editor(): React.JSX.Element {
 
   return (
     <>
-      {tablePlugin && <TablePluginModals />}
+      {tablePlugin && <PayloadTablePlugin />}
       {richText && <ToolbarPlugin />}
       <div
         className={`editor-container ${showTreeView ? 'tree-view' : ''} ${

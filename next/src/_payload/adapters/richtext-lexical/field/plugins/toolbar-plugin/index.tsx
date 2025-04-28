@@ -83,7 +83,7 @@ import { OPEN_ADMONITION_MODAL_COMMAND } from '../admonition-plugin'
 import { EmbedConfigs } from '../auto-embed-plugin'
 import { OPEN_INLINE_IMAGE_MODAL_COMMAND } from '../inline-image-plugin'
 import { InsertLayoutDialog } from '../layout-plugin/insert-layout-dialog'
-import { OPEN_TABLE_MODAL_COMMAND } from '../table-plugin-modals'
+import { OPEN_TABLE_MODAL_COMMAND } from '../table-plugin'
 
 import type { LexicalEditor, NodeKey } from 'lexical'
 
@@ -892,7 +892,7 @@ export function ToolbarPlugin(): React.JSX.Element {
                   {tablePlugin && (
                     <DropDownItem
                       onClick={() => {
-                        activeEditor.dispatchCommand(OPEN_TABLE_MODAL_COMMAND, 'table')
+                        activeEditor.dispatchCommand(OPEN_TABLE_MODAL_COMMAND, null)
                       }}
                       className="item"
                     >

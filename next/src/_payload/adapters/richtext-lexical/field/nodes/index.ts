@@ -21,7 +21,7 @@ import { AdmonitionNode } from './admonition-node/admonition-node'
 import { InlineImageNode } from './inline-image-node/inline-image-node'
 import { LayoutContainerNode } from './layout-container-node/layout-container-node'
 import { LayoutItemNode } from './layout-container-node/layout-item-node'
-import { AutoLinkNode, LinkNode } from './link-nodes-payload'
+import { AutoLinkNode, LinkNode } from './link-nodes'
 import { YouTubeNode } from './youtube-node'
 import { VimeoNode } from './vimeo-node'
 

@@ -26,7 +26,7 @@ import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
 import type { SerializedAdmonitionNode } from './nodes/admonition-node'
 import type { SerializedInlineImageNode } from './nodes/inline-image-node'
-import type { SerializedLinkNode } from './nodes/link-nodes-payload'
+import type { SerializedLinkNode } from './nodes/link-nodes'
 
 import type { RichTextHooks } from 'payload'
 import { Page } from 'payload-types'

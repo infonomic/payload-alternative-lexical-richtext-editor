@@ -29,7 +29,7 @@ import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
 import type { Payload } from 'payload'
 import type { SerializedAdmonitionNode } from './nodes/admonition-node'
 import type { SerializedInlineImageNode } from './nodes/inline-image-node'
-import type { SerializedLinkNode } from './nodes/link-nodes-payload'
+import type { SerializedLinkNode } from './nodes/link-nodes'
 
 // See https://github.com/payloadcms/payload/pull/11316
 

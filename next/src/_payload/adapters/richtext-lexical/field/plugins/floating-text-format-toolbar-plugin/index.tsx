@@ -18,7 +18,6 @@ import { useEditDepth } from '@payloadcms/ui'
 import { useModal } from '@payloadcms/ui'
 
 import { $isCodeHighlightNode } from '@lexical/code'
-// import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { mergeRegister } from '@lexical/utils'
 import {
@@ -37,11 +36,10 @@ import {
   $isLinkNode,
   TOGGLE_LINK_COMMAND,
   type LinkAttributes
-} from '../../nodes/link-nodes-payload'
+} from '../../nodes/link-nodes'
 import { getDOMRangeRect } from '../../utils/getDOMRangeRect'
 import { getSelectedNode } from '../../utils/getSelectedNode'
 import { setFloatingElemPosition } from '../../utils/setFloatingElemPosition'
-// import { INSERT_INLINE_COMMAND } from '../CommentPlugin'
 
 function TextFormatFloatingToolbar({
   editor,
@@ -103,18 +101,6 @@ function TextFormatFloatingToolbar({
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)
     }
   }, [editor, isLink, linkDrawerSlug, openModal])
-
-  // const insertLink = useCallback(() => {
-  //   if (!isLink) {
-  //     editor.dispatchCommand(TOGGLE_LINK_COMMAND, 'https://')
-  //   } else {
-  //     editor.dispatchCommand(TOGGLE_LINK_COMMAND, null)
-  //   }
-  // }, [editor, isLink])
-
-  // const insertComment = () => {
-  //   editor.dispatchCommand(INSERT_INLINE_COMMAND, undefined)
-  // }
 
   function mouseMoveListener(e: MouseEvent): void {
     if (popupCharStylesEditorRef?.current != null && (e.buttons === 1 || e.buttons === 3)) {
@@ -304,14 +290,6 @@ function TextFormatFloatingToolbar({
           </button>
         </>
       )}
-      {/* <button
-        type="button"
-        onClick={insertComment}
-        className={'popup-item spaced insert-comment'}
-        aria-label="Insert comment"
-      >
-        <i className="format add-comment" />
-      </button> */}
     </div>
   )
 }

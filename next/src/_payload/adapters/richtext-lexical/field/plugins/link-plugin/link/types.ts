@@ -1,4 +1,4 @@
-import type { LinkAttributes } from '../../../nodes/link-nodes-payload'
+import type { LinkAttributes } from '../../../nodes/link-nodes'
 
 /**
  * The payload of a link node

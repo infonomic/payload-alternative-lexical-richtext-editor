@@ -35,7 +35,7 @@ import {
   $isLinkNode,
   $isAutoLinkNode,
   TOGGLE_LINK_COMMAND
-} from '../../../nodes/link-nodes-payload'
+} from '../../../nodes/link-nodes'
 
 import { getSelectedNode } from '../../../utils/getSelectedNode'
 import { setFloatingElemPositionForLinkEditor } from '../../../utils/setFloatingElemPositionForLinkEditor'
@@ -45,7 +45,7 @@ import type { Dispatch } from 'react'
 import type { ClientConfig } from 'payload'
 import type { LinkData } from './types'
 import type { LexicalEditor } from 'lexical'
-import type { LinkAttributes } from '../../../nodes/link-nodes-payload'
+import type { LinkAttributes } from '../../../nodes/link-nodes'
 
 import './floating-link-editor.css'
 

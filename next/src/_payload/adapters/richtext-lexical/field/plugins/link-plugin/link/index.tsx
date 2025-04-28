@@ -24,7 +24,7 @@ import {
   LinkNode,
   $toggleLink,
   TOGGLE_LINK_COMMAND
-} from '../../../nodes/link-nodes-payload'
+} from '../../../nodes/link-nodes'
 import { validateUrl, encodeRelativeUrl } from '../../../utils/url'
 
 export function LinkPlugin(): null {

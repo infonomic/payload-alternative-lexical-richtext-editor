@@ -74,7 +74,7 @@ import {
   $isLinkNode,
   type LinkAttributes,
   TOGGLE_LINK_COMMAND
-} from '../../nodes/link-nodes-payload'
+} from '../../nodes/link-nodes'
 import { IS_APPLE } from '../../shared/environment'
 import DropDown, { DropDownItem } from '../../ui/dropdown'
 import { getSelectedNode } from '../../utils/getSelectedNode'

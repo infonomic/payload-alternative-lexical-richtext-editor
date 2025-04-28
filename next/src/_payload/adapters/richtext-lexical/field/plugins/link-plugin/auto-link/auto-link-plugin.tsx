@@ -19,7 +19,7 @@ import {
   $createAutoLinkNode,
   $isAutoLinkNode,
   AutoLinkNode
-} from '../../../nodes/link-nodes-payload'
+} from '../../../nodes/link-nodes'
 import invariant from '../../../shared/invariant'
 
 import type { ElementNode, LexicalEditor, LexicalNode } from 'lexical'

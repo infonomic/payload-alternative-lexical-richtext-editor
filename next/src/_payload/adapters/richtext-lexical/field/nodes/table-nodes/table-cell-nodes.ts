@@ -12,7 +12,7 @@ import { ListItemNode, ListNode } from '@lexical/list'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text'
 
 // import {AutocompleteNode} from './AutocompleteNode'
-import { AutoLinkNode, LinkNode } from '../link-nodes-payload'
+import { AutoLinkNode, LinkNode } from '../link-nodes'
 
 import type { Klass, LexicalNode } from 'lexical'
 // import {EquationNode} from './EquationNode'

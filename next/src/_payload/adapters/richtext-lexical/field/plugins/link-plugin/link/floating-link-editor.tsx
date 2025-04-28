@@ -89,10 +89,8 @@ function FloatingLinkEditor({
     depth: editDepth
   })
 
-  /**
-   * updateLinkEditor
-   */
-  const updateLinkEditor = useCallback(() => {
+
+  const $updateLinkEditor = useCallback(() => {
     const selection = $getSelection()
     if ($isRangeSelection(selection)) {
       const node = getSelectedNode(selection)
@@ -192,7 +190,7 @@ function FloatingLinkEditor({
 
     const update = (): void => {
       editor.getEditorState().read(() => {
-        updateLinkEditor()
+        $updateLinkEditor()
       })
     }
 
@@ -209,20 +207,20 @@ function FloatingLinkEditor({
         scrollerElem.removeEventListener('scroll', update)
       }
     }
-  }, [anchorElem.parentElement, editor, updateLinkEditor])
+  }, [anchorElem.parentElement, editor, $updateLinkEditor])
 
   useEffect(() => {
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
-          updateLinkEditor()
+          $updateLinkEditor()
         })
       }),
 
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         () => {
-          void updateLinkEditor()
+          void $updateLinkEditor()
           return true
         },
         COMMAND_PRIORITY_LOW
@@ -239,13 +237,13 @@ function FloatingLinkEditor({
         COMMAND_PRIORITY_HIGH
       )
     )
-  }, [editor, updateLinkEditor, setIsLink, isLink])
+  }, [editor, $updateLinkEditor, setIsLink, isLink])
 
   useEffect(() => {
     editor.getEditorState().read(() => {
-      updateLinkEditor()
+      $updateLinkEditor()
     })
-  }, [editor, updateLinkEditor])
+  }, [editor, $updateLinkEditor])
 
   /**
    * handleModalSubmit
@@ -266,7 +264,7 @@ function FloatingLinkEditor({
 
   return (
     <div ref={editorRef} className="link-editor">
-      {isLink && (
+      {isLink === true && (
         <>
           <div className="link-input">
             <a href={sanitizeUrl(linkEditorState.url)} target="_blank" rel="noopener noreferrer">
@@ -321,7 +319,7 @@ function useFloatingLinkEditor(
   const [isLink, setIsLink] = useState(false)
 
   useEffect(() => {
-    const updateLinkEditor = () => {
+    const $determineIsLink = () => {
       const selection = $getSelection()
       if ($isRangeSelection(selection)) {
         const focusNode = getSelectedNode(selection)
@@ -356,14 +354,14 @@ function useFloatingLinkEditor(
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
-          updateLinkEditor()
+          $determineIsLink()
         })
       }),
 
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
         (_payload, newEditor) => {
-          updateLinkEditor()
+          $determineIsLink()
           setActiveEditor(newEditor)
           return false
         },

@@ -20,7 +20,7 @@ export function TablePlugin(): React.JSX.Element {
   const editDepth = useEditDepth()
   const {
     toggleModal = () => {
-      console.log('Error: useModal() from Payload did not work correctly')
+      console.error('Error: useModal() from Payload did not work correctly')
     }
   } = useModal()
 

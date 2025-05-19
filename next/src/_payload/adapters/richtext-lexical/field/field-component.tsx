@@ -8,7 +8,7 @@
  * Adapted from https://github.com/payloadcms/payload/tree/main/packages/richtext-lexical
  */
 
-import React, { useCallback, useMemo, useState, useEffect } from 'react'
+import React, { useCallback, useMemo, useState, useEffect, useRef } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import type { EditorState, SerializedEditorState } from 'lexical'
@@ -101,28 +101,38 @@ const RichTextComponent: React.FC<LexicalRichTextFieldProps> = (props) => {
 
   const pathWithEditDepth = `${path}.${editDepth}`
 
-  // Debounce editor as per this Payload PR and commit:
-  // https://github.com/payloadcms/payload/pull/12046
-  // https://github.com/payloadcms/payload/commit/101f765
-  const updateFieldValue = useCallback(
-    (editorState: EditorState) => {
-      const newState = editorState.toJSON()
-      prevValueRef.current = newState
-      setValue(newState)
-    },
-    [setValue],
-  )
+  const dispatchFieldUpdateTask = useRef<number>(undefined)
 
+  // Debounce editor as per this Payload PR and commit:
+  // https://github.com/payloadcms/payload/pull/12086/files
+  // https://github.com/payloadcms/payload/commit/1d5d96d
   const handleChange = useCallback(
     (editorState: EditorState) => {
+      const updateFieldValue = (editorState: EditorState) => {
+        const newState = editorState.toJSON()
+        prevValueRef.current = newState
+        setValue(newState)
+      }
+
       if (typeof window.requestIdleCallback === 'function') {
-        requestIdleCallback(() => updateFieldValue(editorState), {
-          timeout: 500,})
+        // Cancel earlier scheduled value updates,
+        // so that a CPU-limited event loop isn't flooded with n callbacks for n keystrokes into the rich text field,
+        // but that there's only ever the latest one state update
+        // dispatch task, to be executed with the next idle time,
+        // or the deadline of 500ms.
+        if (typeof window.cancelIdleCallback === 'function' && dispatchFieldUpdateTask.current) {
+          cancelIdleCallback(dispatchFieldUpdateTask.current)
+        }
+        // Schedule the state update to happen the next time the browser has sufficient resources,
+        // or the latest after 500ms.
+        dispatchFieldUpdateTask.current = requestIdleCallback(() => updateFieldValue(editorState), {
+          timeout: 500,
+        })
       } else {
         updateFieldValue(editorState)
       }
     },
-    [updateFieldValue],
+    [setValue],
   )
 
   const styles = useMemo(() => mergeFieldStyles(field), [field])

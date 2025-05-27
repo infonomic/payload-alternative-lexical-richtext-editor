@@ -19,7 +19,7 @@
 
 import type { FieldHookArgs, GeneratedTypes, PayloadRequest, RequestContext } from 'payload'
 
-import { collectionAliases } from '../../../../../infonomic.config'
+import { collectionAliases } from '@/infonomic.config'
 import { loadRelatedWithContext } from './utils/load-related'
 
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'
@@ -29,7 +29,7 @@ import type { SerializedInlineImageNode } from './nodes/inline-image-node'
 import type { SerializedLinkNode } from './nodes/link-nodes'
 
 import type { RichTextHooks } from 'payload'
-import { Page } from 'payload-types'
+import { Page } from '@/payload-types'
 // See https://github.com/payloadcms/payload/pull/11316
 
 // type LexicalAfterReadPopulateLinksFieldHook = (

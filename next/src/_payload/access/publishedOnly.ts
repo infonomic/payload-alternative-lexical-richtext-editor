@@ -1,6 +1,6 @@
 import type { Access } from 'payload'
 
-import type { User } from 'payload-types'
+import type { User } from '@/payload-types'
 
 export const publishedOnly: Access<User> = ({ req: { user } }) => {
   // Any authenticated user can read.

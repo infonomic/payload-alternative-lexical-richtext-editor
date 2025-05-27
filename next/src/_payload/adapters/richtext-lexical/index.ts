@@ -139,5 +139,4 @@ export function lexicalEditor(args?: LexicalEditorProps): LexicalRichTextAdapter
     },
     validate: richTextValidate,
   }
-
 }

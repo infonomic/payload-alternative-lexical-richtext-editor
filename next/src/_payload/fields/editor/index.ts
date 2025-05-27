@@ -1,7 +1,7 @@
 import type { Field } from 'payload'
 
 import deepMerge from '../../utilities/deepMerge'
-import { User } from 'payload-types'
+import { User } from '@/payload-types'
 
 type Editor = (overrides?: Partial<Field>) => Field
 

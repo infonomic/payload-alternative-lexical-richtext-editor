@@ -22,7 +22,7 @@
  */
 import type { FieldHookArgs, GeneratedTypes, PayloadRequest, RequestContext, SanitizedCollectionConfig } from 'payload'
 
-import { collectionAliases } from 'infonomic.config'
+import { collectionAliases } from '@/infonomic.config'
 import { loadRelated } from './utils/load-related'
 
 import type { SerializedEditorState, SerializedLexicalNode } from 'lexical'

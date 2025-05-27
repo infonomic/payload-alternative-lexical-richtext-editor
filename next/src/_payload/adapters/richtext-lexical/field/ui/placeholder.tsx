@@ -12,7 +12,7 @@ import cx from 'classnames'
 
 import './placeholder.css'
 
-import { useEditorConfig } from '../config'
+import { useEditorConfig } from '../config/editor-config-context'
 
 export function Placeholder({
   children,

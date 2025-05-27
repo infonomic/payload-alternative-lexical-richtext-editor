@@ -1,4 +1,4 @@
-import type { EditorSettings } from './config'
+import type { EditorSettings } from './config/types'
 import type { EditorState, LexicalEditor } from 'lexical'
 
 export interface OnChangeProps {

@@ -31,7 +31,7 @@ import {
 
 import { $isAdmonitionNode } from './admonition-node'
 import { NoteIcon, TipIcon, WarningIcon, DangerIcon } from './icons'
-import { useEditorConfig } from '../../config'
+import { useEditorConfig } from '../../config/editor-config-context'
 import { useSharedHistoryContext } from '../../context/shared-history-context'
 import { useSharedOnChange } from '../../context/shared-on-change-context'
 import { AdmonitionDrawer } from '../../plugins/admonition-plugin/admonition-drawer'

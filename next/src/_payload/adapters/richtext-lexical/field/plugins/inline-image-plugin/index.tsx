@@ -43,7 +43,7 @@ import {
 
 import { InlineImageDrawer } from './inline-image-drawer'
 import { getPreferredSize } from './utils'
-import { useEditorConfig } from '../../config'
+import { useEditorConfig } from '../../config/editor-config-context'
 import {
   $createInlineImageNode,
   $isInlineImageNode,

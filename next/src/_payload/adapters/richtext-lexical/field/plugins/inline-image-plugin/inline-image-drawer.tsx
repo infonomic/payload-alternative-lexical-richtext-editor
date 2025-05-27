@@ -7,7 +7,7 @@ import { Form } from '@payloadcms/ui'
 import { RenderFields } from '@payloadcms/ui'
 import { FormSubmit } from '@payloadcms/ui'
 import { useTranslation } from '@payloadcms/ui'
-import { useEditorConfig } from '../../config'
+import { useEditorConfig } from '../../config/editor-config-context'
 
 import { getFields, getInitialState, validateFields } from './fields'
 

@@ -69,6 +69,9 @@ export interface Config {
   collections: {
     pages: Page;
     full: Full;
+    minimal: Minimal;
+    compact: Compact;
+    debug: Debug;
     media: Media;
     users: User;
     'payload-locked-documents': PayloadLockedDocument;
@@ -79,6 +82,9 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     full: FullSelect<false> | FullSelect<true>;
+    minimal: MinimalSelect<false> | MinimalSelect<true>;
+    compact: CompactSelect<false> | CompactSelect<true>;
+    debug: DebugSelect<false> | DebugSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -128,6 +134,7 @@ export interface Page {
    * Optionally enter a sub-title, sub-tag, or 'lead' for this page.
    */
   sub?: string | null;
+  content: (RichTextBlock | PhotoBlock)[];
   slug?: string | null;
   publishedOn: string;
   editor: string | User;
@@ -137,23 +144,62 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "RichTextBlock".
  */
-export interface User {
-  id: string;
-  name?: string | null;
-  photo?: (string | null) | Media;
-  roles: ('admin' | 'editor' | 'public')[];
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
+export interface RichTextBlock {
+  richTextBlockFields?: {
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Constrain the width of the rich text block. Normally rich text will be constrained to 920px. Only turn this setting off if you're sure you want full-width unconstrained text.
+     */
+    constrainedWidth?: boolean | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richTextBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PhotoBlock".
+ */
+export interface PhotoBlock {
+  photoBlockFields: {
+    position?: ('default' | 'wide' | 'full_width') | null;
+    photo: string | Media;
+    useSourcePhotoCaption?: boolean | null;
+    caption?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'photoBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -266,6 +312,26 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  name?: string | null;
+  photo?: (string | null) | Media;
+  roles: ('admin' | 'editor' | 'public')[];
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "full".
  */
 export interface Full {
@@ -293,6 +359,87 @@ export interface Full {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "minimal".
+ */
+export interface Minimal {
+  id: string;
+  title: string;
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "compact".
+ */
+export interface Compact {
+  id: string;
+  title: string;
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "debug".
+ */
+export interface Debug {
+  id: string;
+  title: string;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -305,6 +452,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'full';
         value: string | Full;
+      } | null)
+    | ({
+        relationTo: 'minimal';
+        value: string | Minimal;
+      } | null)
+    | ({
+        relationTo: 'compact';
+        value: string | Compact;
+      } | null)
+    | ({
+        relationTo: 'debug';
+        value: string | Debug;
       } | null)
     | ({
         relationTo: 'media';
@@ -363,6 +522,12 @@ export interface PayloadMigration {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   sub?: T;
+  content?:
+    | T
+    | {
+        richTextBlock?: T | RichTextBlockSelect<T>;
+        photoBlock?: T | PhotoBlockSelect<T>;
+      };
   slug?: T;
   publishedOn?: T;
   editor?: T;
@@ -372,9 +537,75 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock_select".
+ */
+export interface RichTextBlockSelect<T extends boolean = true> {
+  richTextBlockFields?:
+    | T
+    | {
+        richText?: T;
+        constrainedWidth?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PhotoBlock_select".
+ */
+export interface PhotoBlockSelect<T extends boolean = true> {
+  photoBlockFields?:
+    | T
+    | {
+        position?: T;
+        photo?: T;
+        useSourcePhotoCaption?: T;
+        caption?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "full_select".
  */
 export interface FullSelect<T extends boolean = true> {
+  title?: T;
+  richText?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "minimal_select".
+ */
+export interface MinimalSelect<T extends boolean = true> {
+  title?: T;
+  richText?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "compact_select".
+ */
+export interface CompactSelect<T extends boolean = true> {
+  title?: T;
+  richText?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "debug_select".
+ */
+export interface DebugSelect<T extends boolean = true> {
   title?: T;
   richText?: T;
   slug?: T;

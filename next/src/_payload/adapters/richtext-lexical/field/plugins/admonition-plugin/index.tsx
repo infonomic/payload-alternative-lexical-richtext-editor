@@ -18,7 +18,7 @@ import {
 } from 'lexical'
 
 import { AdmonitionDrawer } from './admonition-drawer'
-import { useEditorConfig } from '../../config'
+import { useEditorConfig } from '../../config/editor-config-context'
 import { $createAdmonitionNode, AdmonitionNode } from '../../nodes/admonition-node'
 
 import type { AdmonitionData } from './types'

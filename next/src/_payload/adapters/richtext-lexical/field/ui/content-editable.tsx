@@ -11,7 +11,7 @@ import * as React from 'react'
 import { ContentEditable as LexicalContentEditable } from '@lexical/react/LexicalContentEditable'
 import cx from 'classnames'
 
-import { useEditorConfig } from '../config'
+import { useEditorConfig } from '../config/editor-config-context'
 
 import './content-editable.css'
 

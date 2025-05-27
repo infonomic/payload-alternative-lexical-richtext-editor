@@ -8,7 +8,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { COMMAND_PRIORITY_NORMAL, createCommand } from 'lexical'
 
 import { TableDrawer } from './table-drawer'
-import { useEditorConfig } from '../../config'
+import { useEditorConfig } from '../../config/editor-config-context'
 
 export const OPEN_TABLE_MODAL_COMMAND = createCommand(
   'OPEN_TABLE_MODAL_COMMAND'

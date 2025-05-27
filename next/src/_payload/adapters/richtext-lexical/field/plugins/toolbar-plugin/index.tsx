@@ -68,7 +68,7 @@ import {
   UNDO_COMMAND
 } from 'lexical'
 
-import { useEditorConfig } from '../../config'
+import { useEditorConfig } from '../../config/editor-config-context'
 import useModal from '../../hooks/useModal'
 import {
   $isLinkNode,

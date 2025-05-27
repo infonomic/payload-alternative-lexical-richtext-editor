@@ -9,8 +9,8 @@
 
 import { withNullableJSONSchemaType } from 'payload'
 
-import { defaultEditorConfig } from './field/config'
-// import { populateLexicalLinks } from './field/lexical-after-read-populate-links'
+import { defaultEditorConfig } from './field/config/default'
+
 import { populateLexicalLinks } from './field/lexical-before-change-populate-links'
 import { populateLexicalMedia } from './field/lexical-after-read-populate-media'
 
@@ -62,10 +62,12 @@ export function lexicalEditor(args?: LexicalEditorProps): LexicalRichTextAdapter
       },
     },
     editorConfig,
+    i18n: undefined,
     generateImportMap: ({ addToImportMap }: any) => {
       addToImportMap('/_payload/adapters/richtext-lexical/cell/rsc-entry#RscEntryLexicalCell')
       addToImportMap('/_payload/adapters/richtext-lexical/field/rsc-entry#RscEntryLexicalField')
     },
+    generateSchemaMap: undefined,
     hooks: {
       afterRead: [populateLexicalMedia],
       beforeChange: [populateLexicalLinks],
@@ -75,6 +77,7 @@ export function lexicalEditor(args?: LexicalEditorProps): LexicalRichTextAdapter
       collectionIDFieldTypes,
       config,
       field,
+      i18n,
       interfaceNameDefinitions,
       isRequired,
     }) => {

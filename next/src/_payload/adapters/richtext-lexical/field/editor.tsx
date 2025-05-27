@@ -17,7 +17,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin'
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin'
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin'
 
-import { useEditorConfig } from './config'
+import { useEditorConfig } from './config/editor-config-context'
 import { useSharedHistoryContext } from './context/shared-history-context'
 import { useSharedOnChange } from './context/shared-on-change-context'
 import { Debug } from './debug'

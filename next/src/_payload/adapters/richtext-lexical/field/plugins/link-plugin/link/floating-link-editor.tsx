@@ -29,7 +29,7 @@ import {
 } from 'lexical'
 
 import { LinkDrawer } from './link-drawer'
-import { useEditorConfig } from '../../../config'
+import { useEditorConfig } from '../../../config/editor-config-context'
 
 import {
   $isLinkNode,

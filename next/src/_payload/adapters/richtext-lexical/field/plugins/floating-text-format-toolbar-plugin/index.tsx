@@ -31,7 +31,7 @@ import {
   SELECTION_CHANGE_COMMAND
 } from 'lexical'
 
-import { useEditorConfig } from '../../config'
+import { useEditorConfig } from '../../config/editor-config-context'
 import {
   $isLinkNode,
   TOGGLE_LINK_COMMAND,

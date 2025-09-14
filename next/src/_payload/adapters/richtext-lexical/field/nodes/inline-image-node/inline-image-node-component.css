@@ -53,7 +53,8 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  padding: 6px 8px;
+  font-size: 0.9rem;
+  padding: 3px 4px;
   margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 5px;

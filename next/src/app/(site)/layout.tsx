@@ -11,7 +11,7 @@ const inter = Inter({
 /* Our app sits here to not cause any conflicts with payload's root layout  */
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <html className="dark" lang="en" data-theme="dark">
+    <html className={cx(inter.className, 'dark  scroll-smooth')} lang="en" data-theme="dark">
       <body>{children}</body>
     </html>
   )

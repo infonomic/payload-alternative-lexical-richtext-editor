@@ -4,7 +4,7 @@
   margin-bottom: 1.5rem;
   padding: 8px;
   border: solid 1px #666666;
-  border-radius: 8px;
+  border-radius: 2px;
 }
 
 .LexicalEditor__admonition .Admonition__container.focused {
@@ -16,9 +16,10 @@
   display: block;
   position: absolute;
   z-index: 1;
+  font-size: 0.9rem;
   top: 8px;
   right: 12px;
-  padding: 6px 8px;
+  padding: 3px 4px;
   margin: 0 auto;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 5px;
@@ -38,7 +39,7 @@
   align-items: center;
   font-weight: bold;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .LexicalEditor__admonition .AdmonitionNode__content {
@@ -63,7 +64,7 @@
   background-color: rgba(60, 132, 244, 0.5);
 }
 
-.AdmonitionNode__contentEditable {
+.LexicalEditor__admonition .AdmonitionNode__contentEditable {
   min-height: 20px;
   border: 0px;
   resize: none;
@@ -75,7 +76,7 @@
   outline: 0px;
   padding: 10px;
   user-select: text;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.4em;
   white-space: pre-wrap;
   word-break: break-word;
@@ -100,15 +101,15 @@
   pointer-events: none;
 }
 
-html[data-theme='dark'] .AdmonitionNode__contentEditable {
+.dark .AdmonitionNode__contentEditable {
   color: #eeeeee;
   caret-color: auto;
 }
 
-html[data-theme='dark'] .LexicalEditor__admonition .AdmonitionNode__contentEditable {
+.dark .LexicalEditor__admonition .AdmonitionNode__contentEditable {
   background-color: #222222;
 }
 
-html[data-theme='dark'] .AdmonitionNode__placeholder {
+.dark .AdmonitionNode__placeholder {
   color: #888;
 }

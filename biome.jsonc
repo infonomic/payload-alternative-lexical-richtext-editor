@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -7,10 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": [
-      "(payload)",
-      "_payload"
-    ]
+    "includes": ["**", "!**/(payload)", "!**/_payload", "!**/payload-types.ts", "!**/tailwind.css"]
   },
   "formatter": {
     "enabled": true,
@@ -22,20 +19,41 @@
     "lineWidth": 100,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": [
-      "**/dist",
-      "**/build",
-      "**/node_modules",
-      "**/.cache"
-    ]
+    "includes": ["**", "!**/dist", "!**/build", "!**/node_modules", "!**/.cache"]
   },
-  "organizeImports": {
-    "enabled": true
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":NODE:",
+              ":URL:",
+              ":BLANK_LINE:",
+              ["react"],
+              ["next/**", "@tanstack/**"],
+              ":BLANK_LINE:",
+              ":PACKAGE:",
+              ":BLANK_LINE:",
+              {
+                "type": false
+              }
+            ]
+          }
+        }
+      }
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "warn",
+        "useUniqueElementIds": "off"
+      },
       "style": {
         "noNonNullAssertion": "info",
         "useSelfClosingElements": "off"
@@ -46,7 +64,8 @@
         "noArrayIndexKey": "warn"
       },
       "performance": {
-        "noDelete": "off"
+        "noDelete": "off",
+        "noImgElement": "off"
       },
       "a11y": {
         "useSemanticElements": "off"

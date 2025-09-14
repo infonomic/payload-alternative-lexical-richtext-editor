@@ -391,7 +391,9 @@ export function ToolbarPlugin(): React.JSX.Element {
       setIsSubscript(selection.hasFormat('subscript'))
       setIsSuperscript(selection.hasFormat('superscript'))
       setIsCode(selection.hasFormat('code'))
-      setIsRTL($isParentElementRTL(selection))
+      // TODO: temp RTL fix as this broke on Lexical core update. Unable
+      // to find current editor.
+      // setIsRTL($isParentElementRTL(selection))
 
       // Update links
       const node = getSelectedNode(selection)

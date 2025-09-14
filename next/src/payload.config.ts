@@ -32,15 +32,7 @@ export default buildConfig({
   },
   // @ts-ignore: return type for editorConfig is different
   editor: lexicalEditor(),
-  collections: [
-    Pages,
-    Full,
-    Minimal,
-    Compact,
-    Debug,
-    Media,
-    Users
-  ],
+  collections: [Pages, Full, Minimal, Compact, Debug, Media, Users],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

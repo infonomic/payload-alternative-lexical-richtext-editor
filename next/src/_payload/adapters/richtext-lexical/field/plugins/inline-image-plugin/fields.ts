@@ -21,6 +21,21 @@ export const positionOptions: OptionObject[] = [
   }
 ]
 
+export const sizeOptions: OptionObject[] = [
+  {
+    label: 'Small',
+    value: 'small'
+  },
+  {
+    label: 'Medium',
+    value: 'medium'
+  },
+  {
+    label: 'Auto',
+    value: 'auto'
+  },
+]
+
 export const getFields = (imageCollection: CollectionSlug): ClientField[] => [
   {
     name: 'image',
@@ -47,7 +62,16 @@ export const getFields = (imageCollection: CollectionSlug): ClientField[] => [
     name: 'position',
     localized: false,
     label: 'Position',
+    required: true,
     options: positionOptions,
+    type: 'select'
+  },
+   {
+    name: 'size',
+    localized: false,
+    label: 'Size',
+    required: true,
+    options: sizeOptions,
     type: 'select'
   },
   {
@@ -83,6 +107,11 @@ export function getInitialState(data: InlineImageData | undefined): FormState {
       initialValue: data?.position ?? 'full',
       valid: true
     },
+     size: {
+      value: data?.size ?? 'auto',
+      initialValue: data?.size ?? 'auto',
+      valid: true,
+    },
     showCaption: {
       value: data?.showCaption ?? false,
       initialValue: data?.showCaption ?? false,
@@ -106,6 +135,23 @@ export function validateFields(fields: FormState): { valid: boolean; fields: For
       fields.altText.valid = true
     }
   }
+
+  if (fields.position != null) {
+    if(fields.position.value !== 'left' && fields.position.value !== 'right' && fields.position.value !== 'full' && fields.position.value !== 'wide') {
+      fields.position.valid = false
+    } else {
+      fields.position.valid = true
+    }
+  }
+
+  if (fields.size != null) {
+    if(fields.size.value !== 'small' && fields.size.value !== 'medium' && fields.size.value !== 'auto') {
+    fields.size.valid = false
+    } else {
+      fields.size.valid = true
+    }
+  }
+
   // Return
   return {
     valid,

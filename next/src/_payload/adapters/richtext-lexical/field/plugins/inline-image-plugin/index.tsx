@@ -156,8 +156,8 @@ export function InlineImagePlugin({ collection }: { collection: string }): React
         const response = await requests.get(url)
         if (response.ok) {
           const doc = await response.json()
-          const size = data?.position === 'default' ? 'medium' : 'small'
-          const imageSource = getPreferredSize(size, doc)
+          const editorPreviewSize = data?.position === 'default' ? 'medium' : 'small'
+          const imageSource = getPreferredSize(editorPreviewSize, doc)
           if (imageSource != null) {
             const imagePayload: InlineImageAttributes = {
               id: data.id,
@@ -165,6 +165,7 @@ export function InlineImagePlugin({ collection }: { collection: string }): React
               src: imageSource.url,
               altText: data?.altText,
               position: data?.position,
+              size: data?.size,
               showCaption: data?.showCaption
             }
 
@@ -198,6 +199,7 @@ export function InlineImagePlugin({ collection }: { collection: string }): React
         id: undefined,
         altText: undefined,
         position: undefined,
+        size: undefined,
         showCaption: undefined
       }}
       onSubmit={(data: InlineImageData) => {

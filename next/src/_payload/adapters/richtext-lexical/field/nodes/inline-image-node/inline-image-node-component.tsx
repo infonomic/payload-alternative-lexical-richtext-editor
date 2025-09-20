@@ -45,7 +45,7 @@ import ContentEditableInline from '../../ui/content-editable-inline'
 import PlaceholderInline from '../../ui/placeholder-inline'
 
 import type { InlineImageNode } from './inline-image-node'
-import type { Position, InlineImageAttributes } from './types'
+import type { Position, Size, InlineImageAttributes } from './types'
 import type { LexicalEditor, NodeKey, NodeSelection, RangeSelection, BaseSelection } from 'lexical'
 
 import './inline-image-node-component.css'
@@ -71,6 +71,7 @@ function LazyImage({
   collection,
   src,
   position,
+  size,
   altText,
   className,
   imageRef,
@@ -81,6 +82,7 @@ function LazyImage({
   collection: string
   src: string
   position: Position
+  size: Size
   altText?: string
   className?: string
   height?: number | string
@@ -100,6 +102,7 @@ function LazyImage({
       data-id={id}
       data-collection={collection}
       data-position={position}
+      data-size={size}
       style={{
         display: 'block'
       }}
@@ -113,6 +116,7 @@ export default function InlineImageComponent({
   collection,
   src,
   position,
+  size,
   altText,
   width,
   height,
@@ -124,6 +128,7 @@ export default function InlineImageComponent({
   collection: string
   src: string
   position: Position
+  size: Size
   altText?: string
   height?: number | string
   width?: number | string
@@ -301,8 +306,8 @@ export default function InlineImageComponent({
         const response = await requests.get(url)
         if (response.ok) {
           const doc = await response.json()
-          const size = data?.position === 'default' ? 'medium' : 'small'
-          const imageSource = getPreferredSize(size, doc)
+          const editorPreviewSize = data?.position === 'default' ? 'medium' : 'small'
+          const imageSource = getPreferredSize(editorPreviewSize, doc)
           if (imageSource != null) {
             const imagePayload: InlineImageAttributes = {
               id: data.id,
@@ -310,6 +315,7 @@ export default function InlineImageComponent({
               src: imageSource.url,
               altText: data?.altText,
               position: data?.position,
+              size: data?.size,
               showCaption: data?.showCaption
             }
 
@@ -363,6 +369,7 @@ export default function InlineImageComponent({
             collection={collection}
             src={src}
             position={position}
+            size={size}
             altText={altText}
             imageRef={imageRef}
             width={width}
@@ -412,7 +419,7 @@ export default function InlineImageComponent({
           <InlineImageDrawer
             isOpen={isModalOpen(inlineImageDrawerSlug)}
             drawerSlug={inlineImageDrawerSlug}
-            data={{ id, altText, position, showCaption }}
+            data={{ id, altText, position, size, showCaption }}
             onSubmit={(data: InlineImageData) => {
               void handleModalSubmit(data)
             }}

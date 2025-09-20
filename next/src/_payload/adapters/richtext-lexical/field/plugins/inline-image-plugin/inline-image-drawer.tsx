@@ -13,7 +13,7 @@ import { getFields, getInitialState, validateFields } from './fields'
 
 import type { CollectionSlug, FormState } from 'payload'
 import type { InlineImageData, InlineImageDrawerProps } from './types'
-import type { Position } from '../../nodes/inline-image-node'
+import type { Position, Size } from '../../nodes/inline-image-node'
 
 import './inline-image-drawer.css'
 
@@ -54,6 +54,7 @@ export const InlineImageDrawer: React.FC<InlineImageDrawerProps> = ({
           id: data.image as string,
           altText: data.altText as string,
           position: data.position as Position,
+          size: data.size as Size,
           showCaption: data.showCaption as boolean
         }
         onSubmit(submitData)

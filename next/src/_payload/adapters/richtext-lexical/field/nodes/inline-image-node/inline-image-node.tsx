@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 
 import { $applyNodeReplacement, createEditor, DecoratorNode } from 'lexical'
 
-import type { Position, Doc, InlineImageAttributes, SerializedInlineImageNode } from './types'
+import type { Position, Size, Doc, InlineImageAttributes, SerializedInlineImageNode } from './types'
 import type {
   DOMConversionMap,
   DOMConversionOutput,
@@ -32,6 +32,7 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
   __doc: Doc
   __src: string
   __position: Position
+  __size: Size
   __altText: string | undefined
   __width: number | string | undefined
   __height: number | string | undefined
@@ -47,6 +48,7 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
       node.__doc,
       node.__src,
       node.__position,
+      node.__size,
       node.__altText,
       node.__width,
       node.__height,
@@ -57,12 +59,13 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
   }
 
   static importJSON(serializedNode: SerializedInlineImageNode): InlineImageNode {
-    const { src, position, altText, height, width, showCaption, caption, doc } = serializedNode
+    const { src, position, size, altText, height, width, showCaption, caption, doc } = serializedNode
     const node = $createInlineImageNode({
       id: doc.value,
       collection: doc.relationTo,
       src,
       position,
+      size,
       altText,
       width,
       height,
@@ -89,6 +92,7 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
     doc: Doc,
     src: string,
     position: Position,
+    size: Size,
     altText?: string,
     width?: number | string,
     height?: number | string,
@@ -100,6 +104,7 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
     this.__doc = doc
     this.__src = src
     this.__position = position
+    this.__size = size
     this.__altText = altText
     this.__width = width
     this.__height = height
@@ -129,6 +134,7 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
       doc: this.__doc,
       src: this.getSrc(),
       position: this.__position,
+      size: this.__size,
       altText: this.getAltText(),
       height: this.__height,
       width: this.__width,
@@ -176,9 +182,18 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
     writable.__position = position
   }
 
+  getSize(): Size {
+    return this.__size
+  }
+
+  setSize(size: Size): void {
+    const writable = this.getWritable()
+    writable.__size = size
+  }
+
   update(payload: InlineImageAttributes): void {
     const writable = this.getWritable()
-    const { id, collection, src, position, altText, height, width, showCaption } = payload
+    const { id, collection, src, position, size, altText, height, width, showCaption } = payload
     if (id != null) {
       writable.__doc.value = id
     }
@@ -190,6 +205,9 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
     }
     if (position != null) {
       writable.__position = position
+    }
+     if (size != null) {
+      writable.__size = size
     }
     if (altText != null) {
       writable.__altText = altText
@@ -237,6 +255,7 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
           collection={this.__doc.relationTo}
           src={this.__src}
           position={this.__position}
+          size={this.__size}
           altText={this.__altText}
           width={this.__width}
           height={this.__height}
@@ -254,6 +273,7 @@ export function $createInlineImageNode({
   collection,
   src,
   position,
+  size,
   altText,
   height,
   width,
@@ -263,7 +283,7 @@ export function $createInlineImageNode({
 }: InlineImageAttributes): InlineImageNode {
   const doc: Doc = { value: id, relationTo: collection }
   return $applyNodeReplacement(
-    new InlineImageNode(doc, src, position, altText, width, height, showCaption, caption, key)
+    new InlineImageNode(doc, src, position, size, altText, width, height, showCaption, caption, key)
   )
 }
 

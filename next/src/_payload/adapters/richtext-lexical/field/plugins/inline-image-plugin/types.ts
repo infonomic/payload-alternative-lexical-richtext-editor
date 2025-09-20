@@ -6,6 +6,7 @@ export interface InlineImageData {
   id?: string
   altText?: string
   position?: Position
+  size?: 'small' | 'medium' | 'auto'
   showCaption?: boolean
 }
 

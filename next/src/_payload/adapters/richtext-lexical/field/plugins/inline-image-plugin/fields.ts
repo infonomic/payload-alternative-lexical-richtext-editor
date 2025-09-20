@@ -66,13 +66,17 @@ export const getFields = (imageCollection: CollectionSlug): ClientField[] => [
     options: positionOptions,
     type: 'select'
   },
-   {
+  // @ts-ignore 
+  {
     name: 'size',
     localized: false,
     label: 'Size',
     required: true,
     options: sizeOptions,
-    type: 'select'
+    type: 'select',
+    admin: {
+      description: 'If an inline image is placed in a column layout, its position should be set to \'full\' and size should be set to \'medium\' for equal width or 75% columns, and \'small\' for 25% columns. Otherwise set size to \'auto\'.',
+    }
   },
   {
     name: 'showCaption',

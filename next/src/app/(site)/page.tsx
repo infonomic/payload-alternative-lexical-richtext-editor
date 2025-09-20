@@ -14,7 +14,7 @@ const Page = () => {
             <Link href="https://payloadcms.com/" target="_blank">
               Payload
             </Link>{' '}
-            is an awesome headless CMS. Payload is running at <Link href="/admin">/admin</Link>. An
+            — a headless CMS. Payload is running at <Link href="/admin">/admin</Link>. An
             example of a custom route running the Local API can be found at{' '}
             <Link href="/my-route">/my-route</Link>.
           </p>

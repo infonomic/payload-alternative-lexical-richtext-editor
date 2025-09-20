@@ -35,39 +35,44 @@
     "@lexical/selection": "0.35.0",
     "@lexical/table": "0.35.0",
     "@lexical/utils": "0.35.0",
-    "@payloadcms/db-mongodb": "^3.55.1",
-    "@payloadcms/db-postgres": "^3.55.1",
-    "@payloadcms/next": "^3.55.1",
-    "@payloadcms/richtext-lexical": "^3.55.1",
-    "@payloadcms/translations": "^3.55.1",
-    "@payloadcms/ui": "^3.55.1",
+    "@payloadcms/db-mongodb": "^3.56.0",
+    "@payloadcms/db-postgres": "^3.56.0",
+    "@payloadcms/next": "^3.56.0",
+    "@payloadcms/richtext-lexical": "^3.56.0",
+    "@payloadcms/translations": "^3.56.0",
+    "@payloadcms/ui": "^3.56.0",
     "classnames": "^2.5.1",
     "cross-env": "^10.0.0",
-    "eslint": "^9.35.0",
-    "eslint-config-next": "15.4.5",
+    "eslint": "^9.36.0",
+    "eslint-config-next": "15.5.3",
     "graphql": "^16.11.0",
     "json-schema": "^0.4.0",
     "lexical": "0.35.0",
-    "next": "15.4.5",
-    "payload": "3.55.1",
+    "next": "15.5.3",
+    "payload": "3.56.0",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-error-boundary": "^6.0.0",
-    "sharp": "0.34.3",
+    "sharp": "0.34.4",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
     "@types/json-schema": "^7.0.15",
-    "@types/node": "^24.3.3",
+    "@types/node": "^24.5.2",
     "@types/react": "19.1.13",
     "@types/react-dom": "19.1.9",
-    "@types/uuid": "^10.0.0",
+    "@types/uuid": "^11.0.0",
     "dotenv": "^17.2.2",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["@biomejs/biome", "esbuild", "sharp", "unrs-resolver"]
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }

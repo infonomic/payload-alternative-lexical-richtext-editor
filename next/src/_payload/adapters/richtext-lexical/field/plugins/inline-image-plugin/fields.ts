@@ -75,7 +75,7 @@ export const getFields = (imageCollection: CollectionSlug): ClientField[] => [
     options: sizeOptions,
     type: 'select',
     admin: {
-      description: 'If an inline image is placed in a column layout, its position should be set to \'full\' and size should be set to \'medium\' for equal width or 75% columns, and \'small\' for 25% columns. Otherwise set size to \'auto\'.',
+      description: 'If an inline image is placed in an editor column layout, its position should be set to \'full\' and size should be set to \'medium\' for 75% columns, and \'small\' for equal width and 25% columns. Otherwise set size to \'auto\'.',
     }
   },
   {

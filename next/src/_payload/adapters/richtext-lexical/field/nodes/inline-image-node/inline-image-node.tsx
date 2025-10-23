@@ -61,8 +61,8 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
   static importJSON(serializedNode: SerializedInlineImageNode): InlineImageNode {
     const { src, position, size, altText, height, width, showCaption, caption, doc } = serializedNode
     const node = $createInlineImageNode({
-      id: doc.value,
-      collection: doc.relationTo,
+      id: doc?.value,
+      collection: doc?.relationTo,
       src,
       position,
       size,
@@ -114,8 +114,8 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
 
   exportDOM(): DOMExportOutput {
     const element = document.createElement('img')
-    element.setAttribute('data-id', this.__doc.value)
-    element.setAttribute('data-collection', this.__doc.relationTo)
+    element.setAttribute('data-id', this.__doc?.value)
+    element.setAttribute('data-collection', this.__doc?.relationTo)
     element.setAttribute('src', this.__src)
     element.setAttribute('alt', this.__altText as string)
 
@@ -251,8 +251,8 @@ export class InlineImageNode extends DecoratorNode<React.JSX.Element> {
     return (
       <Suspense fallback={null}>
         <InlineImageComponent
-          id={this.__doc.value}
-          collection={this.__doc.relationTo}
+          id={this.__doc?.value}
+          collection={this.__doc?.relationTo}
           src={this.__src}
           position={this.__position}
           size={this.__size}
